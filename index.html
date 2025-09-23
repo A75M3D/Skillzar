@@ -3,45 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SF STORE - أزياء نسائية</title>
+    <title>FANZ STORE - أزياء نسائية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2c2c2c;
-            --secondary: #d4af37;
-            --light: #f8f8f8;
-            --dark: #1a1a1a;
+            --primary: rgba(255, 255, 255, 0.15);
+            --secondary: rgba(255, 255, 255, 0.25);
+            --accent: #e91e63;
+            --text: #333;
+            --text-light: #fff;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --border: 1px solid rgba(255, 255, 255, 0.2);
             --transition: all 0.3s ease;
+            --bg-color: #f5f7fa;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background: var(--light);
-            color: var(--dark);
+            background: var(--bg-color);
+            color: var(--text);
             line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* تأثيرات الخلفية */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0.3;
+            filter: blur(40px);
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: 5%;
+        }
+
+        .circle-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -10%;
+            left: 5%;
+        }
+
+        /* تصميم الزجاجي (Glassmorphism) */
+        .glass {
+            background: var(--primary);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .glass-dark {
+            background: var(--secondary);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         .container {
             width: 90%;
             max-width: 1200px;
-            margin: auto;
+            margin: 0 auto;
+            padding: 0 15px;
         }
 
         /* Header */
         header {
-            background: var(--primary);
-            color: white;
-            padding: 0.8rem 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.7rem 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
@@ -50,113 +113,350 @@
             align-items: center;
         }
 
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 1.3rem;
-            font-weight: bold;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
         }
 
-        .logo i {
-            color: var(--secondary);
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.5rem;
+            color: white;
         }
 
         nav ul {
-            list-style: none;
             display: flex;
-            gap: 1.5rem;
+            list-style: none;
+            gap: 2rem;
         }
 
         nav a {
-            color: white;
+            color: var(--text);
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
+            position: relative;
             padding: 0.5rem 0;
         }
 
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
         nav a:hover {
-            color: var(--secondary);
+            color: var(--accent);
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         .header-actions {
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
 
-        .header-actions i {
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c2185b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(233, 30, 99, 0.3);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        /* Color Picker */
+        .color-picker {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .color-option {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
             transition: var(--transition);
         }
 
-        .header-actions i:hover {
-            color: var(--secondary);
+        .color-option.active {
+            border-color: #333;
+            transform: scale(1.1);
+        }
+
+        .color-option[data-theme="pink"] {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            position: relative;
+        }
+
+        .color-option[data-theme="pink"]:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e91e63;
+        }
+
+        .color-option[data-theme="blue"] {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            position: relative;
+        }
+
+        .color-option[data-theme="blue"]:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #1976d2;
+        }
+
+        .color-option[data-theme="brown"] {
+            background: linear-gradient(135deg, #f5e6d3, #e8d5b7);
+            position: relative;
+        }
+
+        .color-option[data-theme="brown"]:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #5d4037;
+        }
+
+        .color-option[data-theme="black"] {
+            background: linear-gradient(135deg, #cfd8dc, #b0bec5);
+            position: relative;
+        }
+
+        .color-option[data-theme="black"]:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #212121;
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), 
-                url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 5rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 0 50px;
+            position: relative;
         }
 
-        .hero h2 {
-            font-size: 2.5rem;
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--accent), #ff4081);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+            width: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            max-width: 80%;
+        }
+
+        .slide-content h2 {
+            font-size: 2.2rem;
             margin-bottom: 1rem;
         }
 
-        .hero p {
-            max-width: 600px;
-            margin: 0 auto 1.5rem;
-            font-size: 1.1rem;
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            right: 50%;
+            transform: translateX(50%);
+            display: flex;
+            gap: 10px;
         }
 
-        .btn {
-            display: inline-block;
-            background: var(--secondary);
-            color: var(--dark);
-            padding: 0.7rem 1.8rem;
-            border-radius: 4px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            border: none;
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
             cursor: pointer;
+            transition: var(--transition);
         }
 
-        .btn:hover {
-            background: #c19b2e;
-            transform: translateY(-2px);
+        .dot.active {
+            background: var(--accent);
         }
 
-        /* Sections */
-        section {
-            padding: 4rem 0;
+        /* Products Section */
+        .products {
+            padding: 100px 0;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
             position: relative;
-            font-size: 2rem;
+            display: inline-block;
         }
 
-        .section-title::after {
+        .section-title h2::after {
             content: '';
-            display: block;
+            position: absolute;
+            bottom: -10px;
+            right: 0;
             width: 80px;
-            height: 3px;
-            background: var(--secondary);
-            margin: 10px auto;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
         }
 
-        /* Products Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -164,26 +464,28 @@
         }
 
         .product-card {
-            background: white;
-            border-radius: 8px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: var(--transition);
+            position: relative;
+            cursor: pointer;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transform: translateY(-10px);
         }
 
         .product-img {
             width: 100%;
             height: 300px;
             object-fit: cover;
+            border-radius: 16px 16px 0 0;
         }
 
         .product-info {
-            padding: 1.2rem;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .product-title {
@@ -193,7 +495,7 @@
         }
 
         .product-price {
-            color: var(--secondary);
+            color: var(--accent);
             font-weight: bold;
             margin-bottom: 1rem;
             font-size: 1.1rem;
@@ -206,76 +508,20 @@
             line-height: 1.5;
         }
 
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            width: 100%;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .whatsapp-btn:hover {
-            background: #128C7E;
-        }
-
-        /* Categories Section */
-        .categories {
-            background: #f5f5f5;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .category-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: var(--transition);
-        }
-
-        .category-card:hover {
-            transform: scale(1.03);
-        }
-
-        .category-img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .category-title {
-            padding: 1rem;
-            font-weight: 600;
-        }
-
         /* Contact Section */
         .contact {
-            background: var(--primary);
-            color: white;
+            padding: 100px 0;
         }
 
         .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .contact-info h3 {
-            margin-bottom: 1rem;
-            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            color: var(--accent);
         }
 
         .contact-info p {
@@ -290,10 +536,9 @@
             width: 100%;
             padding: 0.8rem;
             margin-bottom: 1rem;
-            border: none;
-            border-radius: 4px;
-            background: #3a3a3a;
-            color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.7);
         }
 
         .contact-form textarea {
@@ -302,270 +547,447 @@
         }
 
         .contact-form button {
-            background: var(--secondary);
-            color: var(--dark);
+            background: var(--accent);
+            color: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
         }
 
         .contact-form button:hover {
-            background: #c19b2e;
+            background: #c2185b;
+        }
+
+        /* Designer Section */
+        .designer {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 60px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .designer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .designer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .designer p {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .designer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .designer-social a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .designer-social a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         /* Footer */
         footer {
-            background: var(--dark);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+            padding: 60px 0 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
-        .footer-section h3 {
-            color: var(--secondary);
-            margin-bottom: 1rem;
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
         }
 
-        .footer-section ul {
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .footer-links {
             list-style: none;
         }
 
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
+        .footer-links li {
+            margin-bottom: 0.8rem;
         }
 
-        .footer-section a {
-            color: #ddd;
+        .footer-links a {
+            color: var(--text);
             text-decoration: none;
             transition: var(--transition);
         }
 
-        .footer-section a:hover {
-            color: var(--secondary);
+        .footer-links a:hover {
+            color: var(--accent);
         }
 
-        .social-icons {
+        .social-links {
             display: flex;
-            justify-content: center;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .social-icons a {
-            color: white;
-            font-size: 1.2rem;
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: var(--transition);
         }
 
-        .social-icons a:hover {
-            color: var(--secondary);
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px);
         }
 
         .copyright {
-            border-top: 1px solid #444;
-            padding-top: 1rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 0.9rem;
-            color: #aaa;
-        }
-
-        /* Mobile Menu */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
+            opacity: 0.7;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            nav {
-                position: absolute;
-                top: 100%;
-                right: 0;
-                width: 100%;
-                background: var(--primary);
-                display: none;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
-            
-            nav.active {
-                display: block;
-            }
-            
-            nav ul {
-                flex-direction: column;
-                padding: 1rem 0;
-                gap: 0;
-            }
-            
-            nav ul li {
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
                 text-align: center;
-                padding: 0.8rem 0;
-                border-bottom: 1px solid #444;
             }
             
-            .hero h2 {
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-slider {
+                order: -1;
+                margin-bottom: 2rem;
+                height: 300px;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
                 font-size: 2rem;
             }
             
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
-        }
-
-        @media (max-width: 480px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
             
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero h2 {
+            .slide-content h2 {
                 font-size: 1.8rem;
             }
-            
-            .section-title {
-                font-size: 1.6rem;
+        }
+
+        @media (max-width: 576px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
             }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .designer-social {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .designer-social a {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 5rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: block;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+    <!-- تأثيرات الخلفية -->
+    <div class="bg-effects">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+    </div>
+
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-bag-shopping"></i>
-                    <span>SF STORE</span>
+                <div class="logo-section">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-bag-shopping"></i>
+                        </div>
+                        <span>FANZ STORE</span>
+                    </a>
+                    
+                    <!-- Color Picker -->
+                    <div class="color-picker">
+                        <div class="color-option active" data-theme="pink" title="الوردي"></div>
+                        <div class="color-option" data-theme="blue" title="الأزرق"></div>
+                        <div class="color-option" data-theme="brown" title="البني والذهبي"></div>
+                        <div class="color-option" data-theme="black" title="الأسود والأبيض"></div>
+                    </div>
                 </div>
-                <button class="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
+
                 <nav>
                     <ul>
                         <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#products">منتجاتنا</a></li>
-                        <li><a href="#categories">الفئات</a></li>
-                        <li><a href="#contact">اتصل بنا</a></li>
+                        <li><a href="#products">المنتجات</a></li>
+                        <li><a href="#contact">التواصل</a></li>
                     </ul>
                 </nav>
+
                 <div class="header-actions">
-                    <i class="fas fa-search"></i>
-                    <i class="fas fa-user"></i>
-                    <i class="fas fa-shopping-bag"></i>
+                    <!-- تم إزالة زر تسجيل الدخول -->
                 </div>
+
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="close-menu">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#products">المنتجات</a></li>
+            <li><a href="#contact">التواصل</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h2>أحدث صيحات الموضة النسائية</h2>
-            <p>اكتشف تشكيلتنا الراقية من الملابس النسائية مع جودة عالية وأسعار مناسبة.</p>
-            <a href="#products" class="btn">تسوق الآن</a>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>FANZ STORE<br>أزياء نسائية أنيقة</h1>
+                    <p>اكتشف أحدث صيحات الموضة والأزياء النسائية من خلال متجرنا الإلكتروني. جودة عالية وأسعار مناسبة.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="shopNowBtn">تسوق الآن</button>
+                    </div>
+                </div>
+                <div class="hero-slider glass">
+                    <div class="slider-container">
+                        <div class="slider">
+                            <!-- يمكنك تحديث الروابط التالية بصورك الخاصة -->
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=80')">
+                                <div class="slide-content">
+                                    <h2>طرح أنيقة</h2>
+                                </div>
+                            </div>
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585487000113-7bf7a7c4d2d3?auto=format&fit=crop&w=1200&q=80')">
+                                <div class="slide-content">
+                                    <h2>فستان سهرة</h2>
+                                </div>
+                            </div>
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=1200&q=80')">
+                                <div class="slide-content">
+                                    <h2>تنورة كلاسيكية</h2>
+                                </div>
+                            </div>
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=1200&q=80')">
+                                <div class="slide-content">
+                                    <h2>فستان يومي</h2>
+                                </div>
+                            </div>
+                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1200&q=80')">
+                                <div class="slide-content">
+                                    <h2>زفاف فاخر</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-dots"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="products">
+    <!-- Products Section -->
+    <section class="products" id="products">
         <div class="container">
-            <h2 class="section-title">منتجاتنا</h2>
+            <div class="section-title">
+                <h2>أفضل المنتجات</h2>
+                <p>اكتشف تشكيلتنا المميزة من الأزياء النسائية</p>
+            </div>
             <div class="products-grid">
-                <!-- فستان أنيق -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=500&q=80" alt="فستان أنيق" class="product-img">
+                <!-- Product 1 -->
+                <div class="product-card glass">
+                    <img src="https://images.unsplash.com/photo-1585487000113-7bf7a7c4d2d3?auto=format&fit=crop&w=500&q=80" alt="فستان سهرة" class="product-img">
                     <div class="product-info">
-                        <h3 class="product-title">فستان أنيق</h3>
-                        <div class="product-price">250 ر.س</div>
-                        <p class="product-desc">فستان أنيق بتصميم عصري يناسب المناسبات الخاصة، مصنوع من قماش عالي الجودة.</p>
-                        <button class="whatsapp-btn" data-product="فستان أنيق">
-                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- بلوزة كلاسيكية -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=500&q=80" alt="بلوزة كلاسيكية" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">بلوزة كلاسيكية</h3>
-                        <div class="product-price">180 ر.س</div>
-                        <p class="product-desc">بلوزة نسائية كلاسيكية بتصميم أنيق، مناسبة للارتداء اليومي أو في العمل.</p>
-                        <button class="whatsapp-btn" data-product="بلوزة كلاسيكية">
-                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- تنورة قصيرة -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=500&q=80" alt="تنورة قصيرة" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">تنورة قصيرة</h3>
-                        <div class="product-price">120 ر.س</div>
-                        <p class="product-desc">تنورة نسائية قصيرة بتصميم عصري، مثالية للطلعات اليومية والمناسبات غير الرسمية.</p>
-                        <button class="whatsapp-btn" data-product="تنورة قصيرة">
-                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- جاكيت جلد -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=500&q=80" alt="جاكيت جلد" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">جاكيت جلد</h3>
+                        <h3 class="product-title">فستان سهرة</h3>
                         <div class="product-price">350 ر.س</div>
-                        <p class="product-desc">جاكيت جلد أنيق للمرأة العصرية، يوفر الدفء والأناقة في نفس الوقت.</p>
-                        <button class="whatsapp-btn" data-product="جاكيت جلد">
+                        <p class="product-desc">فستان أنيق للسهرات والحفلات، مصمم من أجود الخامات وبأحدث الصيحات.</p>
+                        <button class="btn-whatsapp" data-product="فستان سهرة">
                             <i class="fab fa-whatsapp"></i> طلب عبر واتساب
                         </button>
                     </div>
                 </div>
                 
-                <!-- بنطلون جينز -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" alt="بنطلون جينز" class="product-img">
+                <!-- Product 2 -->
+                <div class="product-card glass">
+                    <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=500&q=80" alt="تنورة كلاسيكية" class="product-img">
                     <div class="product-info">
-                        <h3 class="product-title">بنطلون جينز</h3>
-                        <div class="product-price">200 ر.س</div>
-                        <p class="product-desc">بنطلون جينز نسائي مريح وأنيق، يناسب جميع المناسبات والأنشطة اليومية.</p>
-                        <button class="whatsapp-btn" data-product="بنطلون جينز">
+                        <h3 class="product-title">تنورة كلاسيكية</h3>
+                        <div class="product-price">280 ر.س</div>
+                        <p class="product-desc">تنورة أنيقة بتصميم كلاسيكي، مناسبة للارتداء اليومي أو في المناسبات.</p>
+                        <button class="btn-whatsapp" data-product="تنورة كلاسيكية">
                             <i class="fab fa-whatsapp"></i> طلب عبر واتساب
                         </button>
                     </div>
                 </div>
                 
-                <!-- عباية مطرزة -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1585487000113-7bf7a7c4d2d3?auto=format&fit=crop&w=500&q=80" alt="عباية مطرزة" class="product-img">
+                <!-- Product 3 -->
+                <div class="product-card glass">
+                    <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=500&q=80" alt="زفاف فاخر" class="product-img">
                     <div class="product-info">
-                        <h3 class="product-title">عباية مطرزة</h3>
-                        <div class="product-price">450 ر.س</div>
-                        <p class="product-desc">عباية نسائية فاخرة بتطريز أنيق، مثالية للمناسبات الخاصة والأعياد.</p>
-                        <button class="whatsapp-btn" data-product="عباية مطرزة">
+                        <h3 class="product-title">زفاف فاخر</h3>
+                        <div class="product-price">420 ر.س</div>
+                        <p class="product-desc">فستان زفاف فاخر بتصميم ملكي، مثالي لحفلات الزفاف والمناسبات الخاصة.</p>
+                        <button class="btn-whatsapp" data-product="زفاف فاخر">
+                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card glass">
+                    <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=500&q=80" alt="فستان يومي" class="product-img">
+                    <div class="product-info">
+                        <h3 class="product-title">فستان يومي</h3>
+                        <div class="product-price">220 ر.س</div>
+                        <p class="product-desc">فستان مريح للارتداء اليومي، مصنوع من خامات عالية الجودة.</p>
+                        <button class="btn-whatsapp" data-product="فستان يومي">
                             <i class="fab fa-whatsapp"></i> طلب عبر واتساب
                         </button>
                     </div>
@@ -574,125 +996,153 @@
         </div>
     </section>
 
-    <section class="categories" id="categories">
-        <div class="container">
-            <h2 class="section-title">فئات المنتجات</h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=500&q=80" alt="فساتين" class="category-img">
-                    <div class="category-title">فساتين</div>
-                </div>
-                
-                <div class="category-card">
-                    <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=500&q=80" alt="بلوزات" class="category-img">
-                    <div class="category-title">بلوزات</div>
-                </div>
-                
-                <div class="category-card">
-                    <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=500&q=80" alt="تنانير" class="category-img">
-                    <div class="category-title">تنانير</div>
-                </div>
-                
-                <div class="category-card">
-                    <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=500&q=80" alt="جاكيتات" class="category-img">
-                    <div class="category-title">جاكيتات</div>
-                </div>
-                
-                <div class="category-card">
-                    <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" alt="بنطلونات" class="category-img">
-                    <div class="category-title">بنطلونات</div>
-                </div>
-                
-                <div class="category-card">
-                    <img src="https://images.unsplash.com/photo-1585487000113-7bf7a7c4d2d3?auto=format&fit=crop&w=500&q=80" alt="عبايات" class="category-img">
-                    <div class="category-title">عبايات</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title" style="color: white;">اتصل بنا</h2>
+            <div class="section-title">
+                <h2>تواصل معنا</h2>
+                <p>يسعدنا تواصلكم معنا لأي استفسار أو طلب</p>
+            </div>
             <div class="contact-container">
-                <div class="contact-info">
+                <div class="contact-info glass" style="padding: 2rem;">
                     <h3>معلومات الاتصال</h3>
                     <p><i class="fas fa-map-marker-alt"></i> العنوان: الرياض، المملكة العربية السعودية</p>
                     <p><i class="fas fa-phone"></i> الهاتف: +966 123 456 789</p>
-                    <p><i class="fas fa-envelope"></i> البريد الإلكتروني: info@sfstore.com</p>
+                    <p><i class="fas fa-envelope"></i> البريد الإلكتروني: info@fanzstore.com</p>
                     <p><i class="fas fa-clock"></i> أوقات العمل: من الأحد إلى الخميس، 9 صباحاً - 6 مساءً</p>
                 </div>
-                <div class="contact-form">
+                <div class="contact-form glass" style="padding: 2rem;">
                     <h3>أرسل رسالة</h3>
-                    <form>
+                    <form id="contactForm">
                         <input type="text" placeholder="اسمك" required>
                         <input type="email" placeholder="بريدك الإلكتروني" required>
                         <input type="text" placeholder="الموضوع" required>
                         <textarea placeholder="رسالتك" required></textarea>
-                        <button type="submit">إرسال</button>
+                        <button type="submit" class="btn btn-primary">إرسال</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Designer Section -->
+    <section class="designer">
+        <div class="container">
+            <div class="designer-content">
+                <h3>هل تحتاج إلى متجر إلكتروني مميز؟</h3>
+                <p>أنا مصمم متاجر إلكترونية محترف، يمكنني تصميم متجرك الإلكتروني بتصميم عصري وجذاب يناسب علامتك التجارية.</p>
+                <div class="designer-social">
+                    <a href="https://wa.me/966123456789" target="_blank">
+                        <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+                    </a>
+                    <a href="https://instagram.com/yourprofile" target="_blank">
+                        <i class="fab fa-instagram"></i> تابعنا على انستغرام
+                    </a>
+                    <a href="https://facebook.com/yourpage" target="_blank">
+                        <i class="fab fa-facebook"></i> تابعنا على فيسبوك
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>عن المتجر</h3>
-                    <p>SF STORE هو وجهتك الأولى للملابس النسائية العصرية بجودة عالية وأسعار مناسبة.</p>
+                <div class="footer-column">
+                    <h3>FANZ STORE</h3>
+                    <p>وجهتك الأولى للأزياء النسائية العصرية بجودة عالية وأسعار مناسبة.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-snapchat"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
                 </div>
-                <div class="footer-section">
+                <div class="footer-column">
                     <h3>روابط سريعة</h3>
-                    <ul>
+                    <ul class="footer-links">
                         <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#products">منتجاتنا</a></li>
-                        <li><a href="#categories">الفئات</a></li>
-                        <li><a href="#contact">اتصل بنا</a></li>
+                        <li><a href="#products">المنتجات</a></li>
+                        <li><a href="#contact">التواصل</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-column">
                     <h3>خدمة العملاء</h3>
-                    <ul>
-                        <li><a href="#">شروط الاستخدام</a></li>
+                    <ul class="footer-links">
                         <li><a href="#">سياسة الخصوصية</a></li>
                         <li><a href="#">سياسة الإرجاع</a></li>
                         <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">دليل المقاسات</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-snapchat"></i></a>
-            </div>
             <div class="copyright">
-                <p>جميع الحقوق محفوظة &copy; 2023 SF STORE</p>
+                <p>جميع الحقوق محفوظة &copy; 2023 FANZ STORE</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // القائمة المتنقلة للهواتف
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('nav').classList.toggle('active');
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
 
-        // إغلاق القائمة عند النقر على رابط
-        document.querySelectorAll('nav a').forEach(link => {
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const closeMenuBtn = document.querySelector('.close-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileNav.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', function() {
+            mobileNav.classList.remove('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
             link.addEventListener('click', function() {
-                document.querySelector('nav').classList.remove('active');
+                mobileNav.classList.remove('active');
             });
         });
 
-        // وظيفة التواصل عبر واتساب
-        document.querySelectorAll('.whatsapp-btn').forEach(button => {
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close mobile menu if open
+                    mobileNav.classList.remove('active');
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // WhatsApp ordering functionality
+        document.querySelectorAll('.btn-whatsapp').forEach(button => {
             button.addEventListener('click', function() {
                 const productName = this.getAttribute('data-product');
                 const phoneNumber = "966123456789"; // استبدل برقم الهاتف الفعلي
-                const message = `مرحباً، أنا مهتمة بشراء ${productName} من متجركم. هل يمكنكم مساعدتي؟`;
+                const message = `مرحباً، أنا مهتمة بشراء ${productName} من متجر FANZ STORE. هل يمكنكم مساعدتي؟`;
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
                 
@@ -700,21 +1150,115 @@
             });
         });
 
-        // تنعيم التمرير للروابط الداخلية
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
+        // Hero Slider
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.querySelector('.slider-dots');
+        
+        let currentSlide = 0;
+        let slideInterval;
+        
+        // إنشاء النقاط
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+        
+        const dots = document.querySelectorAll('.dot');
+        
+        // الانتقال لشريحة محددة
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateSlider();
+        }
+        
+        // تحديث السلايدر
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // تحديث النقاط النشطة
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        // الشريحة التالية
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlider();
+        }
+        
+        // بدء التشغيل التلقائي
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 3000); // تغيير كل 3 ثواني
+        }
+        
+        // إيقاف التشغيل التلقائي
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+        
+        // بدء التشغيل التلقائي عند تحميل الصفحة
+        startSlideShow();
+        
+        // إيقاف التشغيل التلقائي عند التمرير فوق السلايدر
+        slider.addEventListener('mouseenter', stopSlideShow);
+        slider.addEventListener('mouseleave', startSlideShow);
+
+        // Color Picker
+        const colorOptions = document.querySelectorAll('.color-option');
+        
+        colorOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
                 
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
+                // إزالة النشط من جميع الخيارات
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                // إضافة النشط للخيار المحدد
+                this.classList.add('active');
                 
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+                // تغيير الألوان بناءً على الثيم المختار
+                changeTheme(theme);
+            });
+        });
+
+        function changeTheme(theme) {
+            const root = document.documentElement;
+            
+            switch(theme) {
+                case 'pink':
+                    root.style.setProperty('--accent', '#e91e63');
+                    root.style.setProperty('--bg-color', '#f5f7fa');
+                    break;
+                case 'blue':
+                    root.style.setProperty('--accent', '#1976d2');
+                    root.style.setProperty('--bg-color', '#e3f2fd');
+                    break;
+                case 'brown':
+                    root.style.setProperty('--accent', '#5d4037');
+                    root.style.setProperty('--bg-color', '#f5e6d3');
+                    break;
+                case 'black':
+                    root.style.setProperty('--accent', '#212121');
+                    root.style.setProperty('--bg-color', '#cfd8dc');
+                    break;
+            }
+        }
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('شكراً لتواصلكم معنا! سنرد على رسالتكم في أقرب وقت ممكن.');
+            this.reset();
+        });
+
+        // زر تسوق الآن ينقل إلى قسم المنتجات
+        document.getElementById('shopNowBtn').addEventListener('click', function() {
+            document.querySelector('#products').scrollIntoView({
+                behavior: 'smooth'
             });
         });
     </script>
