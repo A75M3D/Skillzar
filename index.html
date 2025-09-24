@@ -128,8 +128,8 @@
 
         .logo-section {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            align-items: center;
+            gap: 15px;
         }
 
         .logo {
@@ -780,6 +780,10 @@
                 flex-direction: column;
                 gap: 2rem;
             }
+            
+            .header-actions {
+                display: none;
+            }
         }
 
         @media (max-width: 576px) {
@@ -791,10 +795,6 @@
             .btn {
                 width: 100%;
                 max-width: 250px;
-            }
-            
-            .header-actions {
-                display: none;
             }
         }
 
@@ -929,7 +929,7 @@
                 </div>
                 <div class="hero-video-container glass">
                     <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/3Lvxr-kqDcE" title="مقدمة عن التعليم الإلكتروني" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="مقدمة عن التعليم الإلكتروني" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -946,7 +946,7 @@
             <div class="courses-grid">
                 <!-- Course 1 - TOT -->
                 <div class="course-card glass">
-                    <iframe class="course-video" src="https://www.youtube.com/embed/9qmcG3o7w10" title="دورة TOT" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="course-video" src="https://www.youtube.com/embed/8S6e2m6_4uY" title="دورة TOT" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="course-info">
                         <h3 class="course-title">دورة مدرب مدربين (TOT) <span class="free-badge">مجاني</span></h3>
                         <div class="course-free-note">
@@ -967,7 +967,7 @@
                 
                 <!-- Course 2 - Leadership -->
                 <div class="course-card glass">
-                    <iframe class="course-video" src="https://www.youtube.com/embed/l6bmTJ7qQ5s" title="دورة القيادة" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="course-video" src="https://www.youtube.com/embed/xNY0AAUtH3g" title="دورة القيادة" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="course-info">
                         <h3 class="course-title">دورة القيادة والإدارة المتقدمة <span class="free-badge">مجاني</span></h3>
                         <div class="course-free-note">
@@ -988,7 +988,7 @@
                 
                 <!-- Course 3 - HR -->
                 <div class="course-card glass">
-                    <iframe class="course-video" src="https://www.youtube.com/embed/5MgBikgcWnY" title="دورة HR" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="course-video" src="https://www.youtube.com/embed/zPtRrtx1N8s" title="دورة HR" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="course-info">
                         <h3 class="course-title">دورة إدارة الموارد البشرية (HR) <span class="free-badge">مجاني</span></h3>
                         <div class="course-free-note">
@@ -1009,7 +1009,7 @@
 
                 <!-- Course 4 - Business Development -->
                 <div class="course-card glass">
-                    <iframe class="course-video" src="https://www.youtube.com/embed/6ILQrUrEWe8" title="دورة تطوير الأعمال" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="course-video" src="https://www.youtube.com/embed/0BxXWk2yL_Q" title="دورة تطوير الأعمال" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="course-info">
                         <h3 class="course-title">دورة تطوير الأعمال والتسويق <span class="free-badge">مجاني</span></h3>
                         <div class="course-free-note">
@@ -1030,7 +1030,7 @@
 
                 <!-- Course 5 - Communication Skills -->
                 <div class="course-card glass">
-                    <iframe class="course-video" src="https://www.youtube.com/embed/HAnw168huqA" title="دورة مهارات التواصل" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="course-video" src="https://www.youtube.com/embed/2Vkw6L0V-_w" title="دورة مهارات التواصل" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="course-info">
                         <h3 class="course-title">دورة مهارات التواصل الفعال <span class="free-badge">مجاني</span></h3>
                         <div class="course-free-note">
@@ -1305,13 +1305,6 @@
             e.preventDefault();
             alert('شكراً لتواصلكم معنا! سنرد على رسالتكم في أقرب وقت ممكن.');
             this.reset();
-        });
-
-        // Contact button in logo section
-        document.querySelector('.logo-section .btn-primary').addEventListener('click', function() {
-            document.querySelector('#contact').scrollIntoView({
-                behavior: 'smooth'
-            });
         });
 
         // Main CTA button
