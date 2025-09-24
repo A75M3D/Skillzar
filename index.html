@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><h1>FANZ STORE - أزياء نسائية</title></h1>
+    <title>2030Elearning - منصة التعلم الإلكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: rgba(255, 255, 255, 0.15);
-            --secondary: rgba(255, 255, 255, 0.25);
-            --accent: #e91e63;
-            --text: #333;
-            --text-light: #fff;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            --border: 1px solid rgba(255, 255, 255, 0.2);
+            --primary: rgba(30, 30, 46, 0.9);
+            --secondary: rgba(49, 51, 68, 0.9);
+            --accent: #00d4ff;
+            --accent-dark: #0099cc;
+            --text: #e0e0e0;
+            --text-light: #ffffff;
+            --text-dark: #a0a0a0;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
             --transition: all 0.3s ease;
-            --bg-color: #f5f7fa;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --success: #00cc99;
+            --warning: #ffaa00;
+            --danger: #ff5252;
         }
 
         * {
@@ -47,8 +53,8 @@
         .bg-circle {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0.3;
+            background: radial-gradient(circle, var(--accent), transparent);
+            opacity: 0.05;
             filter: blur(40px);
         }
 
@@ -64,6 +70,13 @@
             height: 500px;
             bottom: -10%;
             left: 5%;
+        }
+
+        .circle-3 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 20%;
         }
 
         /* تصميم الزجاجي (Glassmorphism) */
@@ -100,11 +113,11 @@
         }
 
         header.scrolled {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(26, 26, 46, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 0.7rem 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
         .header-content {
@@ -115,8 +128,8 @@
 
         .logo-section {
             display: flex;
-            align-items: center;
-            gap: 20px;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .logo {
@@ -125,7 +138,7 @@
             gap: 10px;
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--text);
+            color: var(--text-light);
             text-decoration: none;
         }
 
@@ -138,7 +151,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: white;
+            color: var(--bg-color);
         }
 
         nav ul {
@@ -168,7 +181,7 @@
         }
 
         nav a:hover {
-            color: var(--accent);
+            color: var(--text-light);
         }
 
         nav a:hover::after {
@@ -183,23 +196,46 @@
 
         .btn {
             padding: 0.7rem 1.5rem;
-            border-radius: 50px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             border: none;
             outline: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary {
             background: var(--accent);
-            color: white;
+            color: var(--bg-color);
         }
 
         .btn-primary:hover {
-            background: #c2185b;
+            background: var(--accent-dark);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(233, 30, 99, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #00b386;
+            transform: translateY(-3px);
         }
 
         .btn-whatsapp {
@@ -224,94 +260,6 @@
             transform: translateY(-2px);
         }
 
-        /* Color Picker */
-        .color-picker {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .color-option {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .color-option.active {
-            border-color: #333;
-            transform: scale(1.1);
-        }
-
-        .color-option[data-theme="pink"] {
-            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
-            position: relative;
-        }
-
-        .color-option[data-theme="pink"]:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #e91e63;
-        }
-
-        .color-option[data-theme="blue"] {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            position: relative;
-        }
-
-        .color-option[data-theme="blue"]:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #1976d2;
-        }
-
-        .color-option[data-theme="brown"] {
-            background: linear-gradient(135deg, #f5e6d3, #e8d5b7);
-            position: relative;
-        }
-
-        .color-option[data-theme="brown"]:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #5d4037;
-        }
-
-        .color-option[data-theme="black"] {
-            background: linear-gradient(135deg, #cfd8dc, #b0bec5);
-            position: relative;
-        }
-
-        .color-option[data-theme="black"]:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #212121;
-        }
-
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -333,7 +281,7 @@
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--accent), #ff4081);
+            background: linear-gradient(to right, var(--accent), #80e0ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -343,6 +291,7 @@
             font-size: 1.2rem;
             margin-bottom: 2rem;
             opacity: 0.9;
+            color: var(--text);
         }
 
         .hero-buttons {
@@ -350,87 +299,34 @@
             gap: 1rem;
         }
 
-        .hero-slider {
+        .hero-video-container {
             position: relative;
             width: 100%;
-            height: 400px;
-            border-radius: 20px;
+            max-width: 500px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: var(--shadow);
         }
 
-        .slider-container {
+        .video-wrapper {
             position: relative;
-            width: 100%;
-            height: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
             overflow: hidden;
         }
 
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-            width: 100%;
-        }
-
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .slide::after {
-            content: '';
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            border-radius: 16px;
         }
 
-        .slide-content {
-            position: relative;
-            z-index: 1;
-            color: white;
-            text-align: center;
-            max-width: 80%;
-        }
-
-        .slide-content h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .slider-dots {
-            position: absolute;
-            bottom: 20px;
-            right: 50%;
-            transform: translateX(50%);
-            display: flex;
-            gap: 10px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .dot.active {
-            background: var(--accent);
-        }
-
-        /* Products Section */
-        .products {
+        /* Courses Section */
+        .courses {
             padding: 100px 0;
         }
 
@@ -444,6 +340,7 @@
             margin-bottom: 1rem;
             position: relative;
             display: inline-block;
+            color: var(--text-light);
         }
 
         .section-title h2::after {
@@ -457,55 +354,250 @@
             border-radius: 2px;
         }
 
-        .products-grid {
+        .section-title p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
 
-        .product-card {
+        .course-card {
             border-radius: 16px;
             overflow: hidden;
             transition: var(--transition);
             position: relative;
-            cursor: pointer;
+            background: var(--card-bg);
         }
 
-        .product-card:hover {
+        .course-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
 
-        .product-img {
+        .course-video {
             width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 16px 16px 0 0;
+            height: 200px;
+            border: none;
         }
 
-        .product-info {
+        .course-info {
             padding: 1.5rem;
             position: relative;
             z-index: 1;
         }
 
-        .product-title {
+        .course-title {
             font-weight: 600;
             margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            color: var(--text-light);
+        }
+
+        .course-instructor {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .course-desc {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .course-price {
+            color: var(--accent);
+            font-weight: bold;
             font-size: 1.2rem;
         }
 
-        .product-price {
-            color: var(--accent);
+        .free-badge {
+            background: var(--success);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: bold;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
         }
 
-        .product-desc {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 1.2rem;
-            line-height: 1.5;
+        .course-free-note {
+            background: rgba(0, 204, 153, 0.1);
+            border-right: 3px solid var(--success);
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .course-certificate-note {
+            background: rgba(0, 212, 255, 0.1);
+            border-right: 3px solid var(--accent);
+            padding: 0.5rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Process Section */
+        .process {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            color: var(--bg-color);
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .process-step p {
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+
+        /* Certificate Template */
+        .certificate-template {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .certificate {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            color: #333;
+            position: relative;
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/45-degree-fabric-light.png');
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .certificate-header {
+            background: linear-gradient(135deg, #0f3460, #533483);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .certificate-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .certificate-body {
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .certificate-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #0f3460;
+            font-weight: bold;
+        }
+
+        .certificate-text {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .certificate-signature {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+        }
+
+        .signature {
+            text-align: center;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 1px;
+            background: #333;
+            margin: 0.5rem auto;
+        }
+
+        .signature-name {
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .certificate-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            color: rgba(0, 0, 0, 0.05);
+            font-weight: bold;
+            z-index: 1;
+            white-space: nowrap;
         }
 
         /* Contact Section */
@@ -536,9 +628,10 @@
             width: 100%;
             padding: 0.8rem;
             margin-bottom: 1rem;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
         }
 
         .contact-form textarea {
@@ -548,7 +641,7 @@
 
         .contact-form button {
             background: var(--accent);
-            color: white;
+            color: var(--bg-color);
             border: none;
             padding: 0.8rem 1.5rem;
             border-radius: 8px;
@@ -558,61 +651,13 @@
         }
 
         .contact-form button:hover {
-            background: #c2185b;
-        }
-
-        /* Designer Section */
-        .designer {
-            background: rgba(0, 0, 0, 0.05);
-            padding: 60px 0;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        .designer-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .designer h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .designer p {
-            margin-bottom: 1.5rem;
-            opacity: 0.8;
-        }
-
-        .designer-social {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .designer-social a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--accent);
-            color: white;
-            padding: 0.7rem 1.2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .designer-social a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: var(--accent-dark);
         }
 
         /* Footer */
         footer {
             padding: 60px 0 30px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .footer-content {
@@ -668,7 +713,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -677,14 +722,14 @@
 
         .social-link:hover {
             background: var(--accent);
-            color: white;
+            color: var(--bg-color);
             transform: translateY(-5px);
         }
 
         .copyright {
             text-align: center;
             padding-top: 2rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.9rem;
             opacity: 0.7;
         }
@@ -704,16 +749,9 @@
                 justify-content: center;
             }
             
-            .hero-slider {
+            .hero-video-container {
                 order: -1;
                 margin-bottom: 2rem;
-                height: 300px;
-            }
-            
-            .logo-section {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
             }
         }
 
@@ -734,12 +772,13 @@
                 font-size: 2rem;
             }
             
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
             
-            .slide-content h2 {
-                font-size: 1.8rem;
+            .certificate-signature {
+                flex-direction: column;
+                gap: 2rem;
             }
         }
 
@@ -754,15 +793,8 @@
                 max-width: 250px;
             }
             
-            .designer-social {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .designer-social a {
-                width: 100%;
-                max-width: 250px;
-                justify-content: center;
+            .header-actions {
+                display: none;
             }
         }
 
@@ -783,14 +815,14 @@
             right: -100%;
             width: 80%;
             height: 100vh;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(26, 26, 46, 0.95);
             backdrop-filter: blur(20px);
             z-index: 1000;
             transition: var(--transition);
             padding: 5rem 2rem 2rem;
             display: flex;
             flex-direction: column;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
         }
 
         .mobile-nav.active {
@@ -811,7 +843,7 @@
             font-size: 1.2rem;
             display: block;
             padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .close-menu {
@@ -825,13 +857,13 @@
             cursor: pointer;
         }
     </style>
-    <meta name="google-site-verification" content="vsvV5LO-_GMeOhYPsK--pV8OmHJJPHjxhzqtJ6dL2pk" />
 </head>
 <body>
     <!-- تأثيرات الخلفية -->
     <div class="bg-effects">
         <div class="bg-circle circle-1"></div>
         <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
     </div>
 
     <!-- Header -->
@@ -841,30 +873,25 @@
                 <div class="logo-section">
                     <a href="#" class="logo">
                         <div class="logo-icon">
-                            <i class="fas fa-bag-shopping"></i>
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <span>FANZ STORE</span>
+                        <span>2030Elearning</span>
                     </a>
-                    
-                    <!-- Color Picker -->
-                    <div class="color-picker">
-                        <div class="color-option active" data-theme="pink" title="الوردي"></div>
-                        <div class="color-option" data-theme="blue" title="الأزرق"></div>
-                        <div class="color-option" data-theme="brown" title="البني والذهبي"></div>
-                        <div class="color-option" data-theme="black" title="الأسود والأبيض"></div>
-                    </div>
+                    <button class="btn btn-primary contact-whatsapp">تواصل معنا</button>
                 </div>
 
                 <nav>
                     <ul>
                         <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#products">المنتجات</a></li>
+                        <li><a href="#courses">الدورات</a></li>
+                        <li><a href="#process">كيفية الاشتراك</a></li>
+                        <li><a href="#certificate">الشهادات</a></li>
                         <li><a href="#contact">التواصل</a></li>
                     </ul>
                 </nav>
 
                 <div class="header-actions">
-                    <!-- تم إزالة زر تسجيل الدخول -->
+                    <!-- تم إزالة أزرار تسجيل الدخول وإنشاء الحساب -->
                 </div>
 
                 <button class="mobile-menu-btn">
@@ -881,8 +908,11 @@
         </button>
         <ul>
             <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#products">المنتجات</a></li>
+            <li><a href="#courses">الدورات</a></li>
+            <li><a href="#process">كيفية الاشتراك</a></li>
+            <li><a href="#certificate">الشهادات</a></li>
             <li><a href="#contact">التواصل</a></li>
+            <li><a href="#" class="btn btn-primary contact-whatsapp">تواصل معنا</a></li>
         </ul>
     </div>
 
@@ -891,106 +921,233 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>FANZ STORE<br>أزياء نسائية أنيقة</h1>
-                    <p>اكتشف أحدث صيحات الموضة والأزياء النسائية من خلال متجرنا الإلكتروني. جودة عالية وأسعار مناسبة.</p>
+                    <h1>2030Elearning<br>منصة التعلم الإلكتروني المتقدمة</h1>
+                    <p>انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary" id="shopNowBtn">تسوق الآن</button>
+                        <button class="btn btn-primary contact-whatsapp">اطلب شهاداتك ودورتك على واتساب</button>
                     </div>
                 </div>
-                <div class="hero-slider glass">
-                    <div class="slider-container">
-                        <div class="slider">
-                            <!-- يمكنك تحديث الروابط التالية بصورك الخاصة -->
-                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=1200&q=80')">
-                                <div class="slide-content">
-                                    <h2>طرح أنيقة</h2>
-                                </div>
-                            </div>
-                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585487000113-7bf7a7c4d2d3?auto=format&fit=crop&w=1200&q=80')">
-                                <div class="slide-content">
-                                    <h2>فستان سهرة</h2>
-                                </div>
-                            </div>
-                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=1200&q=80')">
-                                <div class="slide-content">
-                                    <h2>تنورة كلاسيكية</h2>
-                                </div>
-                            </div>
-                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=1200&q=80')">
-                                <div class="slide-content">
-                                    <h2>فستان يومي</h2>
-                                </div>
-                            </div>
-                            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1200&q=80')">
-                                <div class="slide-content">
-                                    <h2>زفاف فاخر</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slider-dots"></div>
+                <div class="hero-video-container glass">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/3Lvxr-kqDcE" title="مقدمة عن التعليم الإلكتروني" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="products" id="products">
+    <!-- Courses Section -->
+    <section class="courses" id="courses">
         <div class="container">
             <div class="section-title">
-                <h2>أفضل المنتجات</h2>
-                <p>اكتشف تشكيلتنا المميزة من الأزياء النسائية</p>
+                <h2>دوراتنا التعليمية المجانية</h2>
+                <p>اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث</p>
             </div>
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card glass">
-                    <img src="https://images.unsplash.com/photo-1585487000113-7bf7a7c4d2d3?auto=format&fit=crop&w=500&q=80" alt="فستان سهرة" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">فستان سهرة</h3>
-                        <div class="product-price">350 ر.س</div>
-                        <p class="product-desc">فستان أنيق للسهرات والحفلات، مصمم من أجود الخامات وبأحدث الصيحات.</p>
-                        <button class="btn-whatsapp" data-product="فستان سهرة">
-                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-                        </button>
+            <div class="courses-grid">
+                <!-- Course 1 - TOT -->
+                <div class="course-card glass">
+                    <iframe class="course-video" src="https://www.youtube.com/embed/9qmcG3o7w10" title="دورة TOT" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة مدرب مدربين (TOT) <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor">د. أحمد محمد</div>
+                        <p class="course-desc">تعلم كيفية تصميم وتقديم برامج تدريبية فعالة، وإدارة جلسات التدريب، وتطوير مهاراتك كمدرب محترف. هذه السلسلة الكاملة تغطي جميع جوانب التدريب والتطوير.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 40 ساعة</span>
+                            <span><i class="far fa-user"></i> 250 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
                     </div>
                 </div>
                 
-                <!-- Product 2 -->
-                <div class="product-card glass">
-                    <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=500&q=80" alt="تنورة كلاسيكية" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">تنورة كلاسيكية</h3>
-                        <div class="product-price">280 ر.س</div>
-                        <p class="product-desc">تنورة أنيقة بتصميم كلاسيكي، مناسبة للارتداء اليومي أو في المناسبات.</p>
-                        <button class="btn-whatsapp" data-product="تنورة كلاسيكية">
-                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-                        </button>
+                <!-- Course 2 - Leadership -->
+                <div class="course-card glass">
+                    <iframe class="course-video" src="https://www.youtube.com/embed/l6bmTJ7qQ5s" title="دورة القيادة" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة القيادة والإدارة المتقدمة <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor">د. خالد الحربي</div>
+                        <p class="course-desc">طور مهاراتك القيادية وتعلم كيفية إدارة الفرق بفعالية، واتخاذ القرارات الاستراتيجية، وتحقيق الأهداف التنظيمية. سلسلة شاملة عن فنون القيادة الحديثة.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 32 ساعة</span>
+                            <span><i class="far fa-user"></i> 320 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
                     </div>
                 </div>
                 
-                <!-- Product 3 -->
-                <div class="product-card glass">
-                    <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=500&q=80" alt="زفاف فاخر" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">زفاف فاخر</h3>
-                        <div class="product-price">420 ر.س</div>
-                        <p class="product-desc">فستان زفاف فاخر بتصميم ملكي، مثالي لحفلات الزفاف والمناسبات الخاصة.</p>
-                        <button class="btn-whatsapp" data-product="زفاف فاخر">
-                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-                        </button>
+                <!-- Course 3 - HR -->
+                <div class="course-card glass">
+                    <iframe class="course-video" src="https://www.youtube.com/embed/5MgBikgcWnY" title="دورة HR" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة إدارة الموارد البشرية (HR) <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor">أ. سارة عبدالله</div>
+                        <p class="course-desc">اكتشف أحدث استراتيجيات إدارة الموارد البشرية وتعلم كيفية تطوير بيئة عمل مثالية وتحسين أداء الموظفين. دورة متكاملة في إدارة المواهب والتطوير التنظيمي.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 36 ساعة</span>
+                            <span><i class="far fa-user"></i> 180 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
                     </div>
                 </div>
+
+                <!-- Course 4 - Business Development -->
+                <div class="course-card glass">
+                    <iframe class="course-video" src="https://www.youtube.com/embed/6ILQrUrEWe8" title="دورة تطوير الأعمال" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة تطوير الأعمال والتسويق <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor">د. محمد السيد</div>
+                        <p class="course-desc">تعلم استراتيجيات تطوير الأعمال والتسويق الفعالة، وكيفية بناء علامة تجارية ناجحة وجذب العملاء. دورة متكاملة في ريادة الأعمال والتسويق الرقمي.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 28 ساعة</span>
+                            <span><i class="far fa-user"></i> 210 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
+                    </div>
+                </div>
+
+                <!-- Course 5 - Communication Skills -->
+                <div class="course-card glass">
+                    <iframe class="course-video" src="https://www.youtube.com/embed/HAnw168huqA" title="دورة مهارات التواصل" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة مهارات التواصل الفعال <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor">أ. منى أحمد</div>
+                        <p class="course-desc">اكتسب مهارات التواصل الفعال مع الآخرين، وتعلم فنون الإلقاء والعرض، وكيفية التأثير والإقناع. دورة متخصصة في تطوير المهارات الشخصية والمهنية.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 24 ساعة</span>
+                            <span><i class="far fa-user"></i> 290 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
+                    </div>
+                </div>
+
+                <!-- Course 6 - Project Management -->
+                <div class="course-card glass">
+                    <iframe class="course-video" src="https://www.youtube.com/embed/9LSnINglkQA" title="دورة إدارة المشاريع" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="course-info">
+                        <h3 class="course-title">دورة إدارة المشاريع الاحترافية <span class="free-badge">مجاني</span></h3>
+                        <div class="course-free-note">
+                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
+                        </div>
+                        <div class="course-instructor">د. ياسر القحطاني</div>
+                        <p class="course-desc">تعلم أساسيات إدارة المشاريع باستخدام منهجيات عالمية مثل PMP و Agile. اكتسب المهارات اللازمة لإدارة المشاريع بنجاح وتحقيق الأهداف المطلوبة.</p>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> 38 ساعة</span>
+                            <span><i class="far fa-user"></i> 175 طالب</span>
+                        </div>
+                        <div class="course-certificate-note">
+                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
+                        </div>
+                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-title">
+                <h2>كيفية الحصول على الدورة والشهادة</h2>
+                <p>اتبع هذه الخطوات البسيطة للحصول على دورتك المجانية وشهادتك المعتمدة</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step glass">
+                    <div class="step-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>الخطوة 1: تواصل معنا عبر واتساب</h3>
+                    <p>ارسل رسالة على واتساب تخبرنا فيها بالدورة التي ترغب في الالتحاق بها</p>
+                </div>
                 
-                <!-- Product 4 -->
-                <div class="product-card glass">
-                    <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=500&q=80" alt="فستان يومي" class="product-img">
-                    <div class="product-info">
-                        <h3 class="product-title">فستان يومي</h3>
-                        <div class="product-price">220 ر.س</div>
-                        <p class="product-desc">فستان مريح للارتداء اليومي، مصنوع من خامات عالية الجودة.</p>
-                        <button class="btn-whatsapp" data-product="فستان يومي">
-                            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-                        </button>
+                <div class="process-step glass">
+                    <div class="step-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>الخطوة 2: احصل على مواد الدورة</h3>
+                    <p>سنرسل لك رابط الدورة كاملة مع جميع الفيديوهات والمواد التعليمية</p>
+                </div>
+                
+                <div class="process-step glass">
+                    <div class="step-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>الخطوة 3: اختبر معلوماتك</h3>
+                    <p>بعد إكمال الدورة، ستخضع لامتحان قصير لقياس مدى استفادتك من المحتوى</p>
+                </div>
+                
+                <div class="process-step glass">
+                    <div class="step-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>الخطوة 4: احصل على شهادتك</h3>
+                    <p>بعد اجتياز الامتحان، سنرسل لك شهادتك المعتمدة عبر البريد الإلكتروني</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificate Template -->
+    <section class="certificate-template" id="certificate">
+        <div class="container">
+            <div class="section-title">
+                <h2>نموذج الشهادة المعتمدة</h2>
+                <p>شهادة معتمدة من 2030Elearning تثبت إنجازك في الدورة التدريبية</p>
+            </div>
+            <div class="certificate">
+                <div class="certificate-watermark">2030Elearning</div>
+                <div class="certificate-header">
+                    <div class="certificate-logo">2030Elearning</div>
+                    <h2>شهادة إتمام الدورة التدريبية</h2>
+                </div>
+                <div class="certificate-body">
+                    <h3 class="certificate-title">شهادة مدرب مدربين (TOT)</h3>
+                    <p class="certificate-text">تهنئ منصة 2030Elearning</p>
+                    <h2>أحمد محمد</h2>
+                    <p class="certificate-text">لإتمامه بنجاح دورة مدرب مدربين (TOT) والتي استمرت لمدة 40 ساعة تدريبية</p>
+                    <p class="certificate-text">بتاريخ 15 نوفمبر 2023</p>
+                    <p class="certificate-text">رقم الشهادة: TOT-2023-12345</p>
+                    
+                    <div class="certificate-signature">
+                        <div class="signature">
+                            <p>CEO</p>
+                            <div class="signature-line"></div>
+                            <p class="signature-name">Ahmed Abdoelkreem</p>
+                        </div>
+                        <div class="signature">
+                            <p>مدير التدريب</p>
+                            <div class="signature-line"></div>
+                            <p class="signature-name">أ. سارة عبدالله</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1002,15 +1159,19 @@
         <div class="container">
             <div class="section-title">
                 <h2>تواصل معنا</h2>
-                <p>يسعدنا تواصلكم معنا لأي استفسار أو طلب</p>
+                <p>يسعدنا تواصلكم معنا لأي استفسار حول الدورات أو الشهادات</p>
             </div>
             <div class="contact-container">
                 <div class="contact-info glass" style="padding: 2rem;">
                     <h3>معلومات الاتصال</h3>
                     <p><i class="fas fa-map-marker-alt"></i> العنوان: الرياض، المملكة العربية السعودية</p>
                     <p><i class="fas fa-phone"></i> الهاتف: +966 123 456 789</p>
-                    <p><i class="fas fa-envelope"></i> البريد الإلكتروني: info@fanzstore.com</p>
+                    <p><i class="fas fa-envelope"></i> البريد الإلكتروني: info@2030elearning.com</p>
                     <p><i class="fas fa-clock"></i> أوقات العمل: من الأحد إلى الخميس، 9 صباحاً - 6 مساءً</p>
+                    
+                    <button class="btn btn-whatsapp contact-whatsapp" style="margin-top: 2rem;">
+                        <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
+                    </button>
                 </div>
                 <div class="contact-form glass" style="padding: 2rem;">
                     <h3>أرسل رسالة</h3>
@@ -1026,62 +1187,43 @@
         </div>
     </section>
 
-    <!-- Designer Section -->
-    <section class="designer">
-        <div class="container">
-            <div class="designer-content">
-                <h3>هل تحتاج إلى متجر إلكتروني مميز؟</h3>
-                <p>أنا مصمم متاجر إلكترونية محترف، يمكنني تصميم متجرك الإلكتروني بتصميم عصري وجذاب يناسب علامتك التجارية.</p>
-                <div class="designer-social">
-                    <a href="https://wa.me/966123456789" target="_blank">
-                        <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
-                    </a>
-                    <a href="https://instagram.com/yourprofile" target="_blank">
-                        <i class="fab fa-instagram"></i> تابعنا على انستغرام
-                    </a>
-                    <a href="https://facebook.com/yourpage" target="_blank">
-                        <i class="fab fa-facebook"></i> تابعنا على فيسبوك
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>FANZ STORE</h3>
-                    <p>وجهتك الأولى للأزياء النسائية العصرية بجودة عالية وأسعار مناسبة.</p>
+                    <h3>2030Elearning</h3>
+                    <p>منصة التعلم الإلكتروني الرائدة في تقديم دورات تدريبية متخصصة وشهادات معتمدة.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-snapchat"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
                     <h3>روابط سريعة</h3>
                     <ul class="footer-links">
                         <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#products">المنتجات</a></li>
-                        <li><a href="#contact">التواصل</a></li>
-                        <li><a href="#">شروط الاستخدام</a></li>
+                        <li><a href="#courses">الدورات</a></li>
+                        <li><a href="#process">كيفية الاشتراك</a></li>
+                        <li><a href="#certificate">الشهادات</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>خدمة العملاء</h3>
+                    <h3>الدورات</h3>
                     <ul class="footer-links">
-                        <li><a href="#">سياسة الخصوصية</a></li>
-                        <li><a href="#">سياسة الإرجاع</a></li>
-                        <li><a href="#">الأسئلة الشائعة</a></li>
-                        <li><a href="#">دليل المقاسات</a></li>
+                        <li><a href="#">مدرب مدربين (TOT)</a></li>
+                        <li><a href="#">القيادة والإدارة</a></li>
+                        <li><a href="#">إدارة الموارد البشرية</a></li>
+                        <li><a href="#">تطوير الأعمال</a></li>
+                        <li><a href="#">مهارات التواصل</a></li>
+                        <li><a href="#">إدارة المشاريع</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>جميع الحقوق محفوظة &copy; 2023 FANZ STORE</p>
+                <p>جميع الحقوق محفوظة &copy; 2023 2030Elearning</p>
             </div>
         </div>
     </footer>
@@ -1138,116 +1280,25 @@
             });
         });
 
-        // WhatsApp ordering functionality
+        // WhatsApp functionality
+        function openWhatsApp() {
+            const phoneNumber = "966123456789"; // استبدل برقم الهاتف الفعلي
+            const message = `مرحباً، أنا مهتم بالدورات التدريبية المجانية على منصة 2030Elearning. أود الحصول على مزيد من المعلومات.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Add WhatsApp functionality to all WhatsApp buttons
         document.querySelectorAll('.btn-whatsapp').forEach(button => {
-            button.addEventListener('click', function() {
-                const productName = this.getAttribute('data-product');
-                const phoneNumber = "966123456789"; // استبدل برقم الهاتف الفعلي
-                const message = `مرحباً، أنا مهتمة بشراء ${productName} من متجر FANZ STORE. هل يمكنكم مساعدتي؟`;
-                const encodedMessage = encodeURIComponent(message);
-                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-                
-                window.open(whatsappURL, '_blank');
-            });
+            button.addEventListener('click', openWhatsApp);
         });
 
-        // Hero Slider
-        const slider = document.querySelector('.slider');
-        const slides = document.querySelectorAll('.slide');
-        const dotsContainer = document.querySelector('.slider-dots');
-        
-        let currentSlide = 0;
-        let slideInterval;
-        
-        // إنشاء النقاط
-        slides.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(index));
-            dotsContainer.appendChild(dot);
+        // Add WhatsApp functionality to all contact buttons
+        document.querySelectorAll('.contact-whatsapp').forEach(button => {
+            button.addEventListener('click', openWhatsApp);
         });
-        
-        const dots = document.querySelectorAll('.dot');
-        
-        // الانتقال لشريحة محددة
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateSlider();
-        }
-        
-        // تحديث السلايدر
-        function updateSlider() {
-            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            // تحديث النقاط النشطة
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-        }
-        
-        // الشريحة التالية
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlider();
-        }
-        
-        // بدء التشغيل التلقائي
-        function startSlideShow() {
-            slideInterval = setInterval(nextSlide, 3000); // تغيير كل 3 ثواني
-        }
-        
-        // إيقاف التشغيل التلقائي
-        function stopSlideShow() {
-            clearInterval(slideInterval);
-        }
-        
-        // بدء التشغيل التلقائي عند تحميل الصفحة
-        startSlideShow();
-        
-        // إيقاف التشغيل التلقائي عند التمرير فوق السلايدر
-        slider.addEventListener('mouseenter', stopSlideShow);
-        slider.addEventListener('mouseleave', startSlideShow);
-
-        // Color Picker
-        const colorOptions = document.querySelectorAll('.color-option');
-        
-        colorOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                const theme = this.getAttribute('data-theme');
-                
-                // إزالة النشط من جميع الخيارات
-                colorOptions.forEach(opt => opt.classList.remove('active'));
-                // إضافة النشط للخيار المحدد
-                this.classList.add('active');
-                
-                // تغيير الألوان بناءً على الثيم المختار
-                changeTheme(theme);
-            });
-        });
-
-        function changeTheme(theme) {
-            const root = document.documentElement;
-            
-            switch(theme) {
-                case 'pink':
-                    root.style.setProperty('--accent', '#e91e63');
-                    root.style.setProperty('--bg-color', '#f5f7fa');
-                    break;
-                case 'blue':
-                    root.style.setProperty('--accent', '#1976d2');
-                    root.style.setProperty('--bg-color', '#e3f2fd');
-                    break;
-                case 'brown':
-                    root.style.setProperty('--accent', '#5d4037');
-                    root.style.setProperty('--bg-color', '#f5e6d3');
-                    break;
-                case 'black':
-                    root.style.setProperty('--accent', '#212121');
-                    root.style.setProperty('--bg-color', '#cfd8dc');
-                    break;
-            }
-        }
 
         // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
@@ -1256,12 +1307,15 @@
             this.reset();
         });
 
-        // زر تسوق الآن ينقل إلى قسم المنتجات
-        document.getElementById('shopNowBtn').addEventListener('click', function() {
-            document.querySelector('#products').scrollIntoView({
+        // Contact button in logo section
+        document.querySelector('.logo-section .btn-primary').addEventListener('click', function() {
+            document.querySelector('#contact').scrollIntoView({
                 behavior: 'smooth'
             });
         });
+
+        // Main CTA button
+        document.querySelector('.hero-buttons .btn-primary').addEventListener('click', openWhatsApp);
     </script>
 </body>
 </html>
