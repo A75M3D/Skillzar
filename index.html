@@ -2,16 +2,31 @@
 <html lang="ar" dir="rtl">
 <head>
     <!-- PWA Manifest -->
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2196F3">
 
 <!-- iOS Support -->
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="b.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <!-- Android Support -->
 <meta name="mobile-web-app-capable" content="yes">
+
+<!-- Service Worker -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('sw.js')
+        .then(function(registration) {
+          console.log('SW registered: ', registration);
+        })
+        .catch(function(error) {
+          console.log('SW registration failed: ', error);
+        });
+    });
+  }
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2030Elearning - منصة التعلم الإلكتروني</title>
@@ -1322,19 +1337,5 @@
         // Main CTA button
         document.querySelector('.hero-buttons .btn-primary').addEventListener('click', openWhatsApp);
     </script>
-   <script>
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js')
-      .then(function(registration) {
-        console.log('SW registered: ', registration);
-      })
-      .catch(function(error) {
-        console.log('SW registration failed: ', error);
-      });
-  });
-}
-</script> 
 </body>
 </html>
