@@ -5,7 +5,609 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skillzoy Academy - منصة التعلم الإلكتروني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-blue: #1a2a6c;
+            --secondary-blue: #2a3a7c;
+            --accent-blue: #3a4a8c;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #e0f7fa;
+            --text-secondary: #b2ebf2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(26, 42, 108, 0.85), rgba(42, 58, 124, 0.9)), 
+                        url('https://dl.dropbox.com/scl/fi/zisw2hveqb9yeky4gi37x/Picsart_25-09-27_12-30-45-516.jpg?rlkey=wwtaq4fqowd5ogx05srfpi9fb&st=2dvntcaf& raw=1?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* تأثيرات الخلفية الإضافية */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 15s infinite linear;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .circle-3 {
+            width: 250px;
+            height: 250px;
+            bottom: 10%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        /* تصميم الزجاجي */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(26, 42, 108, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: rgba(77, 208, 225, 0.3);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: rgba(77, 208, 225, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hero-video-container {
+            padding: 20px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Sections Common Styles */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Courses Section */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            padding: 0;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .course-info {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .free-badge {
+            background: #25D366;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .course-free-note {
+            background: rgba(37, 211, 102, 0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .course-instructor {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .course-desc {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .course-certificate-note {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Process Section */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .process-step {
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(77, 208, 225, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+
+        .process-step h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Certificate Section */
+        .certificate {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .certificate-image {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .certificate-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .contact-info, .contact-form {
+            padding: 30px;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 12px 15px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(77, 208, 225, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: var(--primary-blue);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 80px 30px 30px;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+        }
+
+        .mobile-nav ul li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav .btn {
+            display: block;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav, .header-actions {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .logo-section {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- تأثيرات الخلفية -->
@@ -26,7 +628,7 @@
                         </div>
                         <span>Skillzoy Academy</span>
                     </a>
-                    <button class="btn btn-primary contact-whatsapp">تواصل معنا</button>
+                    
                 </div>
 
                 <nav>
@@ -82,12 +684,6 @@
                 </div>
                 <div class="hero-video-container glass">
                     <div class="video-wrapper">
-                        <!-- 
-                            كيفية إضافة فيديو جديد:
-                            1. احصل على رابط YouTube للفيديو
-                            2. استبدل VIDEO_ID بمعرف الفيديو
-                            3. الصيغة الصحيحة: https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1&autoplay=0
-                        -->
                         <iframe src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" 
                                 title="مقدمة عن Skillzoy Academy" 
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -110,12 +706,6 @@
                 <!-- دورة 1: TOT -->
                 <div class="course-card glass">
                     <div class="video-wrapper">
-                        <!-- 
-                            مثال: إضافة فيديو جديد
-                            الخطوات:
-                            1. احصل على معرف الفيديو من YouTube (مثال: WJw8Ql0pYag)
-                            2. استخدم الصيغة الصحيحة أدناه
-                        -->
                         <iframe class="course-video" 
                                 src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" 
                                 title="دورة TOT" 
@@ -144,7 +734,6 @@
                 <!-- دورة 2: القيادة -->
                 <div class="course-card glass">
                     <div class="video-wrapper">
-                        <!-- مثال لفيديو جديد - استبدل VIDEO_ID بمعرف الفيديو الحقيقي -->
                         <iframe class="course-video" 
                                 src="https://www.youtube.com/embed/xNY0AAUtH3g?rel=0&modestbranding=1&autoplay=0" 
                                 title="دورة القيادة" 
@@ -170,11 +759,9 @@
                     </div>
                 </div>
 
-      
-                <!-- دورة 2: القيادة -->
+                <!-- دورة 3: leadership -->
                 <div class="course-card glass">
                     <div class="video-wrapper">
-                        <!-- مثال لفيديو جديد - استبدل VIDEO_ID بمعرف الفيديو الحقيقي -->
                         <iframe class="course-video" 
                                 src="https://www.youtube.com/embed/PC3005GGYtA?rel=0&modestbranding=1&autoplay=0" 
                                 title="دورة القيادة" 
@@ -199,23 +786,10 @@
                         <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
                     </div>
                 </div>
-
-
-                <!-- يمكنك إضافة المزيد من الدورات هنا بنفس الطريقة -->
-                <!-- دورة جديدة - اضف هذا الكود في قسم الدورات -->
-                
-                
-                
-                
-                
-                
-                
-
             </div>
         </div>
     </section>
 
-    <!-- باقي أقسام الموقع -->
     <!-- Process Section -->
     <section class="process" id="process">
         <div class="container">
@@ -267,32 +841,8 @@
                 <p>شهادة معتمدة من Skillzoy Academy تثبت إنجازك في الدورة التدريبية</p>
             </div>
             <div class="certificate">
-                <div class="certificate-watermark">Skillzoy Academy</div>
-                <div class="certificate-header">
-                    <div class="certificate-logo">Skillzoy Academy</div>
-                    <h2>شهادة إتمام الدورة التدريبية</h2>
-                </div>
-                <div class="certificate-body">
-                    <h3 class="certificate-title">شهادة مدرب مدربين (TOT)</h3>
-                    <p class="certificate-text">تهنئ منصة Skillzoy Academy</p>
-                    <h2>أحمد محمد</h2>
-                    <p class="certificate-text">لإتمامه بنجاح دورة مدرب مدربين (TOT) والتي استمرت لمدة 40 ساعة تدريبية</p>
-                    <p class="certificate-text">بتاريخ 15 نوفمبر 2023</p>
-                    <p class="certificate-text">رقم الشهادة: TOT-2023-12345</p>
-                    
-                    <div class="certificate-signature">
-                        <div class="signature">
-                            <p>CEO</p>
-                            <div class="signature-line"></div>
-                            <p class="signature-name">Ahmed Abdoelkreem</p>
-                        </div>
-                        <div class="signature">
-                            <p>مدير التدريب</p>
-                            <div class="signature-line"></div>
-                            <p class="signature-name">أ. سارة عبدالله</p>
-                        </div>
-                    </div>
-                </div>
+                <img src="https://dl.dropbox.com/scl/fi/8qp2k21gy5um5gelp3iq2/Blue-Grey-Modern-Gradient-Certificate-of-Completion_20250927_110652_.png?rlkey=gadbixsqdabfsymguk6bv8ua8&st=dl6zl89j&raw=1?auto=format&fit=crop&w=800&q=100" 
+                     alt="نموذج شهادة Skillzoy Academy" class="certificate-image glass">
             </div>
         </div>
     </section>
@@ -305,7 +855,7 @@
                 <p>يسعدنا تواصلكم معنا لأي استفسار حول الدورات أو الشهادات</p>
             </div>
             <div class="contact-container">
-                <div class="contact-info glass" style="padding: 2rem;">
+                <div class="contact-info glass">
                     <h3>معلومات الاتصال</h3>
                     <p><i class="fas fa-map-marker-alt"></i> العنوان: الرياض، المملكة العربية السعودية</p>
                     <p><i class="fas fa-phone"></i> الهاتف: +966 123 456 789</p>
@@ -316,7 +866,7 @@
                         <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
                     </button>
                 </div>
-                <div class="contact-form glass" style="padding: 2rem;">
+                <div class="contact-form glass">
                     <h3>أرسل رسالة</h3>
                     <form id="contactForm">
                         <input type="text" placeholder="اسمك" required>
@@ -372,6 +922,92 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const closeMenuBtn = document.querySelector('.close-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+            });
+            
+            closeMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+            });
+            
+            // Close mobile menu when clicking on a link
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                });
+            });
+            
+            // WhatsApp buttons functionality
+            const whatsappButtons = document.querySelectorAll('.contact-whatsapp, .btn-whatsapp');
+            whatsappButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const phoneNumber = "966123456789";
+                    const message = "مرحباً، أرغب في الاستفسار عن دورات Skillzoy Academy";
+                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappURL, '_blank');
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('شكراً لتواصلكم معنا! سنرد على رسالتكم في أقرب وقت ممكن.');
+                    contactForm.reset();
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Add animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements for animation
+            const animatedElements = document.querySelectorAll('.course-card, .process-step, .section-title');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
 </html>
