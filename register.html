@@ -995,105 +995,80 @@ function validateStep1() {
       // إزالة علامات HTML الأساسية للوقاية من XSS
       return input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
+// ===== إنشاء حساب آمن =====
+async function handleSecureSignup(e) {
+  e.preventDefault();
 
-    // ===== إنشاء حساب آمن =====
-    async function handleSecureSignup(e) {
-      e.preventDefault();
+  // ... (الكود السابق نفسه حتى part 4)
 
-      // 1. التحقق من الموافقة على الشروط
-      if (!elements.agreeTerms.checked) {
-        showAlert('يجب الموافقة على شروط الاستخدام وسياسة الخصوصية', 'error');
-        return;
+  // 4. إنشاء الحساب في Supabase
+  showLoading(true);
+
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          full_name: fullName,
+          username: userName,
+          phone: phone,
+          newsletter_subscription: newsletter
+        }
       }
+    });
 
-      // 2. تنظيف المدخلات
-      const fullName = sanitizeInput(elements.fullName.value.trim());
-      const userName = sanitizeInput(elements.userName.value.trim());
-      const email = sanitizeInput(elements.email.value.trim());
-      const phone = sanitizeInput(elements.phone.value.trim());
-      const password = elements.password.value;
-      const newsletter = elements.newsletter.checked;
+    if (error) {
+      handleSignupError(error);
+      return;
+    }
 
-      // 3. التحقق من صحة البيانات
-      if (!fullName || !userName || !email || !password) {
-        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
-        return;
-      }
-
-      if (password.length < 8) {
-        showAlert('كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل', 'error');
-        return;
-      }
-
-      if (password !== elements.confirmPassword.value) {
-        showAlert('كلمتا المرور غير متطابقتين', 'error');
-        return;
-      }
-
-      // 4. التحقق من reCAPTCHA
-      try {
-        const recaptchaToken = await grecaptcha.execute('6LcC3cApAAAAAKLk9w6QJj8e6d6a6X6a6X6a6X6a', { action: 'signup' });
-        // يمكن إرسال التوكن للخادم للتحقق منه
-      } catch (err) {
-        showAlert('فشل التحقق من الأمان. حاول تحديث الصفحة.', 'error');
-        return;
-      }
-
-      // 5. إنشاء الحساب في Supabase
-      showLoading(true);
-
-      try {
-        const { data, error } = await supabase.auth.signUp({
-          email: email,
-          password: password,
-          options: {
-            data: {
-              full_name: fullName,
-              username: userName,
-              phone: phone,
-              newsletter_subscription: newsletter
-            }
-          }
+    // ✅ ✅ ✅ الكود المضاف - مخصص لحقولك ✅ ✅ ✅
+    if (data.user) {
+      // إدراج البيانات في جدول user_profiles باستخدام الحقول الفعلية
+      const { error: profileError } = await supabase
+        .from('user_profiles')
+        .insert({
+          user_id: data.user.id,      // الربط مع authentication
+          email: email,               // البريد الإلكتروني
+          phone: phone,               // رقم الهاتف
+          full_name: fullName,        // الاسم الكامل
+          username: userName,         // اسم المستخدم
+          // id سيتم توليده تلقائياً (auto-increment)
+          // إذا كنت تحتاج حفظ newsletter_subscription أضف العمود أولاً
         });
 
-        if (error) {
-          handleSignupError(error);
-          return;
-        }
-
-        // 6. نجاح إنشاء الحساب
-        showAlert('تم إنشاء حسابك بنجاح! يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.', 'success');
+      if (profileError) {
+        console.error('Error creating profile:', profileError);
         
-        setTimeout(() => {
-          window.location.href = 'login.html';
-        }, 3000);
-
-      } catch (err) {
-        console.error('Exception:', err);
-        showAlert('خطأ غير متوقع. يرجى المحاولة لاحقًا.', 'error');
-      } finally {
-        showLoading(false);
+        // معالجة أخطاء محددة
+        if (profileError.code === '23505') { // duplicate key
+          showAlert('اسم المستخدم أو البريد الإلكتروني مسجل مسبقاً', 'error');
+        } else {
+          showAlert('تم إنشاء الحساب ولكن حدث خطأ في حفظ البيانات الإضافية', 'warning');
+        }
       }
     }
 
-    // ===== معالجة أخطاء إنشاء الحساب =====
-    function handleSignupError(error) {
-      let message = 'حدث خطأ أثناء إنشاء الحساب';
-      
-      // تحسين عرض رسائل الخطأ
-      if (error.message && error.message.includes('already registered')) {
-        message = 'هذا البريد الإلكتروني مسجل بالفعل. حاول تسجيل الدخول بدلاً من ذلك.';
-      } else if (error.message && error.message.includes('Invalid email')) {
-        message = 'صيغة البريد الإلكتروني غير صحيحة';
-      } else if (error.message && error.message.includes('Weak password')) {
-        message = 'كلمة المرور ضعيفة جداً. يرجى اختيار كلمة مرور أقوى';
-      } else {
-        message = error.message || 'حدث خطأ غير متوقع في الخادم';
-      }
-      
-      showAlert(message, 'error');
+    // 5. معالجة النجاح
+    if (data.user && data.user.identities && data.user.identities.length === 0) {
+      showAlert('هذا البريد الإلكتروني مسجل مسبقاً', 'error');
+      return;
     }
 
+    showAlert('تم إنشاء حسابك بنجاح! يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب.', 'success');
+    
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 3000);
+
+  } catch (err) {
+    console.error('Exception:', err);
+    showAlert('خطأ غير متوقع. يرجى المحاولة لاحقًا.', 'error');
+  } finally {
+    showLoading(false);
+  }
+}
     // ===== وظائف مساعدة =====
     function showAlert(message, type) {
       const icon = type === 'error' ? '⛔' : type === 'warning' ? '⚠️' : '✅';
