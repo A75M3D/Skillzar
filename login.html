@@ -608,22 +608,26 @@
         }
 
         // ===== تسجيل الدخول باستخدام Google =====
-        async function handleGoogleLogin() {
-            try {
-                const { data, error } = await supabase.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: {
-                        redirectTo: window.location.origin + '/dashboard.html'
-                    }
-                });
-                
-                if (error) throw error;
-                
-            } catch (error) {
-                console.error('Google login error:', error);
-                showAlert('حدث خطأ أثناء تسجيل الدخول بـ Google', 'error');
+        // ===== تسجيل الدخول باستخدام Google =====
+async function handleGoogleLogin() {
+    try {
+        // ✅ عدّل هذا السطر فقط
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                // استخدم الرابط الكامل لصفحتك بعد التسجيل
+                redirectTo: 'https://skillzoy-academy.com/dashboard.html'
             }
-        }
+        });
+        
+        if (error) throw error;
+        
+    } catch (error) {
+        console.error('Google login error:', error);
+        showAlert('حدث خطأ أثناء تسجيل الدخول بـ Google', 'error');
+    }
+}
+            
 
         // ===== تنظيف المدخلات =====
         function sanitizeInput(input) {
