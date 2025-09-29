@@ -1,1 +1,6 @@
 /*    /index.html    200
+/dashboard    /public/dashboard.html  200
+/login    /public/login.html  200
+/register    /public/register.html  200
+/admin    /public/admina.html  200
+/admin    /public/home.html  200
