@@ -5,3 +5,28 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/public/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/public/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/register"
+  to = "/public/register.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/public/admina.html"
+  status = 200
+
+  [[redirects]]
+  from = "/home"
+  to = "/public/home.html"
+  status = 200
