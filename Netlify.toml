@@ -1,4 +1,2 @@
-git rm netlify.toml
-git add netlify.toml
-git commit -m "Fix netlify.toml configuration"
-git push
+[build]
+  publish = "public"
