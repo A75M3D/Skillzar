@@ -8,22 +8,17 @@
 
 [[redirects]]
   from = "/dashboard"
-  to = "/public/dashboard.html"
+  to = "/dashboard.html"
   status = 200
 
 [[redirects]]
   from = "/login"
-  to = "/public/login.html"
+  to = "/login.html"
   status = 200
 
 [[redirects]]
   from = "/register"
-  to = "/public/register.html"
-  status = 200
-
-[[redirects]]
-  from = "/admin"
-  to = "/public/admina.html"
+  to = "/register.html"
   status = 200
 
   [[redirects]]
