@@ -631,6 +631,116 @@
             border: none;
         }
 
+        /* Course Details Page */
+        .course-details {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .course-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .course-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .course-header p {
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .course-meta-details {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .course-content-section {
+            padding: 30px;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-item {
+            background: #f8fafc;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .video-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .back-to-courses {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
         /* Responsive Design */
         @media (max-width: 992px) {
             .sidebar {
@@ -670,6 +780,10 @@
             .course-actions {
                 flex-direction: column;
             }
+            
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 576px) {
@@ -686,6 +800,11 @@
             .header-actions {
                 width: 100%;
                 justify-content: space-between;
+            }
+            
+            .course-meta-details {
+                flex-direction: column;
+                gap: 10px;
             }
         }
     </style>
@@ -845,6 +964,41 @@
         </div>
     </div>
 
+    <!-- Course Details Page (Hidden by default) -->
+    <div class="course-details" id="course-details" style="display: none;">
+        <div class="course-header">
+            <a href="#" class="back-to-courses" id="back-to-courses">
+                <i class="fas fa-arrow-right"></i> العودة للدورات
+            </a>
+            <h1 id="course-details-title">دورة مدرب مدربين (TOT)</h1>
+            <p id="course-details-description">تعلم كيفية تصميم وتقديم برامج تدريبية فعالة، وإدارة جلسات التدريب، وتطوير مهاراتك كمدرب محترف</p>
+            <div class="course-meta-details">
+                <div class="meta-item">
+                    <i class="far fa-clock"></i>
+                    <span id="course-total-duration">40 ساعة</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-signal"></i>
+                    <span id="course-level">متقدم</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-user-tie"></i>
+                    <span id="course-instructor">د. أحمد محمد</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-play-circle"></i>
+                    <span id="course-videos-count">10 فيديوهات</span>
+                </div>
+            </div>
+        </div>
+        <div class="course-content-section">
+            <h3>فيديوهات الدورة</h3>
+            <div class="videos-grid" id="course-videos-container">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
     <script>
         // نظام إدارة الحالة
         class AppState {
@@ -863,14 +1017,26 @@
                             title: "دورة مدرب مدربين (TOT)",
                             category: "تطوير الذات",
                             instructor: "د. أحمد محمد",
-                            instructorAvatar: "https://ui-avatars.com/api/?name=أحمد+محمد&background=3a0ca3&color=fff",
+                            instructorAvatar: "https://ui-avatars.com/api/?name=أحmed+محمد&background=3a0ca3&color=fff",
                             youtubeId: "7Ok6J0CURvc",
                             progress: 80,
                             completedLessons: 8,
                             totalLessons: 10,
                             status: "in-progress",
                             duration: "40 ساعة",
-                            level: "متقدم"
+                            level: "متقدم",
+                            videos: [
+                                { id: 1, title: "مقدمة في التدريب", youtubeId: "7Ok6J0CURvc", duration: "15:30", watched: true },
+                                { id: 2, title: "أساليب التدريب الفعال", youtubeId: "xNY0AAUtH3g", duration: "22:15", watched: true },
+                                { id: 3, title: "إدارة جلسات التدريب", youtubeId: "PC3005GGYtA", duration: "18:45", watched: true },
+                                { id: 4, title: "تقييم المتدربين", youtubeId: "dQw4w9WgXcQ", duration: "25:10", watched: true },
+                                { id: 5, title: "التغذية الراجعة", youtubeId: "9bZkp7q19f0", duration: "20:05", watched: true },
+                                { id: 6, title: "التخطيط للتدريب", youtubeId: "kJQP7kiw5Fk", duration: "17:20", watched: true },
+                                { id: 7, title: "مهارات التواصل", youtubeId: "L_jWHffIx5E", duration: "19:30", watched: true },
+                                { id: 8, title: "التدريب العملي", youtubeId: "CevxZvSJLk8", duration: "28:45", watched: true },
+                                { id: 9, title: "التقييم النهائي", youtubeId: "fJ9rUzIMcZQ", duration: "16:15", watched: false },
+                                { id: 10, title: "خاتمة الدورة", youtubeId: "tgbNymZ7vqY", duration: "12:40", watched: false }
+                            ]
                         },
                         {
                             id: 2,
@@ -884,7 +1050,19 @@
                             totalLessons: 10,
                             status: "in-progress",
                             duration: "32 ساعة",
-                            level: "متوسط"
+                            level: "متوسط",
+                            videos: [
+                                { id: 1, title: "مقدمة في القيادة", youtubeId: "xNY0AAUtH3g", duration: "18:20", watched: true },
+                                { id: 2, title: "أنماط القيادة", youtubeId: "PC3005GGYtA", duration: "22:10", watched: true },
+                                { id: 3, title: "اتخاذ القرارات", youtubeId: "dQw4w9WgXcQ", duration: "25:45", watched: true },
+                                { id: 4, title: "إدارة الفرق", youtubeId: "9bZkp7q19f0", duration: "20:30", watched: true },
+                                { id: 5, title: "التواصل الفعال", youtubeId: "kJQP7kiw5Fk", duration: "19:15", watched: true },
+                                { id: 6, title: "حل النزاعات", youtubeId: "L_jWHffIx5E", duration: "21:40", watched: true },
+                                { id: 7, title: "التخطيط الاستراتيجي", youtubeId: "CevxZvSJLk8", duration: "24:20", watched: false },
+                                { id: 8, title: "إدارة التغيير", youtubeId: "fJ9rUzIMcZQ", duration: "23:10", watched: false },
+                                { id: 9, title: "قيادة الابتكار", youtubeId: "tgbNymZ7vqY", duration: "19:55", watched: false },
+                                { id: 10, title: "خاتمة الدورة", youtubeId: "7Ok6J0CURvc", duration: "16:25", watched: false }
+                            ]
                         },
                         {
                             id: 3,
@@ -898,11 +1076,24 @@
                             totalLessons: 10,
                             status: "in-progress",
                             duration: "45 ساعة",
-                            level: "متقدم"
+                            level: "متقدم",
+                            videos: [
+                                { id: 1, title: "مقدمة في إدارة المشاريع", youtubeId: "PC3005GGYtA", duration: "20:15", watched: true },
+                                { id: 2, title: "تخطيط المشاريع", youtubeId: "dQw4w9WgXcQ", duration: "25:30", watched: true },
+                                { id: 3, title: "إدارة المخاطر", youtubeId: "9bZkp7q19f0", duration: "22:45", watched: true },
+                                { id: 4, title: "إدارة الجودة", youtubeId: "kJQP7kiw5Fk", duration: "19:20", watched: false },
+                                { id: 5, title: "إدارة الموارد", youtubeId: "L_jWHffIx5E", duration: "24:10", watched: false },
+                                { id: 6, title: "مؤشرات الأداء", youtubeId: "CevxZvSJLk8", duration: "21:35", watched: false },
+                                { id: 7, title: "التسليم والختام", youtubeId: "fJ9rUzIMcZQ", duration: "18:50", watched: false },
+                                { id: 8, title: "دراسات حالة", youtubeId: "tgbNymZ7vqY", duration: "28:25", watched: false },
+                                { id: 9, title: "أدوات إدارة المشاريع", youtubeId: "7Ok6J0CURvc", duration: "23:40", watched: false },
+                                { id: 10, title: "خاتمة الدورة", youtubeId: "xNY0AAUtH3g", duration: "17:15", watched: false }
+                            ]
                         }
                     ],
                     activities: [],
-                    stats: {}
+                    stats: {},
+                    learningHours: 12
                 };
                 
                 this.listeners = [];
@@ -952,6 +1143,46 @@
                 }
             }
 
+            markVideoAsWatched(courseId, videoId) {
+                const course = this.state.courses.find(c => c.id === courseId);
+                if (course) {
+                    const video = course.videos.find(v => v.id === videoId);
+                    if (video && !video.watched) {
+                        video.watched = true;
+                        
+                        // تحديث تقدم الدورة
+                        const watchedVideos = course.videos.filter(v => v.watched).length;
+                        const progress = Math.round((watchedVideos / course.videos.length) * 100);
+                        const completedLessons = watchedVideos;
+                        
+                        this.updateCourse(courseId, { 
+                            progress: progress,
+                            completedLessons: completedLessons
+                        });
+
+                        // إضافة ساعات التعلم بناءً على مدة الفيديو
+                        const videoDuration = this.parseDuration(video.duration);
+                        this.state.learningHours += videoDuration / 60; // تحويل الدقائق إلى ساعات
+                        
+                        this.addActivity({
+                            type: "completed",
+                            title: `أكملت مشاهدة ${video.title}`,
+                            description: course.title,
+                            timestamp: new Date().toISOString()
+                        });
+                    }
+                }
+            }
+
+            parseDuration(duration) {
+                // تحويل مدة الفيديو من "MM:SS" إلى دقائق
+                const parts = duration.split(':');
+                if (parts.length === 2) {
+                    return parseInt(parts[0]) + (parseInt(parts[1]) / 60);
+                }
+                return 10; // قيمة افتراضية إذا فشل التحليل
+            }
+
             addActivity(activity) {
                 activity.id = Date.now();
                 activity.time = this.formatTime(new Date());
@@ -971,7 +1202,7 @@
                     completedCourses: this.state.courses.filter(c => c.status === "completed").length,
                     inProgressCourses: this.state.courses.filter(c => c.status === "in-progress").length,
                     totalProgress: 0,
-                    learningHours: 12
+                    learningHours: Math.round(this.state.learningHours)
                 };
 
                 if (this.state.courses.length > 0) {
@@ -1024,6 +1255,8 @@
         class UIManager {
             constructor() {
                 this.appState = new AppState();
+                this.currentView = 'dashboard'; // 'dashboard' or 'course-details'
+                this.currentCourseId = null;
                 this.init();
             }
 
@@ -1054,10 +1287,31 @@
             }
 
             render(state) {
+                if (this.currentView === 'dashboard') {
+                    this.renderDashboard(state);
+                } else if (this.currentView === 'course-details') {
+                    this.renderCourseDetails(state);
+                }
+            }
+
+            renderDashboard(state) {
+                document.querySelector('.main-content').style.display = 'block';
+                document.getElementById('course-details').style.display = 'none';
+                
                 this.renderUserProfile(state.user);
                 this.renderStats(state.stats);
                 this.renderCourses(state.courses);
                 this.renderActivities(state.activities);
+            }
+
+            renderCourseDetails(state) {
+                document.querySelector('.main-content').style.display = 'none';
+                document.getElementById('course-details').style.display = 'block';
+                
+                const course = state.courses.find(c => c.id === this.currentCourseId);
+                if (course) {
+                    this.renderCourseDetailsPage(course);
+                }
             }
 
             renderUserProfile(user) {
@@ -1104,8 +1358,8 @@
                                 <span>${course.completedLessons}/${course.totalLessons} دروس</span>
                             </div>
                             <div class="course-actions">
-                                <button class="btn btn-primary watch-video" data-youtube-id="${course.youtubeId}" data-course-title="${course.title}">
-                                    <i class="fas fa-play"></i> مشاهدة الفيديو
+                                <button class="btn btn-primary view-course-details" data-course-id="${course.id}">
+                                    <i class="fas fa-play"></i> عرض الدورة
                                 </button>
                                 <button class="btn btn-outline complete-lesson" data-course-id="${course.id}">
                                     <i class="fas fa-check"></i> إكمال الدرس
@@ -1116,6 +1370,40 @@
                 `).join('');
 
                 this.setupCourseEventListeners();
+            }
+
+            renderCourseDetailsPage(course) {
+                document.getElementById('course-details-title').textContent = course.title;
+                document.getElementById('course-details-description').textContent = `تعلم كيفية تصميم وتقديم برامج تدريبية فعالة، وإدارة جلسات التدريب، وتطوير مهاراتك كمدرب محترف`;
+                document.getElementById('course-total-duration').textContent = course.duration;
+                document.getElementById('course-level').textContent = course.level;
+                document.getElementById('course-instructor').textContent = course.instructor;
+                document.getElementById('course-videos-count').textContent = `${course.videos.length} فيديوهات`;
+
+                const videosContainer = document.getElementById('course-videos-container');
+                videosContainer.innerHTML = course.videos.map(video => `
+                    <div class="video-item ${video.watched ? 'watched' : ''}">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${video.title}">
+                            <span class="video-duration">${video.duration}</span>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-title">${video.title}</div>
+                            <div class="video-meta">
+                                <span>${video.watched ? 'تم المشاهدة' : 'لم يشاهد'}</span>
+                                <button class="btn btn-primary watch-video-btn" 
+                                        data-youtube-id="${video.youtubeId}" 
+                                        data-video-title="${video.title}"
+                                        data-course-id="${course.id}"
+                                        data-video-id="${video.id}">
+                                    ${video.watched ? 'إعادة المشاهدة' : 'مشاهدة'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                this.setupCourseDetailsEventListeners();
             }
 
             renderActivities(activities) {
@@ -1189,15 +1477,20 @@
                         modalVideo.src = modalVideo.src.replace('&autoplay=1', '');
                     }
                 });
+
+                // العودة للدورات
+                document.getElementById('back-to-courses').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showDashboard();
+                });
             }
 
             setupCourseEventListeners() {
-                // أزرار مشاهدة الفيديو
-                document.querySelectorAll('.watch-video').forEach(button => {
+                // أزرار عرض تفاصيل الدورة
+                document.querySelectorAll('.view-course-details').forEach(button => {
                     button.addEventListener('click', (e) => {
-                        const youtubeId = e.target.getAttribute('data-youtube-id');
-                        const courseTitle = e.target.getAttribute('data-course-title');
-                        this.openVideoModal(youtubeId, courseTitle);
+                        const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                        this.showCourseDetails(courseId);
                     });
                 });
 
@@ -1210,20 +1503,47 @@
                 });
             }
 
-            openVideoModal(youtubeId, courseTitle) {
+            setupCourseDetailsEventListeners() {
+                // أزرار مشاهدة الفيديو في صفحة التفاصيل
+                document.querySelectorAll('.watch-video-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const youtubeId = e.target.getAttribute('data-youtube-id');
+                        const videoTitle = e.target.getAttribute('data-video-title');
+                        const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                        const videoId = parseInt(e.target.getAttribute('data-video-id'));
+                        
+                        this.openVideoModal(youtubeId, videoTitle);
+                        this.markVideoAsWatched(courseId, videoId);
+                    });
+                });
+            }
+
+            showDashboard() {
+                this.currentView = 'dashboard';
+                this.currentCourseId = null;
+                this.render(this.appState.state);
+            }
+
+            showCourseDetails(courseId) {
+                this.currentView = 'course-details';
+                this.currentCourseId = courseId;
+                this.render(this.appState.state);
+            }
+
+            openVideoModal(youtubeId, videoTitle) {
                 const modal = document.getElementById('video-modal');
                 const modalVideo = document.getElementById('modal-video');
                 const modalTitle = document.getElementById('modal-title');
                 
                 modalVideo.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
-                modalTitle.textContent = courseTitle;
+                modalTitle.textContent = videoTitle;
                 modal.classList.add('active');
 
                 // تسجيل نشاط المشاهدة
                 this.appState.addActivity({
                     type: "started",
-                    title: `بدأت مشاهدة ${courseTitle}`,
-                    description: courseTitle,
+                    title: `بدأت مشاهدة ${videoTitle}`,
+                    description: videoTitle,
                     timestamp: new Date().toISOString()
                 });
             }
@@ -1244,6 +1564,10 @@
                         timestamp: new Date().toISOString()
                     });
                 }
+            }
+
+            markVideoAsWatched(courseId, videoId) {
+                this.appState.markVideoAsWatched(courseId, videoId);
             }
 
             handleSearch(query) {
