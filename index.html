@@ -13,12 +13,13 @@
             --accent: #4fc3f7;
             --light: #ffffff;
             --dark: #0d47a1;
-            --text: #1a237e;
-            --text-light: #5c6bc0;
-            --background: linear-gradient(135deg, #1a237e, #1565c0, #1e88e5);
+            --text: #ffffff;
+            --text-light: #e3f2fd;
+            --background: linear-gradient(135deg, #0d47a1, #1565c0, #1e88e5);
             --card-bg: rgba(255, 255, 255, 0.1);
             --glass-bg: rgba(255, 255, 255, 0.15);
             --glass-border: rgba(255, 255, 255, 0.2);
+            --nav-bg: rgba(13, 71, 161, 0.9);
             --border-radius: 16px;
             --box-shadow: 0 8px 32px rgba(30, 136, 229, 0.2);
             --transition: all 0.3s ease;
@@ -33,7 +34,7 @@
 
         body {
             background: var(--background);
-            color: var(--light);
+            color: var(--text);
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
@@ -85,7 +86,7 @@
             align-items: center;
             padding: 15px 30px;
             margin-bottom: 30px;
-            background: var(--glass-bg);
+            background: var(--nav-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             backdrop-filter: blur(10px);
@@ -632,6 +633,90 @@
             opacity: 0.9;
         }
 
+        /* الفوتر */
+        footer {
+            background: var(--nav-bg);
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .footer-section p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
         /* التجاوب */
         @media (max-width: 992px) {
             .courses-grid {
@@ -643,7 +728,7 @@
                 position: absolute;
                 top: 100%;
                 right: 0;
-                background: var(--glass-bg);
+                background: var(--nav-bg);
                 flex-direction: column;
                 width: 200px;
                 padding: 15px;
@@ -700,6 +785,10 @@
             
             .stats-section {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -851,6 +940,69 @@
             </div>
         </div>
     </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Skillzoy Academy</h3>
+                <p>منصة التعلم الرائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> جميع الدورات</a></li>
+                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> المدربين</a></li>
+                    <li><a href="#"><i class="fas fa-certificate"></i> الشهادات</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> عن الأكاديمية</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>مركز دعم المتعلم</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a></li>
+                    <li><a href="#"><i class="fas fa-headset"></i> الدعم الفني</a></li>
+                    <li><a href="#"><i class="fas fa-comments"></i> تواصل معنا</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> سياسة الخصوصية</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> شروط الاستخدام</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <ul class="footer-links">
+                    <li><a href="tel:+1234567890"><i class="fas fa-phone"></i> +1 234 567 890</a></li>
+                    <li><a href="mailto:info@skillzoy.com"><i class="fas fa-envelope"></i> info@skillzoy.com</a></li>
+                    <li><a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i> واتساب</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> العنوان: مدينة المعرفة، الرياض</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>جميع الحقوق محفوظة &copy; 2023 Skillzoy Academy</p>
+        </div>
+    </footer>
 
     <script>
         // بيانات الدورات - أفضل دورات Mindluster
