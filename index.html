@@ -503,6 +503,15 @@
             background: #3aa8d0;
         }
 
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+        }
+
         /* Recent Activity */
         .activity-list {
             background: white;
@@ -684,11 +693,16 @@
             border-radius: var(--border-radius);
             overflow: hidden;
             transition: var(--transition);
+            border: 1px solid #e2e8f0;
         }
 
         .video-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-item.watched {
+            border-left: 4px solid var(--success);
         }
 
         .video-thumbnail {
@@ -727,18 +741,88 @@
         .video-meta {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 0.8rem;
             color: var(--text-light);
+        }
+
+        .video-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-status.watched {
+            color: var(--success);
         }
 
         .back-to-courses {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: var(--primary);
+            color: white;
             text-decoration: none;
             font-weight: 600;
             margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .back-to-courses:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .whatsapp-certificate-section {
+            background: rgba(37, 211, 102, 0.1);
+            border: 1px solid rgba(37, 211, 102, 0.2);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .whatsapp-certificate-section h3 {
+            color: #25D366;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-certificate-section p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .nav-tab {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .nav-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         /* Responsive Design */
@@ -784,6 +868,10 @@
             .videos-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
         }
 
         @media (max-width: 576px) {
@@ -826,30 +914,30 @@
                 <div class="nav-section">
                     <h3 class="nav-section-title">القائمة الرئيسية</h3>
                     <ul class="nav-links">
-                        <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> لوحة التحكم</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-book-open"></i> دوراتي</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> التقدم</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-award"></i> الشهادات</a></li>
+                        <li><a href="#" class="nav-link active" data-tab="dashboard"><i class="fas fa-home"></i> لوحة التحكم</a></li>
+                        <li><a href="#" class="nav-link" data-tab="my-courses"><i class="fas fa-book-open"></i> دوراتي</a></li>
+                        <li><a href="#" class="nav-link" data-tab="progress"><i class="fas fa-chart-line"></i> التقدم</a></li>
+                        <li><a href="#" class="nav-link" data-tab="certificates"><i class="fas fa-award"></i> الشهادات</a></li>
                     </ul>
                 </div>
                 
                 <div class="nav-section">
                     <h3 class="nav-section-title">المحتوى التعليمي</h3>
                     <ul class="nav-links">
-                        <li><a href="#" class="nav-link"><i class="fas fa-play-circle"></i> الفيديوهات</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> الواجبات</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
+                        <li><a href="#" class="nav-link" data-tab="videos"><i class="fas fa-play-circle"></i> الفيديوهات</a></li>
+                        <li><a href="#" class="nav-link" data-tab="materials"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
+                        <li><a href="#" class="nav-link" data-tab="assignments"><i class="fas fa-tasks"></i> الواجبات</a></li>
+                        <li><a href="#" class="nav-link" data-tab="tests"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
                     </ul>
                 </div>
                 
                 <div class="nav-section">
                     <h3 class="nav-section-title">الحساب والإعدادات</h3>
                     <ul class="nav-links">
-                        <li><a href="#" class="nav-link"><i class="fas fa-user"></i> الملف الشخصي</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
-                        <li><a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
+                        <li><a href="#" class="nav-link" data-tab="profile"><i class="fas fa-user"></i> الملف الشخصي</a></li>
+                        <li><a href="#" class="nav-link" data-tab="settings"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="#" class="nav-link" data-tab="help"><i class="fas fa-question"></i> المساعدة</a></li>
+                        <li><a href="#" class="nav-link" data-tab="logout"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
                     </ul>
                 </div>
             </nav>
@@ -992,9 +1080,36 @@
             </div>
         </div>
         <div class="course-content-section">
-            <h3>فيديوهات الدورة</h3>
-            <div class="videos-grid" id="course-videos-container">
-                <!-- سيتم ملؤها ديناميكياً -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="videos">فيديوهات الدورة</button>
+                <button class="nav-tab" data-tab="materials">المواد الدراسية</button>
+                <button class="nav-tab" data-tab="certificate">الشهادة</button>
+            </div>
+            
+            <div class="tab-content active" id="videos-tab">
+                <h3>فيديوهات الدورة</h3>
+                <div class="videos-grid" id="course-videos-container">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="materials-tab">
+                <h3>المواد الدراسية</h3>
+                <p>هنا ستجد جميع المواد الدراسية والملفات المساعدة للدورة.</p>
+                <!-- يمكن إضافة محتوى المواد الدراسية هنا -->
+            </div>
+            
+            <div class="tab-content" id="certificate-tab">
+                <h3>شهادة إتمام الدورة</h3>
+                <p>بعد إكمال جميع فيديوهات الدورة، يمكنك طلب شهادتك عبر واتساب.</p>
+                
+                <div class="whatsapp-certificate-section">
+                    <h3><i class="fab fa-whatsapp"></i> احصل على شهادتك الآن!</h3>
+                    <p>بعد إكمال جميع دروس الدورة، تواصل معنا عبر واتساب لتحصل على شهادتك المعتمدة</p>
+                    <button class="btn btn-whatsapp request-certificate">
+                        <i class="fab fa-whatsapp"></i> اطلب شهادتك على واتساب
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -1035,7 +1150,7 @@
                                 { id: 7, title: "مهارات التواصل", youtubeId: "L_jWHffIx5E", duration: "19:30", watched: true },
                                 { id: 8, title: "التدريب العملي", youtubeId: "CevxZvSJLk8", duration: "28:45", watched: true },
                                 { id: 9, title: "التقييم النهائي", youtubeId: "fJ9rUzIMcZQ", duration: "16:15", watched: false },
-                                { id: 10, title: "خاتمة الدورة", youtubeId: "tgbNymZ7vqY", duration: "12:40", watched: false }
+                                { id: 10, title: "خاتمة الدورة والحصول على الشهادة", youtubeId: "tgbNymZ7vqY", duration: "12:40", watched: false }
                             ]
                         },
                         {
@@ -1061,7 +1176,7 @@
                                 { id: 7, title: "التخطيط الاستراتيجي", youtubeId: "CevxZvSJLk8", duration: "24:20", watched: false },
                                 { id: 8, title: "إدارة التغيير", youtubeId: "fJ9rUzIMcZQ", duration: "23:10", watched: false },
                                 { id: 9, title: "قيادة الابتكار", youtubeId: "tgbNymZ7vqY", duration: "19:55", watched: false },
-                                { id: 10, title: "خاتمة الدورة", youtubeId: "7Ok6J0CURvc", duration: "16:25", watched: false }
+                                { id: 10, title: "خاتمة الدورة والحصول على الشهادة", youtubeId: "7Ok6J0CURvc", duration: "16:25", watched: false }
                             ]
                         },
                         {
@@ -1087,7 +1202,7 @@
                                 { id: 7, title: "التسليم والختام", youtubeId: "fJ9rUzIMcZQ", duration: "18:50", watched: false },
                                 { id: 8, title: "دراسات حالة", youtubeId: "tgbNymZ7vqY", duration: "28:25", watched: false },
                                 { id: 9, title: "أدوات إدارة المشاريع", youtubeId: "7Ok6J0CURvc", duration: "23:40", watched: false },
-                                { id: 10, title: "خاتمة الدورة", youtubeId: "xNY0AAUtH3g", duration: "17:15", watched: false }
+                                { id: 10, title: "خاتمة الدورة والحصول على الشهادة", youtubeId: "xNY0AAUtH3g", duration: "17:15", watched: false }
                             ]
                         }
                     ],
@@ -1170,6 +1285,16 @@
                             description: course.title,
                             timestamp: new Date().toISOString()
                         });
+
+                        // إذا كان هذا هو الفيديو الأخير، إضافة نشاط للحصول على الشهادة
+                        if (videoId === course.videos.length) {
+                            this.addActivity({
+                                type: "certificate",
+                                title: `تهانينا! أكملت ${course.title}`,
+                                description: "يمكنك الآن طلب شهادتك عبر واتساب",
+                                timestamp: new Date().toISOString()
+                            });
+                        }
                     }
                 }
             }
@@ -1390,7 +1515,10 @@
                         <div class="video-info">
                             <div class="video-title">${video.title}</div>
                             <div class="video-meta">
-                                <span>${video.watched ? 'تم المشاهدة' : 'لم يشاهد'}</span>
+                                <div class="video-status ${video.watched ? 'watched' : ''}">
+                                    <i class="fas ${video.watched ? 'fa-check-circle' : 'fa-clock'}"></i>
+                                    <span>${video.watched ? 'تم المشاهدة' : 'لم يشاهد'}</span>
+                                </div>
                                 <button class="btn btn-primary watch-video-btn" 
                                         data-youtube-id="${video.youtubeId}" 
                                         data-video-title="${video.title}"
@@ -1483,6 +1611,40 @@
                     e.preventDefault();
                     this.showDashboard();
                 });
+
+                // التنقل بين التبويبات
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.addEventListener('click', (e) => {
+                        const tabId = e.target.getAttribute('data-tab');
+                        this.switchTab(tabId);
+                    });
+                });
+
+                // أزرار التنقل في الشريط الجانبي
+                document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const tab = e.target.getAttribute('data-tab');
+                        
+                        // إزالة النشط من جميع الروابط
+                        document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => {
+                            l.classList.remove('active');
+                        });
+                        
+                        // إضافة النشط للرابط المحدد
+                        e.target.classList.add('active');
+                        
+                        // عرض رسالة للتبويبات غير المطورة
+                        if (tab !== 'dashboard') {
+                            alert(`سيتم تطوير قسم ${tab} قريباً`);
+                        }
+                    });
+                });
+
+                // زر طلب الشهادة عبر واتساب
+                document.querySelector('.request-certificate').addEventListener('click', () => {
+                    this.requestCertificate();
+                });
             }
 
             setupCourseEventListeners() {
@@ -1530,6 +1692,24 @@
                 this.render(this.appState.state);
             }
 
+            switchTab(tabId) {
+                // إخفاء جميع المحتويات
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // إزالة النشط من جميع التبويبات
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // إظهار المحتوى المحدد
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                
+                // إضافة النشط للتبويب المحدد
+                document.querySelector(`.nav-tab[data-tab="${tabId}"]`).classList.add('active');
+            }
+
             openVideoModal(youtubeId, videoTitle) {
                 const modal = document.getElementById('video-modal');
                 const modalVideo = document.getElementById('modal-video');
@@ -1568,6 +1748,16 @@
 
             markVideoAsWatched(courseId, videoId) {
                 this.appState.markVideoAsWatched(courseId, videoId);
+            }
+
+            requestCertificate() {
+                const course = this.appState.state.courses.find(c => c.id === this.currentCourseId);
+                if (course) {
+                    const phoneNumber = "966123456789";
+                    const message = `مرحباً، أرغب في الحصول على شهادة دورة ${course.title}`;
+                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappURL, '_blank');
+                }
             }
 
             handleSearch(query) {
