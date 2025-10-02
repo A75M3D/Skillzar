@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skillzoy Academy - منصة التعلم الإلكتروني</title>
+    <title>Skillzoy Academy - لوحة التحكم</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-blue: #1a2a6c;
-            --secondary-blue: #2a3a7c;
-            --accent-blue: #3a4a8c;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --text-light: #e0f7fa;
-            --text-secondary: #b2ebf2;
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --primary-light: #4895ef;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --warning: #f4a261;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --bg-light: #f5f7fb;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --sidebar-bg: #ffffff;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -24,238 +36,342 @@
         }
 
         body {
-            <header>
-            <nav>
-    <a href="/">الرئيسية</a>
-    <a href="/home">Home</a>
-    <a href="/dashboard">Dashboard</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    
-</nav>
-            </header>
-            background: linear-gradient(rgba(26, 42, 108, 0.85), rgba(42, 58, 124, 0.9)), 
-                        url('https://dl.dropbox.com/scl/fi/zisw2hveqb9yeky4gi37x/Picsart_25-09-27_12-30-45-516.jpg?rlkey=wwtaq4fqowd5ogx05srfpi9fb&st=2dvntcaf& raw=1?auto=format&fit=crop&w=800&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--text-light);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .dashboard-container {
+            display: flex;
             min-height: 100vh;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* تأثيرات الخلفية الإضافية */
-        .bg-effects {
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
             position: fixed;
+            right: 0;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .bg-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            animation: float 15s infinite linear;
-        }
-
-        .circle-1 {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .circle-2 {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
-        }
-
-        .circle-3 {
-            width: 250px;
-            height: 250px;
-            bottom: 10%;
-            left: 20%;
-            animation-delay: 10s;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-
-        /* تصميم الزجاجي */
-        .glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Header */
-        header {
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(26, 42, 108, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .header-content {
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
             align-items: center;
+            gap: 12px;
         }
 
         .logo {
             display: flex;
             align-items: center;
             text-decoration: none;
-            color: var(--text-light);
+            color: var(--primary);
             font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 700;
         }
 
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: var(--glass-bg);
-            border-radius: 50%;
+            background: var(--primary);
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: white;
             margin-left: 10px;
         }
 
-        nav ul {
-            display: flex;
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-section-title {
+            padding: 0 20px 10px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
             list-style: none;
         }
 
-        nav ul li a {
-            color: var(--text-light);
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-dark);
             text-decoration: none;
-            padding: 10px 15px;
-            transition: all 0.3s ease;
-            border-radius: 5px;
+            transition: var(--transition);
+            border-right: 3px solid transparent;
         }
 
-        nav ul li a:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .nav-link:hover {
+            background: rgba(67, 97, 238, 0.05);
+            color: var(--primary);
+            border-right-color: var(--primary);
         }
 
-        .btn {
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
+        .nav-link.active {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            border-right-color: var(--primary);
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+
+        .user-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-right: var(--sidebar-width);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 0;
+        }
+
+        .page-title h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            width: 250px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .notification-btn, .mobile-menu-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: var(--text-dark);
             cursor: pointer;
-            display: inline-block;
+            transition: var(--transition);
         }
 
-        .btn-primary {
-            background: rgba(77, 208, 225, 0.3);
-            color: var(--text-light);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: rgba(77, 208, 225, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
+        .notification-btn:hover, .mobile-menu-btn:hover {
+            background: var(--primary);
             color: white;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .btn-whatsapp:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
         }
 
         .mobile-menu-btn {
             display: none;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 100px 0;
-        }
-
-        .hero-content {
+        /* Stats Cards */
+        .stats-cards {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
-            color: var(--text-secondary);
-            line-height: 1.6;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .hero-video-container {
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
             padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.courses {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        }
+
+        .stat-icon.progress {
+            background: linear-gradient(135deg, #4cc9f0, #4895ef);
+        }
+
+        .stat-icon.certificates {
+            background: linear-gradient(135deg, #7209b7, #b5179e);
+        }
+
+        .stat-icon.hours {
+            background: linear-gradient(135deg, #f4a261, #e76f51);
+        }
+
+        .stat-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .stat-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Courses Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-video-container {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
         }
 
         .video-wrapper {
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            border-radius: 10px;
-            overflow: hidden;
+            padding-bottom: 56.25%;
         }
 
         .video-wrapper iframe {
@@ -265,794 +381,891 @@
             width: 100%;
             height: 100%;
             border: none;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
         }
 
-        /* Sections Common Styles */
-        section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Courses Section */
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 30px;
-        }
-
-        .course-card {
-            padding: 0;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .course-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .course-info {
+        .course-content {
             padding: 20px;
         }
 
-        .course-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .free-badge {
-            background: #25D366;
-            color: white;
-            padding: 3px 10px;
+        .course-category {
+            display: inline-block;
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
-        .course-free-note {
-            background: rgba(37, 211, 102, 0.2);
-            padding: 8px 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .course-instructor {
-            color: var(--text-secondary);
-            margin-bottom: 15px;
-        }
-
-        .course-desc {
-            margin-bottom: 15px;
-            line-height: 1.6;
+        .course-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
         }
 
         .course-meta {
             display: flex;
-            gap: 15px;
+            justify-content: space-between;
             margin-bottom: 15px;
-            color: var(--text-secondary);
+            font-size: 0.85rem;
+            color: var(--text-light);
         }
 
-        .course-certificate-note {
-            background: rgba(255, 193, 7, 0.2);
-            padding: 8px 15px;
-            border-radius: 5px;
-            margin: 15px 0;
+        .course-instructor {
             display: flex;
             align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .instructor-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .instructor-name {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .course-actions {
+            display: flex;
             gap: 10px;
+            margin-top: 15px;
         }
 
-        /* Process Section */
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+        .btn {
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        .process-step {
-            padding: 30px;
-            text-align: center;
-            transition: transform 0.3s ease;
+        .btn-primary {
+            background: var(--primary);
+            color: white;
         }
 
-        .process-step:hover {
-            transform: translateY(-5px);
+        .btn-primary:hover {
+            background: var(--primary-dark);
         }
 
-        .step-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(77, 208, 225, 0.3);
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #3aa8d0;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            transition: var(--transition);
+        }
+
+        .activity-item:hover {
+            background: #f8fafc;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
+            align-items: center;
             justify-content: center;
-            align-items: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
-        }
-
-        .process-step h3 {
-            margin-bottom: 15px;
-        }
-
-        /* Certificate Section */
-        .certificate {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .certificate-image {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .certificate-image:hover {
-            transform: scale(1.02);
-        }
-
-        /* Contact Section */
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .contact-info, .contact-form {
-            padding: 30px;
-        }
-
-        .contact-info p {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .contact-form form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .contact-form input, .contact-form textarea {
-            padding: 12px 15px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px;
-            color: var(--text-light);
+            color: white;
             font-size: 1rem;
         }
 
-        .contact-form textarea {
-            min-height: 120px;
-            resize: vertical;
+        .activity-icon.completed {
+            background: var(--success);
         }
 
-        /* Footer */
-        footer {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 50px 0 20px;
-            margin-top: 50px;
+        .activity-icon.started {
+            background: var(--primary);
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 30px;
+        .activity-icon.certificate {
+            background: var(--warning);
         }
 
-        .footer-column h3 {
-            margin-bottom: 20px;
-            font-size: 1.3rem;
+        .activity-details h4 {
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+            color: var(--text-dark);
         }
 
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
+        .activity-details p {
+            font-size: 0.8rem;
             color: var(--text-light);
         }
 
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .activity-time {
+            margin-right: auto;
+            font-size: 0.8rem;
             color: var(--text-light);
-            text-decoration: none;
-            transition: all 0.3s ease;
         }
 
-        .social-link:hover {
-            background: rgba(77, 208, 225, 0.5);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary);
-        }
-
-        /* Mobile Navigation */
-        .mobile-nav {
+        /* Video Player Modal */
+        .video-modal {
+            display: none;
             position: fixed;
             top: 0;
-            right: -100%;
-            width: 300px;
-            height: 100vh;
-            background: var(--primary-blue);
-            z-index: 1000;
-            transition: right 0.3s ease;
-            padding: 80px 30px 30px;
-            overflow-y: auto;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
         }
 
-        .mobile-nav.active {
-            right: 0;
+        .video-modal.active {
+            display: flex;
         }
 
-        .close-menu {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-dark);
+        }
+
+        .close-modal {
             background: none;
             border: none;
-            color: var(--text-light);
             font-size: 1.5rem;
             cursor: pointer;
-        }
-
-        .mobile-nav ul {
-            list-style: none;
-        }
-
-        .mobile-nav ul li {
-            margin-bottom: 15px;
-        }
-
-        .mobile-nav ul li a {
             color: var(--text-light);
-            text-decoration: none;
-            font-size: 1.1rem;
-            display: block;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .mobile-nav .btn {
-            display: block;
-            text-align: center;
-            margin: 10px 0;
+        .modal-video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+        }
+
+        .modal-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         /* Responsive Design */
         @media (max-width: 992px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
+            .sidebar {
+                right: -100%;
             }
             
-            .hero-text h1 {
-                font-size: 2.5rem;
+            .sidebar.active {
+                right: 0;
             }
             
-            .contact-container {
-                grid-template-columns: 1fr;
+            .main-content {
+                margin-right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .search-box input {
+                width: 200px;
             }
         }
 
         @media (max-width: 768px) {
-            nav, .header-actions {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .logo-section {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                width: 100%;
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .courses-grid {
                 grid-template-columns: 1fr;
             }
             
-            .hero-buttons {
-                flex-direction: column;
+            .search-box {
+                display: none;
             }
             
-            .hero-text h1 {
-                font-size: 2rem;
+            .course-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
             }
         }
     </style>
 </head>
 <body>
-    <!-- تأثيرات الخلفية -->
-    <div class="bg-effects">
-        <div class="bg-circle circle-1"></div>
-        <div class="bg-circle circle-2"></div>
-        <div class="bg-circle circle-3"></div>
-    </div>
-
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo-section">
-                    <a href="#" class="logo">
-                        <div class="logo-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <span>Skillzoy Academy</span>
-                    </a>
-                    
-                </div>
-
-                <nav>
-                    <ul>
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#courses">الدورات</a></li>
-                        <li><a href="#process">كيفية الاشتراك</a></li>
-                        <li><a href="#certificate">الشهادات</a></li>
-                        <li><a href="#contact">التواصل</a></li>
-                    </ul>
-                </nav>
-
-                <div class="header-actions">
-                    <a href="login.html" class="btn btn-secondary">تسجيل الدخول</a>
-                    <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
-                </div>
-
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav">
-        <button class="close-menu">
-            <i class="fas fa-times"></i>
-        </button>
-        <ul>
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#courses">الدورات</a></li>
-            <li><a href="#process">كيفية الاشتراك</a></li>
-            <li><a href="#certificate">الشهادات</a></li>
-            <li><a href="#contact">التواصل</a></li>
-            <li><a href="login.html" class="btn btn-secondary">تسجيل الدخول</a></li>
-            <li><a href="register.html" class="btn btn-primary">إنشاء حساب</a></li>
-            <li><a href="#" class="btn btn-primary contact-whatsapp">تواصل معنا</a></li>
-        </ul>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Skillzoy Academy<br>منصة التعلم الإلكتروني المتقدمة</h1>
-                    <p>انضم إلى آلاف الطلاب حول العالم وطور مهاراتك مع دوراتنا المتخصصة. احصل على شهادات معتمدة وافتح أبوابًا جديدة لمستقبلك المهني.</p>
-                    <div class="hero-buttons">
-                        <a href="register.html" class="btn btn-primary">ابدأ التعلم الآن</a>
-                        <button class="btn btn-secondary contact-whatsapp">اطلب شهاداتك ودورتك على واتساب</button>
-                    </div>
-                </div>
-                <div class="hero-video-container glass">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" 
-                                title="مقدمة عن Skillzoy Academy" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Courses Section -->
-    <section class="courses" id="courses">
-        <div class="container">
-            <div class="section-title">
-                <h2>دوراتنا التعليمية المجانية</h2>
-                <p>اختر من بين مجموعة واسعة من الدورات المجانية المصممة خصيصًا لتلبية احتياجات سوق العمل الحديث</p>
-            </div>
-            <div class="courses-grid">
-                <!-- دورة 1: TOT -->
-                <div class="course-card glass">
-                    <div class="video-wrapper">
-                        <iframe class="course-video" 
-                                src="https://www.youtube.com/embed/7Ok6J0CURvc?rel=0&modestbranding=1&autoplay=0" 
-                                title="دورة TOT" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="course-info">
-                        <h3 class="course-title">دورة مدرب مدربين (TOT) <span class="free-badge">مجاني</span></h3>
-                        <div class="course-free-note">
-                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
-                        </div>
-                        <div class="course-instructor">د. أحمد محمد</div>
-                        <p class="course-desc">تعلم كيفية تصميم وتقديم برامج تدريبية فعالة، وإدارة جلسات التدريب، وتطوير مهاراتك كمدرب محترف. هذه السلسلة الكاملة تغطي جميع جوانب التدريب والتطوير.</p>
-                        <div class="course-meta">
-                            <span><i class="far fa-clock"></i> 40 ساعة</span>
-                            <span><i class="far fa-user"></i> 250 طالب</span>
-                        </div>
-                        <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
-                        </div>
-                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
-                    </div>
-                </div>
-                
-                <!-- دورة 2: القيادة -->
-                <div class="course-card glass">
-                    <div class="video-wrapper">
-                        <iframe class="course-video" 
-                                src="https://www.youtube.com/embed/xNY0AAUtH3g?rel=0&modestbranding=1&autoplay=0" 
-                                title="دورة القيادة" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="course-info">
-                        <h3 class="course-title">دورة القيادة والإدارة المتقدمة <span class="free-badge">مجاني</span></h3>
-                        <div class="course-free-note">
-                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
-                        </div>
-                        <div class="course-instructor">د. خالد الحربي</div>
-                        <p class="course-desc">طور مهاراتك القيادية وتعلم كيفية إدارة الفرق بفعالية، واتخاذ القرارات الاستراتيجية، وتحقيق الأهداف التنظيمية. سلسلة شاملة عن فنون القيادة الحديثة.</p>
-                        <div class="course-meta">
-                            <span><i class="far fa-clock"></i> 32 ساعة</span>
-                            <span><i class="far fa-user"></i> 320 طالب</span>
-                        </div>
-                        <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
-                        </div>
-                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
-                    </div>
-                </div>
-
-                <!-- دورة 3: leadership -->
-                <div class="course-card glass">
-                    <div class="video-wrapper">
-                        <iframe class="course-video" 
-                                src="https://www.youtube.com/embed/PC3005GGYtA?rel=0&modestbranding=1&autoplay=0" 
-                                title="دورة القيادة" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="course-info">
-                        <h3 class="course-title">leadership <span class="free-badge">مجاني</span></h3>
-                        <div class="course-free-note">
-                            <i class="fas fa-gift"></i> هذه الدورة مقدمة مجاناً بالكامل
-                        </div>
-                        <div class="course-instructor">د. خالد الحربي</div>
-                        <p class="course-desc">طور مهاراتك القيادية وتعلم كيفية إدارة الفرق بفعالية، واتخاذ القرارات الاستراتيجية، وتحقيق الأهداف التنظيمية. سلسلة شاملة عن فنون القيادة الحديثة.</p>
-                        <div class="course-meta">
-                            <span><i class="far fa-clock"></i> 3 اشهر</span>
-                            <span><i class="far fa-user"></i> 2,320 طالب</span>
-                        </div>
-                        <div class="course-certificate-note">
-                            <i class="fas fa-award"></i> بعد إكمال الدورة، تواصل مع المعلم على واتساب لتحصل على شهادتك
-                        </div>
-                        <button class="btn btn-whatsapp">اطلب الدورة على واتساب</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Process Section -->
-    <section class="process" id="process">
-        <div class="container">
-            <div class="section-title">
-                <h2>كيفية الحصول على الدورة والشهادة</h2>
-                <p>اتبع هذه الخطوات البسيطة للحصول على دورتك المجانية وشهادتك المعتمدة</p>
-            </div>
-            <div class="process-steps">
-                <div class="process-step glass">
-                    <div class="step-icon">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
-                    <h3>الخطوة 1: تواصل معنا عبر واتساب</h3>
-                    <p>ارسل رسالة على واتساب تخبرنا فيها بالدورة التي ترغب في الالتحاق بها</p>
-                </div>
-                
-                <div class="process-step glass">
-                    <div class="step-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <h3>الخطوة 2: احصل على مواد الدورة</h3>
-                    <p>سنرسل لك رابط الدورة كاملة مع جميع الفيديوهات والمواد التعليمية</p>
-                </div>
-                
-                <div class="process-step glass">
-                    <div class="step-icon">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <h3>الخطوة 3: اختبر معلوماتك</h3>
-                    <p>بعد إكمال الدورة، ستخضع لامتحان قصير لقياس مدى استفادتك من المحتوى</p>
+                    <span>Skillzoy Academy</span>
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3 class="nav-section-title">القائمة الرئيسية</h3>
+                    <ul class="nav-links">
+                        <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> لوحة التحكم</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-book-open"></i> دوراتي</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> التقدم</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-award"></i> الشهادات</a></li>
+                    </ul>
                 </div>
                 
-                <div class="process-step glass">
-                    <div class="step-icon">
-                        <i class="fas fa-award"></i>
+                <div class="nav-section">
+                    <h3 class="nav-section-title">المحتوى التعليمي</h3>
+                    <ul class="nav-links">
+                        <li><a href="#" class="nav-link"><i class="fas fa-play-circle"></i> الفيديوهات</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> الواجبات</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-section-title">الحساب والإعدادات</h3>
+                    <ul class="nav-links">
+                        <li><a href="#" class="nav-link"><i class="fas fa-user"></i> الملف الشخصي</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
+                        <li><a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=أحمد+محمد&background=4361ee&color=fff" alt="صورة المستخدم" class="user-avatar">
+                    <div class="user-info">
+                        <h4 id="user-name">أحمد محمد</h4>
+                        <p id="user-role">طالب</p>
                     </div>
-                    <h3>الخطوة 4: احصل على شهادتك</h3>
-                    <p>بعد اجتياز الامتحان، سنرسل لك شهادتك المعتمدة عبر البريد الإلكتروني</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Certificate Template -->
-    <section class="certificate-template" id="certificate">
-        <div class="container">
-            <div class="section-title">
-                <h2>نموذج الشهادة المعتمدة</h2>
-                <p>شهادة معتمدة من Skillzoy Academy تثبت إنجازك في الدورة التدريبية</p>
-            </div>
-            <div class="certificate">
-                <img src="https://dl.dropbox.com/scl/fi/8qp2k21gy5um5gelp3iq2/Blue-Grey-Modern-Gradient-Certificate-of-Completion_20250927_110652_.png?rlkey=gadbixsqdabfsymguk6bv8ua8&st=dl6zl89j&raw=1?auto=format&fit=crop&w=800&q=100" 
-                     alt="نموذج شهادة Skillzoy Academy" class="certificate-image glass">
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>تواصل معنا</h2>
-                <p>يسعدنا تواصلكم معنا لأي استفسار حول الدورات أو الشهادات</p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info glass">
-                    <h3>معلومات الاتصال</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> العنوان: الرياض، المملكة العربية السعودية</p>
-                    <p><i class="fas fa-phone"></i> الهاتف: +966 123 456 789</p>
-                    <p><i class="fas fa-envelope"></i> البريد الإلكتروني: info@skillzoyacademy.com</p>
-                    <p><i class="fas fa-clock"></i> أوقات العمل: من الأحد إلى الخميس، 9 صباحاً - 6 مساءً</p>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="header">
+                <div class="page-title">
+                    <h1 id="welcome-message">مرحباً، أحمد!</h1>
+                    <p>هذه هي لوحة تحكمك حيث يمكنك متابعة دوراتك وتقدمك</p>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="ابحث عن دورة أو محتوى...">
+                        <i class="fas fa-search"></i>
+                    </div>
                     
-                    <button class="btn btn-whatsapp contact-whatsapp" style="margin-top: 2rem;">
-                        <i class="fab fa-whatsapp"></i> تواصل معنا عبر واتساب
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
-                <div class="contact-form glass">
-                    <h3>أرسل رسالة</h3>
-                    <form id="contactForm">
-                        <input type="text" placeholder="اسمك" required>
-                        <input type="email" placeholder="بريدك الإلكتروني" required>
-                        <input type="text" placeholder="الموضوع" required>
-                        <textarea placeholder="رسالتك" required></textarea>
-                        <button type="submit" class="btn btn-primary">إرسال</button>
-                    </form>
-                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Skillzoy Academy</h3>
-                    <p>منصة التعلم الإلكتروني الرائدة في تقديم دورات تدريبية متخصصة وشهادات معتمدة.</p>
-                    <div class="social-links">
-                        <a href="https://twitter.com/skillzoy" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="https://linkedin.com/company/skillzoy" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://youtube.com/c/skillzoy" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://instagram.com/skillzoy" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
+            
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon courses">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-courses">5</h3>
+                        <p>الدورات المسجلة</p>
                     </div>
                 </div>
-                <div class="footer-column">
-                    <h3>روابط سريعة</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">الرئيسية</a></li>
-                        <li><a href="#courses">الدورات</a></li>
-                        <li><a href="#process">كيفية الاشتراك</a></li>
-                        <li><a href="#certificate">الشهادات</a></li>
-                        <li><a href="#contact">التواصل</a></li>
-                    </ul>
+                
+                <div class="stat-card">
+                    <div class="stat-icon progress">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-progress">75%</h3>
+                        <p>متوسط التقدم</p>
+                    </div>
                 </div>
-                <div class="footer-column">
-                    <h3>الدورات</h3>
-                    <ul class="footer-links">
-                        <li><a href="#courses">مدرب مدربين (TOT)</a></li>
-                        <li><a href="#courses">القيادة والإدارة</a></li>
-                        <li><a href="#courses">إدارة الموارد البشرية</a></li>
-                        <li><a href="#courses">تطوير الأعمال</a></li>
-                        <li><a href="#courses">مهارات التواصل</a></li>
-                        <li><a href="#courses">إدارة المشاريع</a></li>
-                    </ul>
+                
+                <div class="stat-card">
+                    <div class="stat-icon certificates">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-certificates">2</h3>
+                        <p>الشهادات المكتسبة</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon hours">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="stat-hours">12</h3>
+                        <p>ساعات التعلم</p>
+                    </div>
                 </div>
             </div>
-            <div class="copyright">
-                <p>جميع الحقوق محفوظة &copy; 2023 Skillzoy Academy</p>
+            
+            <div class="section-header">
+                <h2 class="section-title">دوراتي الحالية</h2>
+                <a href="#" class="view-all">عرض الكل <i class="fas fa-chevron-left"></i></a>
+            </div>
+            
+            <div class="courses-grid" id="courses-container">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+            
+            <div class="section-header">
+                <h2 class="section-title">النشاط الأخير</h2>
+                <a href="#" class="view-all">عرض الكل <i class="fas fa-chevron-left"></i></a>
+            </div>
+            
+            <div class="activity-list" id="activities-container">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="video-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">مشاهدة الفيديو</h3>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-video-container">
+                <iframe id="modal-video" src="" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile Menu Toggle
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const closeMenuBtn = document.querySelector('.close-menu');
-            const mobileNav = document.querySelector('.mobile-nav');
-            
-            mobileMenuBtn.addEventListener('click', function() {
-                mobileNav.classList.add('active');
-            });
-            
-            closeMenuBtn.addEventListener('click', function() {
-                mobileNav.classList.remove('active');
-            });
-            
-            // Close mobile menu when clicking on a link
-            const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    mobileNav.classList.remove('active');
-                });
-            });
-            
-            // WhatsApp buttons functionality
-            const whatsappButtons = document.querySelectorAll('.contact-whatsapp, .btn-whatsapp');
-            whatsappButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const phoneNumber = "966123456789";
-                    const message = "مرحباً، أرغب في الاستفسار عن دورات Skillzoy Academy";
-                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-                    window.open(whatsappURL, '_blank');
-                });
-            });
-            
-            // Form submission
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    alert('شكراً لتواصلكم معنا! سنرد على رسالتكم في أقرب وقت ممكن.');
-                    contactForm.reset();
-                });
+        // نظام إدارة الحالة
+        class AppState {
+            constructor() {
+                this.state = {
+                    user: {
+                        id: 1,
+                        name: "أحمد محمد",
+                        role: "طالب",
+                        avatar: "https://ui-avatars.com/api/?name=أحمد+محمد&background=4361ee&color=fff",
+                        joinDate: "2023-01-15"
+                    },
+                    courses: [
+                        {
+                            id: 1,
+                            title: "دورة مدرب مدربين (TOT)",
+                            category: "تطوير الذات",
+                            instructor: "د. أحمد محمد",
+                            instructorAvatar: "https://ui-avatars.com/api/?name=أحمد+محمد&background=3a0ca3&color=fff",
+                            youtubeId: "7Ok6J0CURvc",
+                            progress: 80,
+                            completedLessons: 8,
+                            totalLessons: 10,
+                            status: "in-progress",
+                            duration: "40 ساعة",
+                            level: "متقدم"
+                        },
+                        {
+                            id: 2,
+                            title: "دورة القيادة والإدارة المتقدمة",
+                            category: "القيادة",
+                            instructor: "د. خالد الحربي",
+                            instructorAvatar: "https://ui-avatars.com/api/?name=خالد+الحربي&background=7209b7&color=fff",
+                            youtubeId: "xNY0AAUtH3g",
+                            progress: 60,
+                            completedLessons: 6,
+                            totalLessons: 10,
+                            status: "in-progress",
+                            duration: "32 ساعة",
+                            level: "متوسط"
+                        },
+                        {
+                            id: 3,
+                            title: "دورة إدارة المشاريع الاحترافية",
+                            category: "إدارة المشاريع",
+                            instructor: "د. سارة العلي",
+                            instructorAvatar: "https://ui-avatars.com/api/?name=سارة+العلي&background=e63946&color=fff",
+                            youtubeId: "PC3005GGYtA",
+                            progress: 30,
+                            completedLessons: 3,
+                            totalLessons: 10,
+                            status: "in-progress",
+                            duration: "45 ساعة",
+                            level: "متقدم"
+                        }
+                    ],
+                    activities: [],
+                    stats: {}
+                };
+                
+                this.listeners = [];
+                this.calculateStats();
+                this.loadFromStorage();
             }
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
+
+            subscribe(listener) {
+                this.listeners.push(listener);
+                return () => {
+                    this.listeners = this.listeners.filter(l => l !== listener);
+                };
+            }
+
+            notify() {
+                this.listeners.forEach(listener => listener(this.state));
+            }
+
+            setState(newState) {
+                this.state = { ...this.state, ...newState };
+                this.calculateStats();
+                this.notify();
+                this.saveToStorage();
+            }
+
+            updateCourse(courseId, updates) {
+                const courseIndex = this.state.courses.findIndex(c => c.id === courseId);
+                if (courseIndex !== -1) {
+                    this.state.courses[courseIndex] = { 
+                        ...this.state.courses[courseIndex], 
+                        ...updates 
+                    };
                     
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
+                    if (updates.progress === 100) {
+                        this.state.courses[courseIndex].status = "completed";
+                        this.addActivity({
+                            type: "completed",
+                            title: `أكملت دورة ${this.state.courses[courseIndex].title}`,
+                            description: this.state.courses[courseIndex].title,
+                            timestamp: new Date().toISOString()
                         });
                     }
+                    
+                    this.calculateStats();
+                    this.notify();
+                    this.saveToStorage();
+                }
+            }
+
+            addActivity(activity) {
+                activity.id = Date.now();
+                activity.time = this.formatTime(new Date());
+                this.state.activities.unshift(activity);
+                
+                if (this.state.activities.length > 10) {
+                    this.state.activities.pop();
+                }
+                
+                this.notify();
+                this.saveToStorage();
+            }
+
+            calculateStats() {
+                const stats = {
+                    enrolledCourses: this.state.courses.length,
+                    completedCourses: this.state.courses.filter(c => c.status === "completed").length,
+                    inProgressCourses: this.state.courses.filter(c => c.status === "in-progress").length,
+                    totalProgress: 0,
+                    learningHours: 12
+                };
+
+                if (this.state.courses.length > 0) {
+                    stats.totalProgress = Math.round(
+                        this.state.courses.reduce((sum, course) => sum + course.progress, 0) / 
+                        this.state.courses.length
+                    );
+                }
+
+                this.state.stats = stats;
+            }
+
+            formatTime(date) {
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+
+                if (diffMins < 1) return "الآن";
+                if (diffMins < 60) return `منذ ${diffMins} دقيقة`;
+                if (diffHours < 24) return `منذ ${diffHours} ساعة`;
+                if (diffDays < 7) return `منذ ${diffDays} يوم`;
+                return date.toLocaleDateString('ar-EG');
+            }
+
+            saveToStorage() {
+                try {
+                    localStorage.setItem('skillzoy_app_state', JSON.stringify(this.state));
+                } catch (error) {
+                    console.error('خطأ في حفظ الحالة:', error);
+                }
+            }
+
+            loadFromStorage() {
+                try {
+                    const saved = localStorage.getItem('skillzoy_app_state');
+                    if (saved) {
+                        this.state = JSON.parse(saved);
+                        this.calculateStats();
+                        this.notify();
+                    }
+                } catch (error) {
+                    console.error('خطأ في تحميل الحالة:', error);
+                }
+            }
+        }
+
+        // نظام إدارة الواجهة
+        class UIManager {
+            constructor() {
+                this.appState = new AppState();
+                this.init();
+            }
+
+            init() {
+                this.appState.subscribe((state) => {
+                    this.render(state);
                 });
-            });
-            
-            // Add animation on scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+
+                this.setupEventListeners();
+                this.render(this.appState.state);
+                
+                // إضافة بعض النشاطات الافتراضية
+                if (this.appState.state.activities.length === 0) {
+                    this.appState.addActivity({
+                        type: "started",
+                        title: "بدأت دورة جديدة",
+                        description: "دورة مدرب مدربين (TOT)",
+                        timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+                    });
+                    
+                    this.appState.addActivity({
+                        type: "certificate",
+                        title: "حصلت على شهادة",
+                        description: "شهادة القيادة والإدارة المتقدمة",
+                        timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+                    });
+                }
+            }
+
+            render(state) {
+                this.renderUserProfile(state.user);
+                this.renderStats(state.stats);
+                this.renderCourses(state.courses);
+                this.renderActivities(state.activities);
+            }
+
+            renderUserProfile(user) {
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-role').textContent = user.role;
+                document.getElementById('welcome-message').textContent = `مرحباً، ${user.name}!`;
+            }
+
+            renderStats(stats) {
+                document.getElementById('stat-courses').textContent = stats.enrolledCourses;
+                document.getElementById('stat-progress').textContent = `${stats.totalProgress}%`;
+                document.getElementById('stat-certificates').textContent = stats.completedCourses;
+                document.getElementById('stat-hours').textContent = stats.learningHours;
+            }
+
+            renderCourses(courses) {
+                const container = document.getElementById('courses-container');
+                container.innerHTML = courses.map(course => `
+                    <div class="course-card" data-course-id="${course.id}">
+                        <div class="course-video-container">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/${course.youtubeId}?rel=0&modestbranding=1" 
+                                        title="${course.title}"
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="course-content">
+                            <span class="course-category">${course.category}</span>
+                            <h3 class="course-title">${course.title}</h3>
+                            <div class="course-meta">
+                                <span><i class="far fa-clock"></i> ${course.duration}</span>
+                                <span><i class="fas fa-signal"></i> ${course.level}</span>
+                            </div>
+                            <div class="course-instructor">
+                                <img src="${course.instructorAvatar}" alt="${course.instructor}" class="instructor-avatar">
+                                <span class="instructor-name">${course.instructor}</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: ${course.progress}%"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span>${course.progress}% مكتمل</span>
+                                <span>${course.completedLessons}/${course.totalLessons} دروس</span>
+                            </div>
+                            <div class="course-actions">
+                                <button class="btn btn-primary watch-video" data-youtube-id="${course.youtubeId}" data-course-title="${course.title}">
+                                    <i class="fas fa-play"></i> مشاهدة الفيديو
+                                </button>
+                                <button class="btn btn-outline complete-lesson" data-course-id="${course.id}">
+                                    <i class="fas fa-check"></i> إكمال الدرس
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                this.setupCourseEventListeners();
+            }
+
+            renderActivities(activities) {
+                const container = document.getElementById('activities-container');
+                container.innerHTML = activities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-icon ${activity.type}">
+                            <i class="${this.getActivityIcon(activity.type)}"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>${activity.title}</h4>
+                            <p>${activity.description}</p>
+                        </div>
+                        <span class="activity-time">${activity.time}</span>
+                    </div>
+                `).join('');
+            }
+
+            getActivityIcon(type) {
+                const icons = {
+                    'completed': 'fas fa-check',
+                    'started': 'fas fa-play',
+                    'certificate': 'fas fa-award'
+                };
+                return icons[type] || 'fas fa-bell';
+            }
+
+            setupEventListeners() {
+                // القائمة المتنقلة
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                const sidebar = document.querySelector('.sidebar');
+                
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+
+                // إغلاق القائمة عند النقر خارجها
+                document.addEventListener('click', function(event) {
+                    if (window.innerWidth <= 992) {
+                        const isClickInsideSidebar = sidebar.contains(event.target);
+                        const isClickOnMenuBtn = mobileMenuBtn.contains(event.target);
+                        
+                        if (!isClickInsideSidebar && !isClickOnMenuBtn && sidebar.classList.contains('active')) {
+                            sidebar.classList.remove('active');
+                        }
                     }
                 });
-            }, observerOptions);
-            
-            // Observe elements for animation
-            const animatedElements = document.querySelectorAll('.course-card, .process-step, .section-title');
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(el);
-            });
+
+                // البحث
+                const searchInput = document.getElementById('search-input');
+                searchInput.addEventListener('input', (e) => {
+                    this.handleSearch(e.target.value);
+                });
+
+                // الفيديو المودال
+                const videoModal = document.getElementById('video-modal');
+                const closeModal = document.getElementById('close-modal');
+                
+                closeModal.addEventListener('click', () => {
+                    videoModal.classList.remove('active');
+                    // إيقاف الفيديو عند إغلاق المودال
+                    const modalVideo = document.getElementById('modal-video');
+                    modalVideo.src = modalVideo.src.replace('&autoplay=1', '');
+                });
+
+                videoModal.addEventListener('click', (e) => {
+                    if (e.target === videoModal) {
+                        videoModal.classList.remove('active');
+                        // إيقاف الفيديو عند إغلاق المودال
+                        const modalVideo = document.getElementById('modal-video');
+                        modalVideo.src = modalVideo.src.replace('&autoplay=1', '');
+                    }
+                });
+            }
+
+            setupCourseEventListeners() {
+                // أزرار مشاهدة الفيديو
+                document.querySelectorAll('.watch-video').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const youtubeId = e.target.getAttribute('data-youtube-id');
+                        const courseTitle = e.target.getAttribute('data-course-title');
+                        this.openVideoModal(youtubeId, courseTitle);
+                    });
+                });
+
+                // أزرار إكمال الدرس
+                document.querySelectorAll('.complete-lesson').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                        this.completeLesson(courseId);
+                    });
+                });
+            }
+
+            openVideoModal(youtubeId, courseTitle) {
+                const modal = document.getElementById('video-modal');
+                const modalVideo = document.getElementById('modal-video');
+                const modalTitle = document.getElementById('modal-title');
+                
+                modalVideo.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+                modalTitle.textContent = courseTitle;
+                modal.classList.add('active');
+
+                // تسجيل نشاط المشاهدة
+                this.appState.addActivity({
+                    type: "started",
+                    title: `بدأت مشاهدة ${courseTitle}`,
+                    description: courseTitle,
+                    timestamp: new Date().toISOString()
+                });
+            }
+
+            completeLesson(courseId) {
+                const course = this.appState.state.courses.find(c => c.id === courseId);
+                if (course && course.progress < 100) {
+                    const newProgress = Math.min(course.progress + 10, 100);
+                    this.appState.updateCourse(courseId, { 
+                        progress: newProgress,
+                        completedLessons: Math.min(course.completedLessons + 1, course.totalLessons)
+                    });
+
+                    this.appState.addActivity({
+                        type: "completed",
+                        title: `أكملت درس في ${course.title}`,
+                        description: `التقدم: ${newProgress}%`,
+                        timestamp: new Date().toISOString()
+                    });
+                }
+            }
+
+            handleSearch(query) {
+                if (query.length < 2) {
+                    this.renderCourses(this.appState.state.courses);
+                    return;
+                }
+
+                const filteredCourses = this.appState.state.courses.filter(course =>
+                    course.title.toLowerCase().includes(query.toLowerCase()) ||
+                    course.category.toLowerCase().includes(query.toLowerCase()) ||
+                    course.instructor.toLowerCase().includes(query.toLowerCase())
+                );
+
+                this.renderCourses(filteredCourses);
+            }
+        }
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', () => {
+            window.uiManager = new UIManager();
         });
     </script>
-    <!-- نربط الموقع بـ Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-  // 1. نربط موقعك بمشروع Supabase
-  const supabase = supabase.createClient(
-    'https://your-project.supabase.co',   // ← اكتب رابط مشروعك هنا
-    'your-anon-key'                       // ← اكتب المفتاح العام هنا
-  );
-
-  // 2. نشوف إذا في رابط فيه كلمة "token" بعد #
-  const hash = window.location.hash; // مثال: #token=abc123&type=email
-
-  if (hash) {
-    // 3. نستخرج الـ token من الرابط
-    const params = new URLSearchParams(hash.substring(1)); // نزيل الـ #
-    const token = params.get('token');
-
-    // 4. إذا وجدنا token، نرسله لـ Supabase علشان يتأكد منه
-    if (token) {
-      supabase.auth.verifyOtp({
-        token_hash: token,
-        type: 'email'
-      }).then(({ data, error }) => {
-        if (error) {
-          alert('❌ خطأ: ' + error.message);
-        } else {
-          alert('✅ تم تفعيل حسابك!');
-          // نمسح الـ token من الرابط بعد ما نخلص
-          history.replaceState(null, null, ' ');
-        }
-      });
-    }
-  }
-</script>
 </body>
 </html>
