@@ -15,10 +15,12 @@
             --dark: #0d47a1;
             --text: #1a237e;
             --text-light: #5c6bc0;
-            --background: #f5fbff;
-            --card-bg: #ffffff;
-            --border-radius: 12px;
-            --box-shadow: 0 4px 12px rgba(30, 136, 229, 0.1);
+            --background: linear-gradient(135deg, #1a237e, #1565c0, #1e88e5);
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --border-radius: 16px;
+            --box-shadow: 0 8px 32px rgba(30, 136, 229, 0.2);
             --transition: all 0.3s ease;
         }
 
@@ -31,13 +33,13 @@
 
         body {
             background: var(--background);
-            color: var(--text);
+            color: var(--light);
             min-height: 100vh;
             direction: rtl;
             overflow-x: hidden;
         }
 
-        /* تأثير الفقاعات الخفيف */
+        /* تأثير الفقاعات */
         .bubbles {
             position: fixed;
             width: 100%;
@@ -45,13 +47,12 @@
             top: 0;
             left: 0;
             z-index: -1;
-            opacity: 0.6;
         }
 
         .bubble {
             position: absolute;
             bottom: -100px;
-            background: rgba(100, 181, 246, 0.15);
+            background: rgba(79, 195, 247, 0.3);
             border-radius: 50%;
             animation: rise 20s infinite ease-in;
         }
@@ -82,8 +83,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 30px;
             margin-bottom: 30px;
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
         }
 
         .logo {
@@ -107,11 +113,11 @@
         .logo-text {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--light);
         }
 
         .logo-text span {
-            color: var(--primary);
+            color: var(--accent);
         }
 
         .nav-links {
@@ -120,7 +126,7 @@
         }
 
         .nav-link {
-            color: var(--text);
+            color: var(--light);
             text-decoration: none;
             font-weight: 600;
             padding: 8px 16px;
@@ -129,15 +135,15 @@
         }
 
         .nav-link:hover, .nav-link.active {
-            background: rgba(30, 136, 229, 0.1);
-            color: var(--primary);
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--accent);
         }
 
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: var(--text);
+            color: var(--light);
             font-size: 1.5rem;
             cursor: pointer;
         }
@@ -146,17 +152,24 @@
         .page-title {
             text-align: center;
             margin-bottom: 40px;
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
         }
 
         .page-title h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: var(--dark);
+            color: var(--light);
         }
 
         .page-title p {
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: var(--light);
+            opacity: 0.9;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -171,15 +184,15 @@
         }
 
         .category-filter {
-            background: white;
-            border: 1px solid #e3f2fd;
-            color: var(--text);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--light);
             padding: 10px 20px;
             border-radius: 30px;
             cursor: pointer;
             transition: var(--transition);
             font-weight: 600;
-            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
         }
 
         .category-filter:hover, .category-filter.active {
@@ -202,12 +215,13 @@
             overflow: hidden;
             box-shadow: var(--box-shadow);
             transition: var(--transition);
-            border: 1px solid #e3f2fd;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
         }
 
         .course-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(30, 136, 229, 0.15);
+            box-shadow: 0 12px 28px rgba(30, 136, 229, 0.3);
         }
 
         .course-video-container {
@@ -238,8 +252,8 @@
 
         .course-category {
             display: inline-block;
-            background: rgba(30, 136, 229, 0.1);
-            color: var(--primary);
+            background: rgba(79, 195, 247, 0.2);
+            color: var(--accent);
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -251,7 +265,7 @@
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 12px;
-            color: var(--dark);
+            color: var(--light);
             line-height: 1.4;
         }
 
@@ -267,19 +281,21 @@
             height: 35px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--primary-light);
+            border: 2px solid var(--accent);
         }
 
         .instructor-name {
             font-size: 0.95rem;
-            color: var(--text-light);
+            color: var(--light);
+            opacity: 0.9;
         }
 
         .course-meta {
             display: flex;
             gap: 15px;
             margin-bottom: 15px;
-            color: var(--text-light);
+            color: var(--light);
+            opacity: 0.8;
             font-size: 0.9rem;
         }
 
@@ -323,12 +339,59 @@
 
         .btn-outline {
             background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
+            color: var(--accent);
+            border: 1px solid var(--accent);
         }
 
         .btn-outline:hover {
-            background: rgba(30, 136, 229, 0.1);
+            background: rgba(79, 195, 247, 0.1);
+        }
+
+        /* مشغل الفيديو المدمج */
+        .video-player-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-player {
+            width: 80%;
+            max-width: 900px;
+            background: black;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .video-player iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .close-video {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
         }
 
         /* صفحة تفاصيل الدورة */
@@ -339,7 +402,8 @@
             box-shadow: var(--box-shadow);
             overflow: hidden;
             margin-bottom: 30px;
-            border: 1px solid #e3f2fd;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
         }
 
         .course-header {
@@ -369,6 +433,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
         }
 
         .course-content-section {
@@ -383,29 +451,35 @@
         }
 
         .video-item {
-            background: white;
+            background: var(--glass-bg);
             border-radius: var(--border-radius);
             overflow: hidden;
             transition: var(--transition);
-            border: 1px solid #e3f2fd;
-            box-shadow: var(--box-shadow);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
         }
 
         .video-item:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(30, 136, 229, 0.1);
+            box-shadow: 0 8px 20px rgba(30, 136, 229, 0.2);
         }
 
         .video-thumbnail {
             position: relative;
             height: 180px;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .video-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .video-item:hover .video-thumbnail img {
+            transform: scale(1.05);
         }
 
         .video-duration {
@@ -419,6 +493,28 @@
             font-size: 0.8rem;
         }
 
+        .video-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-thumbnail:hover .video-play-icon {
+            opacity: 1;
+        }
+
         .video-info {
             padding: 18px;
         }
@@ -426,7 +522,7 @@
         .video-title {
             font-weight: 600;
             margin-bottom: 10px;
-            color: var(--dark);
+            color: var(--light);
             font-size: 1.1rem;
         }
 
@@ -435,7 +531,8 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.85rem;
-            color: var(--text-light);
+            color: var(--light);
+            opacity: 0.8;
         }
 
         .back-to-courses {
@@ -458,24 +555,26 @@
 
         /* قسم التواصل */
         .contact-section {
-            background: white;
+            background: var(--glass-bg);
             padding: 30px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             text-align: center;
             margin-top: 40px;
-            border: 1px solid #e3f2fd;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
         }
 
         .contact-section h2 {
-            color: var(--primary-dark);
+            color: var(--accent);
             margin-bottom: 15px;
         }
 
         .contact-section p {
-            color: var(--text-light);
+            color: var(--light);
             margin-bottom: 20px;
             font-size: 1.1rem;
+            opacity: 0.9;
         }
 
         .whatsapp-btn {
@@ -496,6 +595,43 @@
             transform: translateY(-2px);
         }
 
+        /* قسم الإحصائيات */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 60px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--light);
+            opacity: 0.9;
+        }
+
         /* التجاوب */
         @media (max-width: 992px) {
             .courses-grid {
@@ -507,13 +643,15 @@
                 position: absolute;
                 top: 100%;
                 right: 0;
-                background: white;
+                background: var(--glass-bg);
                 flex-direction: column;
                 width: 200px;
                 padding: 15px;
                 border-radius: var(--border-radius);
                 box-shadow: var(--box-shadow);
                 z-index: 100;
+                backdrop-filter: blur(10px);
+                border: 1px solid var(--glass-border);
             }
             
             .nav-links.show {
@@ -551,6 +689,18 @@
                 padding: 8px 15px;
                 font-size: 0.9rem;
             }
+            
+            .video-player {
+                width: 95%;
+            }
+            
+            .video-player iframe {
+                height: 300px;
+            }
+            
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 576px) {
@@ -569,12 +719,30 @@
             .course-content-section {
                 padding: 20px;
             }
+            
+            header {
+                padding: 15px 20px;
+            }
+            
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <!-- تأثير الفقاعات -->
     <div class="bubbles" id="bubbles-container"></div>
+
+    <!-- مشغل الفيديو المدمج -->
+    <div class="video-player-container" id="video-player">
+        <div class="video-player">
+            <button class="close-video" id="close-video">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe id="video-frame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
 
     <div class="container">
         <!-- الهيدر -->
@@ -617,6 +785,26 @@
         <!-- شبكة الدورات -->
         <div class="courses-grid" id="courses-container">
             <!-- سيتم ملؤها ديناميكياً -->
+        </div>
+
+        <!-- قسم الإحصائيات -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number" id="students-count">0</div>
+                <div class="stat-label">طالب مسجل</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="courses-count">0</div>
+                <div class="stat-label">دورة متاحة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="certificates-count">0</div>
+                <div class="stat-label">شهادة معتمدة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="instructors-count">0</div>
+                <div class="stat-label">مدرب محترف</div>
+            </div>
         </div>
     </div>
 
@@ -816,7 +1004,7 @@
         // إنشاء تأثير الفقاعات
         function createBubbles() {
             const bubblesContainer = document.getElementById('bubbles-container');
-            const bubbleCount = 15;
+            const bubbleCount = 20;
             
             for (let i = 0; i < bubbleCount; i++) {
                 const bubble = document.createElement('div');
@@ -906,9 +1094,12 @@
             const videosContainer = document.getElementById('course-videos-container');
             videosContainer.innerHTML = course.videos.map(video => `
                 <div class="video-item">
-                    <div class="video-thumbnail">
+                    <div class="video-thumbnail" data-youtube-id="${video.youtubeId}">
                         <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${video.title}">
                         <span class="video-duration">${video.duration}</span>
+                        <div class="video-play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
                     </div>
                     <div class="video-info">
                         <div class="video-title">${video.title}</div>
@@ -937,10 +1128,28 @@
             document.getElementById('course-details').style.display = 'none';
         }
 
-        // مشاهدة فيديو في نافذة منبثقة
-        function watchVideo(youtubeId, videoTitle) {
-            // فتح الفيديو في نافذة جديدة
-            window.open(`https://www.youtube.com/watch?v=${youtubeId}`, '_blank');
+        // فتح مشغل الفيديو المدمج
+        function openVideoPlayer(youtubeId, videoTitle) {
+            const videoPlayer = document.getElementById('video-player');
+            const videoFrame = document.getElementById('video-frame');
+            
+            videoFrame.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+            videoPlayer.style.display = 'flex';
+            
+            // منع التمرير عند فتح الفيديو
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق مشغل الفيديو المدمج
+        function closeVideoPlayer() {
+            const videoPlayer = document.getElementById('video-player');
+            const videoFrame = document.getElementById('video-frame');
+            
+            videoPlayer.style.display = 'none';
+            videoFrame.src = '';
+            
+            // إعادة التمرير
+            document.body.style.overflow = 'auto';
         }
 
         // إعداد مستمعي الأحداث
@@ -957,7 +1166,7 @@
             document.querySelectorAll('.watch-trailer').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const youtubeId = e.target.getAttribute('data-youtube-id');
-                    watchVideo(youtubeId, 'مقدمة الدورة');
+                    openVideoPlayer(youtubeId, 'مقدمة الدورة');
                 });
             });
         }
@@ -968,7 +1177,15 @@
                 button.addEventListener('click', (e) => {
                     const youtubeId = e.target.getAttribute('data-youtube-id');
                     const videoTitle = e.target.getAttribute('data-video-title');
-                    watchVideo(youtubeId, videoTitle);
+                    openVideoPlayer(youtubeId, videoTitle);
+                });
+            });
+
+            // النقر على الصورة المصغرة للفيديو
+            document.querySelectorAll('.video-thumbnail').forEach(thumbnail => {
+                thumbnail.addEventListener('click', (e) => {
+                    const youtubeId = e.currentTarget.getAttribute('data-youtube-id');
+                    openVideoPlayer(youtubeId, '');
                 });
             });
 
@@ -998,15 +1215,73 @@
             });
         }
 
+        // إعداد الإحصائيات المتحركة
+        function setupStatsAnimation() {
+            const studentsCount = document.getElementById('students-count');
+            const coursesCount = document.getElementById('courses-count');
+            const certificatesCount = document.getElementById('certificates-count');
+            const instructorsCount = document.getElementById('instructors-count');
+            
+            const targetStudents = 12500;
+            const targetCourses = coursesData.length;
+            const targetCertificates = 8500;
+            const targetInstructors = 24;
+            
+            let currentStudents = 0;
+            let currentCourses = 0;
+            let currentCertificates = 0;
+            let currentInstructors = 0;
+            
+            const duration = 2000; // مدة الحركة بالميلي ثانية
+            const interval = 20; // الفترة بين التحديثات
+            const steps = duration / interval;
+            
+            const studentsStep = targetStudents / steps;
+            const coursesStep = targetCourses / steps;
+            const certificatesStep = targetCertificates / steps;
+            const instructorsStep = targetInstructors / steps;
+            
+            const timer = setInterval(() => {
+                currentStudents += studentsStep;
+                currentCourses += coursesStep;
+                currentCertificates += certificatesStep;
+                currentInstructors += instructorsStep;
+                
+                if (currentStudents >= targetStudents) {
+                    currentStudents = targetStudents;
+                    currentCourses = targetCourses;
+                    currentCertificates = targetCertificates;
+                    currentInstructors = targetInstructors;
+                    clearInterval(timer);
+                }
+                
+                studentsCount.textContent = Math.floor(currentStudents).toLocaleString();
+                coursesCount.textContent = Math.floor(currentCourses);
+                certificatesCount.textContent = Math.floor(currentCertificates).toLocaleString();
+                instructorsCount.textContent = Math.floor(currentInstructors);
+            }, interval);
+        }
+
         // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', () => {
             createBubbles();
             renderCourses();
             setupCategoryFilters();
+            setupStatsAnimation();
             
             // زر القائمة المتنقلة
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
                 document.querySelector('.nav-links').classList.toggle('show');
+            });
+            
+            // زر إغلاق الفيديو
+            document.getElementById('close-video').addEventListener('click', closeVideoPlayer);
+            
+            // إغلاق الفيديو عند النقر خارج الصندوق
+            document.getElementById('video-player').addEventListener('click', (e) => {
+                if (e.target.id === 'video-player') {
+                    closeVideoPlayer();
+                }
             });
         });
     </script>
