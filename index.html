@@ -4,19 +4,1013 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skillzoy Academy - منصة التعلم</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== متغيرات التصميم ===== */
+        :root {
+            --primary: #0f172a;
+            --primary-dark: #0a0f1c;
+            --primary-light: #1e293b;
+            --accent: #3b82f6;
+            --light: #f8fafc;
+            --dark: #020617;
+            --text: #e2e8f0;
+            --text-light: #cbd5e1;
+            --background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(55, 65, 81, 0.5);
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --sidebar-active: #3b82f6;
+            --sidebar-width: 280px;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        /* ===== إعدادات عامة ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== نظام الإشعارات ===== */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .notification {
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 350px;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notification.success {
+            background: rgba(16, 185, 129, 0.9);
+            border-left: 4px solid var(--success);
+        }
+
+        .notification.error {
+            background: rgba(239, 68, 68, 0.9);
+            border-left: 4px solid var(--error);
+        }
+
+        .notification.warning {
+            background: rgba(245, 158, 11, 0.9);
+            border-left: 4px solid var(--warning);
+        }
+
+        .notification-icon {
+            font-size: 1.2rem;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+        }
+
+        /* ===== الشريط الجانبي ===== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            transition: var(--transition);
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .nav-section-title {
+            padding: 0 20px 10px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+            border-right: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--sidebar-hover);
+            color: white;
+            border-right-color: var(--accent);
+        }
+
+        .nav-link.active {
+            background: var(--sidebar-active);
+            color: white;
+            border-right-color: white;
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+
+        .user-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+            color: white;
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* ===== المحتوى الرئيسي ===== */
+        .main-content {
+            margin-right: var(--sidebar-width);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .page-title h1 {
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+            color: var(--light);
+            font-weight: 700;
+        }
+
+        .page-title p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== فلاتر التصنيفات ===== */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-filter:hover, .category-filter.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* ===== شبكة الدورات ===== */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+        }
+
+        .course-video-container {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .course-content {
+            padding: 25px;
+        }
+
+        .course-category {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--light);
+            line-height: 1.4;
+        }
+
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .instructor-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+
+        .instructor-name {
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* ===== مشغل الفيديو المدمج ===== */
+        .video-player-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-player {
+            width: 80%;
+            max-width: 900px;
+            background: black;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .video-player iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .close-video {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        /* ===== صفحة تفاصيل الدورة ===== */
+        .course-details {
+            display: none;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .course-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+
+        .course-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .course-header p {
+            opacity: 0.9;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .course-meta-details {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .course-content-section {
+            padding: 30px;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-item {
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .video-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .video-item:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .video-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-thumbnail:hover .video-play-icon {
+            opacity: 1;
+        }
+
+        .video-info {
+            padding: 18px;
+        }
+
+        .video-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--light);
+            font-size: 1.1rem;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .back-to-courses {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .back-to-courses:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== قسم التواصل ===== */
+        .contact-section {
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .contact-section h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .contact-section p {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        /* ===== قسم الإحصائيات ===== */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 60px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        /* ===== الفوتر ===== */
+        footer {
+            background: var(--sidebar-bg);
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .footer-section p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ===== التجاوب ===== */
+        @media (max-width: 992px) {
+            .sidebar {
+                right: -100%;
+            }
+            
+            .sidebar.active {
+                right: 0;
+            }
+            
+            .main-content {
+                margin-right: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .course-meta-details {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            
+            .category-filters {
+                gap: 10px;
+            }
+            
+            .category-filter {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .video-player {
+                width: 95%;
+            }
+            
+            .video-player iframe {
+                height: 300px;
+            }
+            
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 15px;
+            }
+            
+            .course-actions {
+                flex-direction: column;
+            }
+            
+            .course-header {
+                padding: 20px;
+            }
+            
+            .course-content-section {
+                padding: 20px;
+            }
+            
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .notification-container {
+                left: 10px;
+                right: 10px;
+            }
+            
+            .notification {
+                max-width: 100%;
+            }
+        }
+
+        /* ===== زر القائمة المتنقلة ===== */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--accent);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 992px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        /* ===== تخصيص شريط التمرير ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+
+        /* ===== صفحة دوراتي ===== */
+        .my-courses-page {
+            display: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .empty-state p {
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+    </style>
 </head>
 <body>
-    <!-- نظام الإشعارات -->
+    <!-- ===== نظام الإشعارات ===== -->
     <div class="notification-container" id="notification-container"></div>
 
-    <!-- زر القائمة المتنقلة -->
+    <!-- ===== زر القائمة المتنقلة ===== -->
     <button class="mobile-menu-btn">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- الشريط الجانبي -->
+    <!-- ===== الشريط الجانبي ===== -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <a href="#" class="logo">
@@ -32,7 +1026,7 @@
                 <h3 class="nav-section-title">القائمة الرئيسية</h3>
                 <ul class="nav-links">
                     <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="my-courses.html" class="nav-link"><i class="fas fa-user-graduate"></i> دوراتي</a></li>
+                    <li><a href="#" class="nav-link" data-page="my-courses"><i class="fas fa-user-graduate"></i> دوراتي</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> التقدم</a></li>
                     <li><a href="#" class="nav-link"><i class="fas fa-award"></i> الشهادات</a></li>
                 </ul>
@@ -70,7 +1064,7 @@
         </div>
     </aside>
 
-    <!-- مشغل الفيديو المدمج -->
+    <!-- ===== مشغل الفيديو المدمج ===== -->
     <div class="video-player-container" id="video-player">
         <div class="video-player">
             <button class="close-video" id="close-video">
@@ -80,16 +1074,16 @@
         </div>
     </div>
 
-    <!-- المحتوى الرئيسي -->
+    <!-- ===== المحتوى الرئيسي ===== -->
     <main class="main-content">
-        <!-- الصفحة الرئيسية -->
+        <!-- ===== الصفحة الرئيسية ===== -->
         <div class="home-page">
             <div class="page-title">
                 <h1>Skillzoy Academy - منصة التعلم</h1>
                 <p>أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات</p>
             </div>
             
-            <!-- فلاتر التصنيفات -->
+            <!-- ===== فلاتر التصنيفات ===== -->
             <div class="category-filters">
                 <button class="category-filter active" data-category="all">جميع الدورات</button>
                 <button class="category-filter" data-category="programming">برمجة</button>
@@ -98,12 +1092,12 @@
                 <button class="category-filter" data-category="language">لغات</button>
             </div>
             
-            <!-- شبكة الدورات -->
+            <!-- ===== شبكة الدورات ===== -->
             <div class="courses-grid" id="courses-container">
                 <!-- سيتم ملؤها ديناميكياً -->
             </div>
 
-            <!-- قسم الإحصائيات -->
+            <!-- ===== قسم الإحصائيات ===== -->
             <div class="stats-section">
                 <div class="stat-card">
                     <div class="stat-number" id="students-count">0</div>
@@ -123,9 +1117,72 @@
                 </div>
             </div>
         </div>
+
+        <!-- ===== صفحة دوراتي ===== -->
+        <div class="my-courses-page">
+            <div class="page-title">
+                <h1>دوراتي</h1>
+                <p>الدورات التي سجلت فيها ويمكنك متابعتها</p>
+            </div>
+            
+            <div class="courses-grid" id="my-courses-container">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+            
+            <div class="empty-state" id="empty-my-courses" style="display: none;">
+                <i class="fas fa-book-open"></i>
+                <h3>لا توجد دورات مسجلة</h3>
+                <p>لم تسجل في أي دورة بعد. قم بتصفح الدورات المتاحة وسجل في الدورة التي تهمك.</p>
+                <button class="btn btn-primary" id="browse-courses-btn">تصفح الدورات</button>
+            </div>
+        </div>
     </main>
 
-    <!-- الفوتر -->
+    <!-- ===== صفحة تفاصيل الدورة ===== -->
+    <div class="course-details" id="course-details">
+        <div class="course-header">
+            <a href="#" class="back-to-courses" id="back-to-courses">
+                <i class="fas fa-arrow-right"></i> العودة للدورات
+            </a>
+            <h1 id="course-details-title">دورة تطوير الويب الشاملة</h1>
+            <p id="course-details-description">تعلم تطوير الويب من البداية إلى الاحتراف باستخدام HTML, CSS, JavaScript وتقنيات الويب الحديثة</p>
+            <div class="course-meta-details">
+                <div class="meta-item">
+                    <i class="far fa-clock"></i>
+                    <span id="course-total-duration">35 ساعة</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-signal"></i>
+                    <span id="course-level">متقدم</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-user-tie"></i>
+                    <span id="course-instructor">Skillzoy Academy</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-play-circle"></i>
+                    <span id="course-videos-count">5 فيديوهات</span>
+                </div>
+            </div>
+        </div>
+        <div class="course-content-section">
+            <h3>فيديوهات الدورة</h3>
+            <div class="videos-grid" id="course-videos-container">
+                <!-- سيتم ملؤها ديناميكياً -->
+            </div>
+            
+            <!-- ===== قسم التواصل بعد إكمال الدورة ===== -->
+            <div class="contact-section">
+                <h2>مبروك! لقد أكملت الدورة</h2>
+                <p>للحصول على شهادتك المعتمدة، يرجى التواصل معنا عبر الواتساب</p>
+                <a href="https://wa.me/1234567890" class="whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> تواصل معنا على الواتساب
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== الفوتر ===== -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -188,7 +1245,646 @@
         </div>
     </footer>
 
-    <script src="supabase.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // ===== بيانات التطبيق =====
+        // بيانات الدورات
+        const coursesData = [
+            {
+                id: 1,
+                title: "دورة تطوير الويب الشاملة - من الصفر إلى الاحتراف",
+                category: "programming",
+                instructor: "Skillzoy Academy",
+                instructorAvatar: "https://randomuser.me/api/portraits/men/32.jpg",
+                youtubeId: "qz0aGYrrlhU",
+                duration: "35 ساعة",
+                level: "متقدم",
+                description: "تعلم تطوير الويب من البداية إلى الاحتراف باستخدام HTML, CSS, JavaScript وتقنيات الويب الحديثة مع مشاريع عملية",
+                videos: [
+                    { id: 1, title: "مقدمة في تطوير الويب وأساسياته", youtubeId: "qz0aGYrrlhU", duration: "15:30" },
+                    { id: 2, title: "أساسيات HTML5 والعناصر الجديدة", youtubeId: "BsDoLVMnmZs", duration: "22:15" },
+                    { id: 3, title: "تصميم متجاوب مع CSS3 وتقنيات Flexbox", youtubeId: "mU6anWqZJcc", duration: "18:45" },
+                    { id: 4, title: "JavaScript للمبتدئين - المفاهيم الأساسية", youtubeId: "W6NZfCO5SIk", duration: "25:10" },
+                    { id: 5, title: "مشروع تطبيق ويب تفاعلي كامل", youtubeId: "3PHXvlpOkf4", duration: "30:05" }
+                ]
+            },
+            {
+                id: 2,
+                title: "دورة تصميم UI/UX - من المبادئ إلى الاحتراف",
+                category: "design",
+                instructor: "Skillzoy Academy",
+                instructorAvatar: "https://randomuser.me/api/portraits/women/44.jpg",
+                youtubeId: "c9Wg6Cb_YlU",
+                duration: "28 ساعة",
+                level: "متوسط",
+                description: "تعلم تصميم واجهات المستخدم وتجربة المستخدم باستخدام أحدث الأدوات والتقنيات مع مشاريع عملية",
+                videos: [
+                    { id: 1, title: "مقدمة في تصميم UI/UX وأهميته", youtubeId: "c9Wg6Cb_YlU", duration: "18:20" },
+                    { id: 2, title: "مبادئ التصميم المرئي والألوان", youtubeId: "ZK86XQ1iFVs", duration: "22:10" },
+                    { id: 3, title: "تصميم واجهات الجوال والتجربة المثلى", youtubeId: "HZuk6Wkx_Eg", duration: "25:45" },
+                    { id: 4, title: "أدوات المصمم المحترف - Figma وAdobe XD", youtubeId: "ZByhs3gLGT0", duration: "20:30" },
+                    { id: 5, title: "مشروع تصميم تطبيق كامل من البداية", youtubeId: "3q3FV65ZrUs", duration: "35:15" }
+                ]
+            },
+            {
+                id: 3,
+                title: "دورة إدارة المشاريع الاحترافية - PMP و Agile",
+                category: "business",
+                instructor: "Skillzoy Academy",
+                instructorAvatar: "https://randomuser.me/api/portraits/men/67.jpg",
+                youtubeId: "dIFN_8bbu4o",
+                duration: "32 ساعة",
+                level: "متقدم",
+                description: "تعلم كيفية إدارة المشاريع باحترافية باستخدام منهجيات PMP و Agile مع دراسات حالة عملية",
+                videos: [
+                    { id: 1, title: "مقدمة في إدارة المشاريع والمفاهيم الأساسية", youtubeId: "dIFN_8bbu4o", duration: "20:15" },
+                    { id: 2, title: "التخطيط الاستراتيجي للمشاريع", youtubeId: "EZTQUXW1Q6I", duration: "25:30" },
+                    { id: 3, title: "إدارة المخاطر والميزانية والموارد", youtubeId: "p4QqMgg3XrQ", duration: "22:45" },
+                    { id: 4, title: "منهجية Agile لإدارة المشاريع", youtubeId: "Z9QbYZh1YXY", duration: "28:20" },
+                    { id: 5, title: "دراسة حالة مشروع ناجح وتحليل النتائج", youtubeId: "xT1nZ2a8pJ4", duration: "30:10" }
+                ]
+            },
+            {
+                id: 4,
+                title: "دورة تعلم اللغة الإنجليزية - المحادثة والكتابة",
+                category: "language",
+                instructor: "Skillzoy Academy",
+                instructorAvatar: "https://randomuser.me/api/portraits/women/68.jpg",
+                youtubeId: "2Y3F6YhPeYU",
+                duration: "40 ساعة",
+                level: "مبتدئ",
+                description: "تعلم اللغة الإنجليزية من الصفر حتى الاحتراف مع تمارين تفاعلية ونطق صحيح ومحادثة يومية",
+                videos: [
+                    { id: 1, title: "مقدمة وأساسيات اللغة الإنجليزية", youtubeId: "2Y3F6YhPeYU", duration: "18:20" },
+                    { id: 2, title: "القواعد الأساسية للنطق والأصوات", youtubeId: "qX9_N2nLq3I", duration: "22:10" },
+                    { id: 3, title: "المحادثة اليومية والمواقف الحياتية", youtubeId: "7ES6HazQ2cQ", duration: "25:45" },
+                    { id: 4, title: "المفردات المتقدمة والتعبيرات الشائعة", youtubeId: "8Q8l5pR4W5k", duration: "20:30" },
+                    { id: 5, title: "الكتابة والتعبير بطلاقة", youtubeId: "5JmOM0ZQy4Q", duration: "28:15" }
+                ]
+            }
+        ];
+
+        // ===== إعداد Supabase (محاكاة) =====
+        // في التطبيق الحقيقي، ستقوم باستبدال هذا برمز Supabase الفعلي
+        const supabaseMock = {
+            // محاكاة قاعدة بيانات محلية للتخزين
+            storage: {
+                userCourses: JSON.parse(localStorage.getItem('userCourses')) || []
+            },
+            
+            // الحصول على الدورات المسجلة للمستخدم
+            getUserEnrolledCourses: function(userId) {
+                return this.storage.userCourses
+                    .filter(uc => uc.userId === userId)
+                    .map(uc => uc.courseId);
+            },
+            
+            // تسجيل المستخدم في دورة
+            enrollUserInCourse: function(userId, courseId) {
+                // التحقق من عدم تسجيل المستخدم مسبقاً
+                const existing = this.storage.userCourses.find(
+                    uc => uc.userId === userId && uc.courseId === courseId
+                );
+                
+                if (existing) {
+                    return { success: false, error: 'User already enrolled in this course' };
+                }
+                
+                // إضافة التسجيل
+                this.storage.userCourses.push({
+                    userId,
+                    courseId,
+                    enrolledAt: new Date().toISOString()
+                });
+                
+                // حفظ في localStorage
+                localStorage.setItem('userCourses', JSON.stringify(this.storage.userCourses));
+                
+                return { success: true };
+            }
+        };
+
+        // ===== إدارة المستخدم =====
+        let currentUser = {
+            id: 1,
+            name: "نشط الان",
+            avatar: "https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff"
+        };
+
+        // ===== نظام الإشعارات =====
+        function showNotification(title, message, type = 'success') {
+            const notificationContainer = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = type === 'success' ? 'fas fa-check-circle' : 
+                         type === 'error' ? 'fas fa-exclamation-circle' : 
+                         'fas fa-info-circle';
+            
+            // تدابير أمنية لـ innerHTML
+            const safeTitle = escapeHtml(title);
+            const safeMessage = escapeHtml(message);
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${safeTitle}</div>
+                    <div class="notification-message">${safeMessage}</div>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // إظهار الإشعار
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // إغلاق الإشعار عند النقر على الزر
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 400);
+            });
+            
+            // إزالة الإشعار تلقائياً بعد 5 ثوانٍ
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.remove();
+                        }
+                    }, 400);
+                }
+            }, 5000);
+        }
+
+        // ===== وظائف الأمان =====
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // ===== إدارة الدورات =====
+        // التحقق مما إذا كان المستخدم مسجل في الدورة
+        function isUserEnrolled(courseId) {
+            const enrolledCourses = supabaseMock.getUserEnrolledCourses(currentUser.id);
+            return enrolledCourses.includes(courseId);
+        }
+
+        // تسجيل المستخدم في دورة
+        function enrollUserInCourse(courseId) {
+            const result = supabaseMock.enrollUserInCourse(currentUser.id, courseId);
+            
+            if (result.success) {
+                showNotification('تم التسجيل بنجاح', 'تم تسجيلك في الدورة بنجاح! يمكنك الآن الوصول إلى محتوى الدورة من صفحة "دوراتي".', 'success');
+                return true;
+            } else {
+                showNotification('معلومات', 'أنت مسجل مسبقاً في هذه الدورة.', 'warning');
+                return false;
+            }
+        }
+
+        // الحصول على اسم التصنيف
+        function getCategoryName(category) {
+            const categories = {
+                'programming': 'برمجة',
+                'design': 'تصميم',
+                'business': 'أعمال',
+                'language': 'لغات'
+            };
+            return categories[category] || category;
+        }
+
+        // ===== وظائف العرض =====
+        // عرض الدورات في الصفحة الرئيسية
+        function renderCourses(category = 'all') {
+            const container = document.getElementById('courses-container');
+            const filteredCourses = category === 'all' 
+                ? coursesData 
+                : coursesData.filter(course => course.category === category);
+            
+            // استخدام innerHTML مع تدابير أمنية
+            let coursesHTML = '';
+            filteredCourses.forEach(course => {
+                const isEnrolled = isUserEnrolled(course.id);
+                
+                // تنظيف البيانات قبل العرض
+                const safeTitle = escapeHtml(course.title);
+                const safeInstructor = escapeHtml(course.instructor);
+                const safeDescription = escapeHtml(course.description);
+                
+                coursesHTML += `
+                <div class="course-card" data-course-id="${course.id}">
+                    <div class="course-video-container">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/${course.youtubeId}?rel=0&modestbranding=1" 
+                                    title="${safeTitle}"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">${getCategoryName(course.category)}</span>
+                        <h3 class="course-title">${safeTitle}</h3>
+                        <div class="course-instructor">
+                            <img src="${course.instructorAvatar}" alt="${safeInstructor}" class="instructor-avatar">
+                            <span class="instructor-name">${safeInstructor}</span>
+                        </div>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> ${course.duration}</span>
+                            <span><i class="fas fa-signal"></i> ${course.level}</span>
+                        </div>
+                        <div class="course-actions">
+                            ${isEnrolled ? 
+                                `<button class="btn btn-success view-course-details" data-course-id="${course.id}">
+                                    <i class="fas fa-play"></i> عرض الدورة
+                                </button>` :
+                                `<button class="btn btn-primary enroll-course" data-course-id="${course.id}">
+                                    <i class="fas fa-user-plus"></i> التسجيل في الدورة
+                                </button>`
+                            }
+                            <button class="btn btn-outline watch-trailer" data-youtube-id="${course.youtubeId}">
+                                <i class="fas fa-eye"></i> مشاهدة المقدمة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `});
+            
+            container.innerHTML = coursesHTML;
+            setupCourseEventListeners();
+        }
+
+        // عرض الدورات المسجلة في صفحة "دوراتي"
+        function renderMyCourses() {
+            const container = document.getElementById('my-courses-container');
+            const emptyState = document.getElementById('empty-my-courses');
+            
+            const enrolledCourses = coursesData.filter(course => 
+                isUserEnrolled(course.id)
+            );
+            
+            if (enrolledCourses.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            // استخدام innerHTML مع تدابير أمنية
+            let coursesHTML = '';
+            enrolledCourses.forEach(course => {
+                // تنظيف البيانات قبل العرض
+                const safeTitle = escapeHtml(course.title);
+                const safeInstructor = escapeHtml(course.instructor);
+                
+                coursesHTML += `
+                <div class="course-card" data-course-id="${course.id}">
+                    <div class="course-video-container">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/${course.youtubeId}?rel=0&modestbranding=1" 
+                                    title="${safeTitle}"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <span class="course-category">${getCategoryName(course.category)}</span>
+                        <h3 class="course-title">${safeTitle}</h3>
+                        <div class="course-instructor">
+                            <img src="${course.instructorAvatar}" alt="${safeInstructor}" class="instructor-avatar">
+                            <span class="instructor-name">${safeInstructor}</span>
+                        </div>
+                        <div class="course-meta">
+                            <span><i class="far fa-clock"></i> ${course.duration}</span>
+                            <span><i class="fas fa-signal"></i> ${course.level}</span>
+                        </div>
+                        <div class="course-actions">
+                            <button class="btn btn-success view-course-details" data-course-id="${course.id}">
+                                <i class="fas fa-play"></i> عرض الدورة
+                            </button>
+                            <button class="btn btn-outline watch-trailer" data-youtube-id="${course.youtubeId}">
+                                <i class="fas fa-eye"></i> مشاهدة المقدمة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `});
+            
+            container.innerHTML = coursesHTML;
+            setupCourseEventListeners();
+        }
+
+        // عرض صفحة تفاصيل الدورة
+        function renderCourseDetails(courseId) {
+            const course = coursesData.find(c => c.id === courseId);
+            if (!course) return;
+            
+            // تنظيف البيانات قبل العرض
+            const safeTitle = escapeHtml(course.title);
+            const safeDescription = escapeHtml(course.description);
+            const safeInstructor = escapeHtml(course.instructor);
+            
+            document.getElementById('course-details-title').textContent = safeTitle;
+            document.getElementById('course-details-description').textContent = safeDescription;
+            document.getElementById('course-total-duration').textContent = course.duration;
+            document.getElementById('course-level').textContent = course.level;
+            document.getElementById('course-instructor').textContent = safeInstructor;
+            document.getElementById('course-videos-count').textContent = `${course.videos.length} فيديوهات`;
+
+            const videosContainer = document.getElementById('course-videos-container');
+            
+            // استخدام innerHTML مع تدابير أمنية
+            let videosHTML = '';
+            course.videos.forEach(video => {
+                const safeVideoTitle = escapeHtml(video.title);
+                
+                videosHTML += `
+                <div class="video-item">
+                    <div class="video-thumbnail" data-youtube-id="${video.youtubeId}">
+                        <img src="https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg" alt="${safeVideoTitle}">
+                        <span class="video-duration">${video.duration}</span>
+                        <div class="video-play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-title">${safeVideoTitle}</div>
+                        <div class="video-meta">
+                            <span>مدة الفيديو: ${video.duration}</span>
+                            <button class="btn btn-primary watch-video-btn" 
+                                    data-youtube-id="${video.youtubeId}" 
+                                    data-video-title="${safeVideoTitle}">
+                                <i class="fas fa-play"></i> مشاهدة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `});
+            
+            videosContainer.innerHTML = videosHTML;
+            setupVideoEventListeners();
+            
+            // إظهار صفحة التفاصيل وإخفاء الصفحات الأخرى
+            document.querySelector('.home-page').style.display = 'none';
+            document.querySelector('.my-courses-page').style.display = 'none';
+            document.getElementById('course-details').style.display = 'block';
+        }
+
+        // ===== إدارة الصفحات =====
+        // إظهار الصفحة الرئيسية
+        function showHomePage() {
+            document.querySelector('.home-page').style.display = 'block';
+            document.querySelector('.my-courses-page').style.display = 'none';
+            document.getElementById('course-details').style.display = 'none';
+        }
+
+        // إظهار صفحة دوراتي
+        function showMyCoursesPage() {
+            document.querySelector('.home-page').style.display = 'none';
+            document.querySelector('.my-courses-page').style.display = 'block';
+            document.getElementById('course-details').style.display = 'none';
+            renderMyCourses();
+        }
+
+        // ===== إدارة الفيديو =====
+        // فتح مشغل الفيديو المدمج
+        function openVideoPlayer(youtubeId, videoTitle) {
+            const videoPlayer = document.getElementById('video-player');
+            const videoFrame = document.getElementById('video-frame');
+            
+            videoFrame.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`;
+            videoPlayer.style.display = 'flex';
+            
+            // منع التمرير عند فتح الفيديو
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق مشغل الفيديو المدمج
+        function closeVideoPlayer() {
+            const videoPlayer = document.getElementById('video-player');
+            const videoFrame = document.getElementById('video-frame');
+            
+            videoPlayer.style.display = 'none';
+            videoFrame.src = '';
+            
+            // إعادة التمرير
+            document.body.style.overflow = 'auto';
+        }
+
+        // ===== إعداد مستمعي الأحداث =====
+        function setupCourseEventListeners() {
+            // أزرار التسجيل في الدورة
+            document.querySelectorAll('.enroll-course').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                    if (enrollUserInCourse(courseId)) {
+                        renderCourses(); // إعادة عرض الدورات لتحديث حالة التسجيل
+                    }
+                });
+            });
+
+            // أزرار عرض تفاصيل الدورة
+            document.querySelectorAll('.view-course-details').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const courseId = parseInt(e.target.getAttribute('data-course-id'));
+                    renderCourseDetails(courseId);
+                });
+            });
+
+            // أزرار مشاهدة المقدمة
+            document.querySelectorAll('.watch-trailer').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const youtubeId = e.target.getAttribute('data-youtube-id');
+                    openVideoPlayer(youtubeId, 'مقدمة الدورة');
+                });
+            });
+        }
+
+        function setupVideoEventListeners() {
+            // أزرار مشاهدة الفيديو في صفحة التفاصيل
+            document.querySelectorAll('.watch-video-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const youtubeId = e.target.getAttribute('data-youtube-id');
+                    const videoTitle = e.target.getAttribute('data-video-title');
+                    openVideoPlayer(youtubeId, videoTitle);
+                });
+            });
+
+            // النقر على الصورة المصغرة للفيديو
+            document.querySelectorAll('.video-thumbnail').forEach(thumbnail => {
+                thumbnail.addEventListener('click', (e) => {
+                    const youtubeId = e.currentTarget.getAttribute('data-youtube-id');
+                    openVideoPlayer(youtubeId, '');
+                });
+            });
+
+            // زر العودة للدورات
+            document.getElementById('back-to-courses').addEventListener('click', (e) => {
+                e.preventDefault();
+                showHomePage();
+            });
+        }
+
+        // إعداد فلاتر التصنيفات
+        function setupCategoryFilters() {
+            document.querySelectorAll('.category-filter').forEach(filter => {
+                filter.addEventListener('click', (e) => {
+                    // إزالة النشط من جميع الفلاتر
+                    document.querySelectorAll('.category-filter').forEach(f => {
+                        f.classList.remove('active');
+                    });
+                    
+                    // إضافة النشط للفلتر المحدد
+                    e.target.classList.add('active');
+                    
+                    // تصفية الدورات حسب التصنيف
+                    const category = e.target.getAttribute('data-category');
+                    renderCourses(category);
+                });
+            });
+        }
+
+        // إعداد الإحصائيات المتحركة
+        function setupStatsAnimation() {
+            const studentsCount = document.getElementById('students-count');
+            const coursesCount = document.getElementById('courses-count');
+            const certificatesCount = document.getElementById('certificates-count');
+            const instructorsCount = document.getElementById('instructors-count');
+            
+            const targetStudents = 12500;
+            const targetCourses = coursesData.length;
+            const targetCertificates = 8500;
+            const targetInstructors = 24;
+            
+            let currentStudents = 0;
+            let currentCourses = 0;
+            let currentCertificates = 0;
+            let currentInstructors = 0;
+            
+            const duration = 2000; // مدة الحركة بالميلي ثانية
+            const interval = 20; // الفترة بين التحديثات
+            const steps = duration / interval;
+            
+            const studentsStep = targetStudents / steps;
+            const coursesStep = targetCourses / steps;
+            const certificatesStep = targetCertificates / steps;
+            const instructorsStep = targetInstructors / steps;
+            
+            const timer = setInterval(() => {
+                currentStudents += studentsStep;
+                currentCourses += coursesStep;
+                currentCertificates += certificatesStep;
+                currentInstructors += instructorsStep;
+                
+                if (currentStudents >= targetStudents) {
+                    currentStudents = targetStudents;
+                    currentCourses = targetCourses;
+                    currentCertificates = targetCertificates;
+                    currentInstructors = targetInstructors;
+                    clearInterval(timer);
+                }
+                
+                studentsCount.textContent = Math.floor(currentStudents).toLocaleString();
+                coursesCount.textContent = Math.floor(currentCourses);
+                certificatesCount.textContent = Math.floor(currentCertificates).toLocaleString();
+                instructorsCount.textContent = Math.floor(currentInstructors);
+            }, interval);
+        }
+
+        // ===== تهيئة التطبيق =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // تحميل البيانات الأولية
+            renderCourses();
+            setupCategoryFilters();
+            setupStatsAnimation();
+            
+            // زر القائمة المتنقلة
+            document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+                document.querySelector('.sidebar').classList.toggle('active');
+            });
+            
+            // زر إغلاق الفيديو
+            document.getElementById('close-video').addEventListener('click', closeVideoPlayer);
+            
+            // إغلاق الفيديو عند النقر خارج الصندوق
+            document.getElementById('video-player').addEventListener('click', (e) => {
+                if (e.target.id === 'video-player') {
+                    closeVideoPlayer();
+                }
+            });
+
+            // إغلاق الشريط الجانبي عند النقر خارجها في الشاشات الصغيرة
+            document.addEventListener('click', (e) => {
+                const sidebar = document.querySelector('.sidebar');
+                const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+                
+                if (window.innerWidth <= 992 && 
+                    !sidebar.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target) && 
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // تفعيل الروابط في الشريط الجانبي
+            document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // إزالة النشط من جميع الروابط
+                    document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => {
+                        l.classList.remove('active');
+                    });
+                    
+                    // إضافة النشط للرابط المحدد
+                    e.target.classList.add('active');
+                    
+                    // التنقل بين الصفحات
+                    const page = e.target.getAttribute('data-page');
+                    if (page === 'home') {
+                        showHomePage();
+                    } else if (page === 'my-courses') {
+                        showMyCoursesPage();
+                    }
+                    
+                    // إغلاق الشريط في الشاشات الصغيرة
+                    if (window.innerWidth <= 992) {
+                        document.querySelector('.sidebar').classList.remove('active');
+                    }
+                });
+            });
+
+            // زر تصفح الدورات في حالة عدم وجود دورات مسجلة
+            document.getElementById('browse-courses-btn').addEventListener('click', () => {
+                showHomePage();
+                document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector('[data-page="home"]').classList.add('active');
+            });
+            
+            // اختبار النظام
+            console.log('✅ Skillzoy Academy System Initialized Successfully');
+            console.log('📊 Courses Data:', coursesData);
+            console.log('👤 Current User:', currentUser);
+            console.log('🎯 Supabase Mock:', supabaseMock);
+        });
+    </script>
 </body>
 </html>
