@@ -1,95 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دوراتي - Skillzoy Academy</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- نظام الإشعارات -->
-    <div class="notification-container" id="notification-container"></div>
-
-    <!-- زر القائمة المتنقلة -->
-    <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- الشريط الجانبي -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <span>Skillzoy Academy</span>
-            </a>
-        </div>
-        
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <h3 class="nav-section-title">القائمة الرئيسية</h3>
-                <ul class="nav-links">
-                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
-                    <li><a href="my-courses.html" class="nav-link active"><i class="fas fa-user-graduate"></i> دوراتي</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-chart-line"></i> التقدم</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-award"></i> الشهادات</a></li>
-                </ul>
-            </div>
-            
-            <div class="nav-section">
-                <h3 class="nav-section-title">المحتوى التعليمي</h3>
-                <ul class="nav-links">
-                    <li><a href="#" class="nav-link"><i class="fas fa-play-circle"></i> الفيديوهات</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> المواد الدراسية</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> الواجبات</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-question-circle"></i> الاختبارات</a></li>
-                </ul>
-            </div>
-            
-            <div class="nav-section">
-                <h3 class="nav-section-title">الحساب والإعدادات</h3>
-                <ul class="footer-links">
-                    <li><a href="profiles.html" class="nav-link"><i class="fas fa-user"></i> الملف الشخصي</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-question"></i> المساعدة</a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a></li>
-                </ul>
-            </div>
-        </nav>
-        
-        <div class="sidebar-footer">
-            <div class="user-profile">
-                <img src="https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff" alt="صورة المستخدم" class="user-avatar">
-                <div class="user-info">
-                    <h4> نشط الان 🟢</h4>
-                    <p>👨‍🎓طالب</p>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <!-- المحتوى الرئيسي -->
-    <main class="main-content">
-        <div class="page-title">
-            <h1>دوراتي</h1>
-            <p>الدورات التي سجلت فيها ويمكنك متابعتها</p>
-        </div>
-        
-        <div class="courses-grid" id="my-courses-container">
-            <!-- سيتم ملؤها ديناميكياً -->
-        </div>
-        
-        <div class="empty-state" id="empty-my-courses" style="display: none;">
-            <i class="fas fa-book-open"></i>
-            <h3>لا توجد دورات مسجلة</h3>
-            <p>لم تسجل في أي دورة بعد. قم بتصفح الدورات المتاحة وسجل في الدورة التي تهمك.</p>
-            <a href="index.html" class="btn btn-primary">تصفح الدورات</a>
-        </div>
-    </main>
-
-    <script src="supabase.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
