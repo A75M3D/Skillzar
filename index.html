@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إيجار بلس+Ejar plus - منصة عقارات للإيجار</title>
+    <title>إيجار بلس - منصة عقارات للإيجار</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -135,32 +135,23 @@
             transition: all 0.3s ease;
         }
         
-        /* تصميم محسن للفلترة */
-        .filter-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
         /* تصميم محسن لزر خدمة العملاء */
         .customer-service-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.25);
+            background: none;
+            color: #3b82f6;
+            padding: 8px;
+            border-radius: 50%;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
         }
         
         .customer-service-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3);
         }
         
         /* تصميم بطاقات العقارات المحسن */
@@ -184,6 +175,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             border-left: 4px solid #3b82f6;
             transition: all 0.3s ease;
+            text-align: center;
         }
         
         .stat-card:hover {
@@ -249,6 +241,16 @@
         }
         
         /* تصميم محسن للفوتر */
+        .footer {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+        }
+        
+        .dark-mode .footer {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+        }
+        
         .footer-links a {
             position: relative;
             transition: all 0.3s ease;
@@ -261,7 +263,7 @@
             right: 0;
             width: 0;
             height: 2px;
-            background: #3b82f6;
+            background: #ffffff;
             transition: width 0.3s ease;
         }
         
@@ -325,22 +327,211 @@
             background-size: 16px 12px;
             padding-left: 2.5rem;
         }
+        
+        /* أيقونات الإحصائيات المحسنة */
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 28px;
+        }
+        
+        .stats-counter {
+            transition: all 0.5s ease;
+        }
+        
+        /* تحسينات للهيرو سيكشن */
+        .hero-section {
+            height: 50vh;
+            min-height: 400px;
+            position: relative;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-bottom: 40px;
+        }
+        
+        /* إزالة المسافات الزائدة */
+        .no-gap {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* تحسينات للعداد */
+        .stats-section {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        
+        /* تحسينات شاشة التحميل */
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* تحسينات للشبكة */
+        .network-loading {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .network-spinner {
+            width: 100%;
+            height: 100%;
+            border: 4px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* شاشة تحميل العروض في المنتصف */
+        .properties-loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 300px;
+        }
+        
+        .properties-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        /* إشعار مشكلة الشبكة */
+        .network-error {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 16px;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            max-width: 350px;
+        }
+        
+        .network-error-icon {
+            background: #ef4444;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            color: white;
+            font-size: 18px;
+        }
+        
+        /* شريط التقدم */
+        .progress-bar {
+            width: 300px;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- شاشة التحميل -->
+    <!-- شاشة التحميل الرئيسية -->
     <div id="loadingScreen" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
-        <div class="text-blue-500 text-6xl mb-4">
-            <i class="fas fa-home"></i>
+        <div class="text-center">
+            <i class="fas fa-home text-6xl text-blue-500 mb-4"></i>
+            <div class="text-3xl font-bold text-blue-600 mb-2">إيجار بلس</div>
+            <div class="text-gray-700 text-xl mb-4">جاري تحميل المنصة...</div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
         </div>
-        <div class="text-gray-700 text-2xl font-bold mb-4">جاري التحميل...</div>
-        <div class="w-64 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div id="loadingBar" class="h-full bg-gradient-to-r from-blue-500 to-cyan-400" style="width: 0%"></div>
+    </div>
+
+    <!-- مؤشر تحميل الشبكة -->
+    <div id="networkLoading" class="network-loading">
+        <div class="network-spinner"></div>
+    </div>
+
+    <!-- شاشة تحميل العروض في المنتصف -->
+    <div id="propertiesLoading" class="properties-loading">
+        <div class="properties-loading-spinner"></div>
+        <div class="text-gray-700 font-bold">جاري تحميل العروض...</div>
+        <p class="text-gray-500 text-sm mt-2">يرجى الانتظار</p>
+    </div>
+
+    <!-- إشعار مشكلة الشبكة -->
+    <div id="networkError" class="network-error">
+        <div class="network-error-icon">
+            <i class="fas fa-wifi"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-red-800">مشكلة في الاتصال</h4>
+            <p class="text-red-600 text-sm mt-1">يبدو أن هناك مشكلة في اتصال الإنترنت. يرجى التحقق من الشبكة.</p>
         </div>
     </div>
 
     <!-- الشريط الجانبي -->
-    <div id="sidebar" class="sidebar fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 overflow-y-auto">
+    <div id="sidebar" class="sidebar fixed top-0 right-0 h-full w-80 bg-white z-50 overflow-y-auto">
         <div class="p-6">
             <div class="flex justify-between items-center mb-8">
                 <div class="flex items-center">
@@ -409,7 +600,7 @@
     <!-- المحتوى الرئيسي -->
     <div id="mainContent" class="hidden">
         <!-- Header -->
-        <header class="bg-white shadow-sm border-b sticky top-0 z-40">
+        <header class="bg-white border-b sticky top-0 z-40">
             <div class="container mx-auto px-4">
                 <div class="flex justify-between items-center py-4">
                     <div class="flex items-center">
@@ -432,8 +623,7 @@
                     
                     <div class="flex items-center space-x-3 space-x-reverse">
                         <button id="customerService" class="customer-service-btn">
-                            <i class="fab fa-whatsapp"></i>
-                            خدمة العملاء
+                            <i class="fas fa-headset text-xl"></i>
                         </button>
                         <button id="themeToggleMobile" class="text-gray-600 hover:text-blue-500 text-xl">
                             <i class="fas fa-moon"></i>
@@ -443,101 +633,59 @@
             </div>
         </header>
 
-        <!-- Hero Section -->
-        <section id="home" class="relative py-20 bg-gradient-to-r from-blue-600 to-cyan-600 text-white overflow-hidden">
-            <!-- صورة الخلفية -->
-            <div class="absolute inset-0 bg-black opacity-20 z-0"></div>
-            <div class="absolute inset-0 z-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80')"></div>
+        <!-- Hero Section - محسنة -->
+        <section id="home" class="hero-section relative text-white overflow-hidden">
+            <!-- صورة الخلفية المحسنة -->
+            <img src="https://i.ibb.co/VW2jFCkK/Picsart-25-10-25-16-37-49-337.jpg" alt="خلفية إيجار بلس" class="hero-bg">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60 z-0"></div>
             
-            <div class="container mx-auto px-4 text-center relative z-10">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6 hero-title">Ejar Plus+إيجار بلس</h1>
-                <p class="text-xl mb-8 max-w-2xl mx-auto">منصة عقارية متكاملة تجمع بين أفضل العروض العقارية وأحدث تقنيات البحث</p>
-                
-                <!-- شارات الثقة -->
-                <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <div class="trust-badge flex items-center">
-                        <i class="fas fa-shield-alt text-green-400 ml-2"></i>
-                        <span>منصة آمنة وموثوقة</span>
-                    </div>
-                    <div class="trust-badge flex items-center">
-                        <i class="fas fa-clock text-yellow-400 ml-2"></i>
-                        <span>خدمة عملاء 24/7</span>
-                    </div>
-                    <div class="trust-badge flex items-center">
-                        <i class="fas fa-check-circle text-blue-400 ml-2"></i>
-                        <span>عقارات موثقة</span>
-                    </div>
+            <div class="container mx-auto px-4 h-full flex flex-col justify-center hero-content">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Ejar plus | ايجار بلس</h1>
+                    <p class="text-xl md:text-2xl mb-6 max-w-2xl mx-auto">منصة عقارية متكاملة تجمع بين أفضل العروض العقارية وأحدث تقنيات البحث</p>
                 </div>
             </div>
         </section>
 
-        <!-- قسم الفلترة -->
-        <section class="py-12 relative -mt-10 z-20">
+        <!-- قسم الإحصائيات - محسن -->
+        <section class="stats-section py-12 bg-white no-gap">
             <div class="container mx-auto px-4">
-                <!-- نموذج البحث مع تأثير الزجاج -->
-                <div class="filter-section glass-effect max-w-5xl mx-auto">
-                    <h3 class="text-2xl font-bold text-white mb-6 text-center">ابحث عن عقارك المثالي</h3>
-                    <form id="searchForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div>
-                            <label class="block text-white mb-2 font-medium">الحي</label>
-                            <select id="neighborhood" class="w-full form-input select-arrow">
-                                <option value="">جميع الأحياء</option>
-                                <option value="النخيل">حي النخيل</option>
-                                <option value="الربيع">حي الربيع</option>
-                                <option value="العليا">حي العليا</option>
-                                <option value="السلام">حي السلام</option>
-                                <option value="الفيصلية">حي الفيصلية</option>
-                                <option value="اخر">حي اخر</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-white mb-2 font-medium">نوع العقار</label>
-                            <select id="propertyType" class="w-full form-input select-arrow">
-                                <option value="">الكل</option>
-                                <option value="شقة">شقة</option>
-                                <option value="فيلا">فيلا</option>
-                                <option value="استوديو">استوديو</option>
-                                <option value="منزل">منزل</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-white mb-2 font-medium">السعر (ريال/شهري)</label>
-                            <input type="number" id="maxPrice" placeholder="الحد الأقصى" class="w-full form-input">
-                        </div>
-                        
-                        <div class="flex items-end">
-                            <button type="submit" class="w-full bg-white text-blue-600 p-3 rounded-lg hover:bg-blue-50 transition-colors flex items-center justify-center font-bold">
-                                <i class="fas fa-search ml-2"></i>
-                                بحث
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- قسم الإحصائيات -->
-        <section class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800 section-title">إحصائيات المنصة</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 section-title">إحصائيات المنصة</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <!-- سمسار نشط -->
                     <div class="stat-card">
-                        <div class="text-4xl font-bold mb-2 text-blue-600" id="statProperties">0</div>
+                        <div class="stat-icon bg-blue-100 text-blue-500">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="text-4xl font-bold mb-2 text-blue-600 stats-counter" id="statBroker">0</div>
+                        <p class="text-gray-600">سمسار نشط</p>
+                    </div>
+                    
+                    <!-- مالك عقار -->
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green-100 text-green-500">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="text-4xl font-bold mb-2 text-green-600 stats-counter" id="statOwner">0</div>
+                        <p class="text-gray-600">مالك عقار</p>
+                    </div>
+                    
+                    <!-- وكيل -->
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple-100 text-purple-500">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="text-4xl font-bold mb-2 text-purple-600 stats-counter" id="statAgent">0</div>
+                        <p class="text-gray-600">وكيل</p>
+                    </div>
+                    
+                    <!-- عقار متاح -->
+                    <div class="stat-card">
+                        <div class="stat-icon bg-amber-100 text-amber-500">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="text-4xl font-bold mb-2 text-amber-600 stats-counter" id="statProperties">0</div>
                         <p class="text-gray-600">عقار متاح</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="text-4xl font-bold mb-2 text-green-600" id="statNeighborhoods">0</div>
-                        <p class="text-gray-600">حي مختلف</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="text-4xl font-bold mb-2 text-yellow-600" id="statTypes">0</div>
-                        <p class="text-gray-600">نوع عقار</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="text-4xl font-bold mb-2 text-purple-600" id="statActive">24/7</div>
-                        <p class="text-gray-600">خدمة مستمرة</p>
                     </div>
                 </div>
             </div>
@@ -598,34 +746,6 @@
                         حي اخر
                     </button>
                 </div>
-                
-                <!-- خريطة تفاعلية للأحياء -->
-                <div class="bg-gray-100 rounded-2xl p-6">
-                    <h3 class="text-xl font-bold text-center mb-6">خريطة الأحياء</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div class="bg-white rounded-xl p-4 text-center shadow-md hover:shadow-lg transition-all cursor-pointer">
-                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-tree text-blue-500 text-2xl"></i>
-                            </div>
-                            <h4 class="font-bold">حي النخيل</h4>
-                            <p class="text-sm text-gray-600">15 عقار متوفر</p>
-                        </div>
-                        <div class="bg-white rounded-xl p-4 text-center shadow-md hover:shadow-lg transition-all cursor-pointer">
-                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-leaf text-green-500 text-2xl"></i>
-                            </div>
-                            <h4 class="font-bold">حي الربيع</h4>
-                            <p class="text-sm text-gray-600">12 عقار متوفر</p>
-                        </div>
-                        <div class="bg-white rounded-xl p-4 text-center shadow-md hover:shadow-lg transition-all cursor-pointer">
-                            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                                <i class="fas fa-hill-rockslide text-purple-500 text-2xl"></i>
-                            </div>
-                            <h4 class="font-bold">حي العليا</h4>
-                            <p class="text-sm text-gray-600">18 عقار متوفر</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -682,7 +802,7 @@
                                 <i class="fas fa-user text-purple-500"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold">محمد الحربي</h4>
+                                <h4 class="font-bold">محمد خالد</h4>
                                 <div class="flex text-yellow-400">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
@@ -725,8 +845,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-lg">
-                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="من نحن" class="w-full h-64 object-cover rounded-xl">
+                    <div class="bg-white p-6">
+                        <img src="https://i.ibb.co/M5nfWqC0/file-0000000061506230af89e25838c11d05.png" alt="من نحن" class="w-full h-64 object-cover rounded-xl">
                     </div>
                 </div>
             </div>
@@ -771,16 +891,16 @@
                                     </div>
                                     <div>
                                         <h4 class="font-bold">هاتف</h4>
-                                        <p class="text-gray-600">+966 5X XXX XXXX</p>
+                                        <p class="text-gray-600">0924299798</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center">
                                     <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center ml-4">
-                                        <i class="fab fa-whatsapp text-green-500"></i>
+                                        <i class="fas fa-headset text-green-500"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-bold">واتساب</h4>
-                                        <p class="text-gray-600">+966 5X XXX XXXX</p>
+                                        <h4 class="font-bold">خدمة العملاء</h4>
+                                        <p class="text-gray-600">0924299798</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center">
@@ -799,16 +919,7 @@
                             <h3 class="text-xl font-bold mb-4">ساعات العمل</h3>
                             <div class="space-y-2">
                                 <div class="flex justify-between">
-                                    <span>الأحد - الخميس</span>
-                                    <span>8:00 ص - 6:00 م</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>الجمعة</span>
-                                    <span>2:00 م - 6:00 م</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>السبت</span>
-                                    <span>9:00 ص - 2:00 م</span>
+                                    <span>24 ساعة </span>
                                 </div>
                             </div>
                         </div>
@@ -818,43 +929,44 @@
         </section>
 
         <!-- Footer -->
-        <footer class="bg-gray-800 text-white py-12">
+        <footer class="footer text-white py-12">
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div>
                         <div class="flex items-center mb-4">
-                            <i class="fas fa-home text-2xl ml-2 text-blue-400"></i>
-                            <h3 class="text-xl font-bold">إيجار بلس</h3>
+                            <i class="fas fa-home text-2xl ml-2 text-white"></i>
+                            <h3 class="text-xl font-bold">
+                   Ejar plus | ايجار بلس</h3>
                         </div>
-                        <p class="text-gray-400 mb-4">منصة عقارية متكاملة لتسهيل عملية البحث عن عقارات للإيجار</p>
+                        <p class="text-white/90 mb-4">منصة عقارية متكاملة لتسهيل عملية البحث عن عقارات للإيجار</p>
                     </div>
                     
                     <div>
                         <h4 class="font-bold mb-4 text-lg">روابط سريعة</h4>
                         <ul class="space-y-2 footer-links">
-                            <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">الرئيسية</a></li>
-                            <li><a href="#properties" class="text-gray-400 hover:text-white transition-colors">العروض</a></li>
-                            <li><a href="#neighborhoods" class="text-gray-400 hover:text-white transition-colors">الأحياء</a></li>
-                            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">من نحن</a></li>
-                            <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">اتصل بنا</a></li>
-                            <li><a href="admin.html" class="text-gray-400 hover:text-white transition-colors">لوحة التحكم</a></li>
+                            <li><a href="#home" class="text-white/90 hover:text-white transition-colors">الرئيسية</a></li>
+                            <li><a href="#properties" class="text-white/90 hover:text-white transition-colors">العروض</a></li>
+                            <li><a href="#neighborhoods" class="text-white/90 hover:text-white transition-colors">الأحياء</a></li>
+                            <li><a href="#about" class="text-white/90 hover:text-white transition-colors">من نحن</a></li>
+                            <li><a href="#contact" class="text-white/90 hover:text-white transition-colors">اتصل بنا</a></li>
+                            <li><a href="admin.html" class="text-white/90 hover:text-white transition-colors">لوحة التحكم</a></li>
                         </ul>
                     </div>
                     
                     <div>
                         <h4 class="font-bold mb-4 text-lg">اتصل بنا</h4>
-                        <div class="flex items-center mb-2 text-gray-400">
+                        <div class="flex items-center mb-2 text-white/90">
                             <i class="fas fa-phone ml-2"></i>
                             <span>+249 924 299 798</span>
                         </div>
-                        <div class="flex items-center mb-2 text-gray-400">
+                        <div class="flex items-center mb-2 text-white/90">
                             <i class="fas fa-envelope ml-2"></i>
                             <span>info@ejarplus.com</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500">
+                <div class="border-t border-white/20 mt-8 pt-6 text-center text-white/80">
                     <p>جميع الحقوق محفوظة &copy;Ejar plus+إيجار بلس <span id="currentYear"></span></p>
                 </div>
             </div>
@@ -862,7 +974,7 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed top-4 right-4 p-4 rounded-xl shadow-2xl z-50 max-w-sm hidden"></div>
+    <div id="toast" class="fixed top-4 right-4 p-4 rounded-xl z-50 max-w-sm hidden"></div>
 
     <script>
         // 🔧 إعدادات Supabase - نفس إعدادات لوحة التحكم
@@ -889,34 +1001,40 @@
 
         // عناصر DOM
         const loadingScreen = document.getElementById('loadingScreen');
-        const loadingBar = document.getElementById('loadingBar');
+        const networkLoading = document.getElementById('networkLoading');
+        const propertiesLoading = document.getElementById('propertiesLoading');
+        const networkError = document.getElementById('networkError');
         const mainContent = document.getElementById('mainContent');
-        const searchForm = document.getElementById('searchForm');
         const propertiesList = document.getElementById('propertiesList');
         const noResults = document.getElementById('noResults');
         const toast = document.getElementById('toast');
         const currentYear = document.getElementById('currentYear');
         const statProperties = document.getElementById('statProperties');
-        const statNeighborhoods = document.getElementById('statNeighborhoods');
-        const statTypes = document.getElementById('statTypes');
+        const statBroker = document.getElementById('statBroker');
+        const statOwner = document.getElementById('statOwner');
+        const statAgent = document.getElementById('statAgent');
         const sidebar = document.getElementById('sidebar');
         const menuButton = document.getElementById('menuButton');
         const closeSidebar = document.getElementById('closeSidebar');
         const themeToggle = document.getElementById('themeToggle');
         const themeToggleMobile = document.getElementById('themeToggleMobile');
         const customerService = document.getElementById('customerService');
+        const progressFill = document.getElementById('progressFill');
 
         // بدء التحميل
         function startLoading() {
-            setTimeout(() => {
-                loadingBar.style.width = '100%';
-            }, 100);
-
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-                mainContent.classList.remove('hidden');
-                initializeSite();
-            }, 1000);
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                progressFill.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    loadingScreen.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                    initializeSite();
+                }
+            }, 30);
         }
 
         // تهيئة الموقع
@@ -931,14 +1049,12 @@
             // التحقق من تفضيلات المستخدم للوضع الداكن
             if (localStorage.getItem('darkMode') === 'true') {
                 enableDarkMode();
+                themeToggle.checked = true;
             }
         }
 
         // إعداد مستمعي الأحداث
         function setupEventListeners() {
-            // معالجة نموذج البحث
-            searchForm.addEventListener('submit', handleSearch);
-            
             // تصفية حسب الحي
             document.querySelectorAll('.neighborhood-filter').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -989,12 +1105,12 @@
             themeToggle.addEventListener('change', toggleTheme);
             themeToggleMobile.addEventListener('click', toggleTheme);
             
-            // خدمة العملاء عبر واتساب
+            // خدمة العملاء
             customerService.addEventListener('click', () => {
-                const whatsappNumber = "966501234567";
+                const phoneNumber = "966501234567";
                 const message = "مرحباً، أود الاستفسار عن خدماتكم";
                 const encodedMessage = encodeURIComponent(message);
-                const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
                 window.open(url, '_blank');
             });
             
@@ -1004,6 +1120,32 @@
                     sidebar.classList.remove('open');
                 }
             });
+
+            // مراقبة حالة الاتصال بالإنترنت
+            window.addEventListener('online', () => {
+                networkLoading.style.display = 'none';
+                hideNetworkError();
+                showToast('تم استعادة الاتصال بالإنترنت', 'success');
+            });
+
+            window.addEventListener('offline', () => {
+                networkLoading.style.display = 'block';
+                showNetworkError();
+                showToast('تم فقدان الاتصال بالإنترنت', 'error');
+            });
+        }
+
+        // إظهار إشعار مشكلة الشبكة
+        function showNetworkError() {
+            networkError.style.display = 'flex';
+            setTimeout(() => {
+                hideNetworkError();
+            }, 5000);
+        }
+
+        // إخفاء إشعار مشكلة الشبكة
+        function hideNetworkError() {
+            networkError.style.display = 'none';
         }
 
         // تبديل الوضع الداكن
@@ -1037,6 +1179,9 @@
 
         // تحميل العقارات من Supabase
         async function loadProperties() {
+            // عرض مؤشر تحميل العروض في المنتصف
+            propertiesLoading.style.display = 'flex';
+            
             try {
                 if (supabaseConnected) {
                     const { data, error } = await supabase
@@ -1055,6 +1200,9 @@
                 console.error('Error loading properties:', error);
                 properties = getDefaultProperties();
                 showToast('تم تحميل البيانات الافتراضية', 'info');
+            } finally {
+                // إخفاء مؤشر تحميل العروض
+                propertiesLoading.style.display = 'none';
             }
             
             filteredProperties = [...properties];
@@ -1165,7 +1313,7 @@
         // إنشاء بطاقة عقار
         function createPropertyCard(property, index) {
             const propertyCard = document.createElement('div');
-            propertyCard.className = 'property-card bg-white rounded-xl shadow-lg overflow-hidden fade-in';
+            propertyCard.className = 'property-card bg-white rounded-xl overflow-hidden fade-in';
             
             propertyCard.innerHTML = `
                 <div class="relative overflow-hidden">
@@ -1229,17 +1377,6 @@
             window.open(url, '_blank');
         }
 
-        // معالجة البحث
-        function handleSearch(e) {
-            e.preventDefault();
-            
-            const neighborhood = document.getElementById('neighborhood').value;
-            const propertyType = document.getElementById('propertyType').value;
-            const maxPrice = document.getElementById('maxPrice').value;
-            
-            filterProperties({ neighborhood, propertyType, maxPrice });
-        }
-
         // تصفية العقارات حسب الحي
         function filterPropertiesByNeighborhood(neighborhood) {
             if (neighborhood === 'all') {
@@ -1251,36 +1388,34 @@
             displayProperties();
         }
 
-        // تصفية العقارات حسب معايير البحث
-        function filterProperties(criteria) {
-            filteredProperties = properties.filter(property => {
-                if (criteria.neighborhood && property.area !== criteria.neighborhood) {
-                    return false;
-                }
-                
-                if (criteria.propertyType && property.category !== criteria.propertyType) {
-                    return false;
-                }
-                
-                if (criteria.maxPrice && property.price > parseInt(criteria.maxPrice)) {
-                    return false;
-                }
-                
-                return true;
-            });
+        // تحديث الإحصائيات مع تأثير العد
+        function updateStats() {
+            const stats = {
+                properties: properties.length,
+                broker: 42,  // عدد السماسرة النشطين
+                owner: 156,  // عدد مالكي العقارات
+                agent: 23    // عدد الوكلاء
+            };
             
-            displayProperties();
+            animateCounter(statProperties, 0, stats.properties, 1500);
+            animateCounter(statBroker, 0, stats.broker, 1500);
+            animateCounter(statOwner, 0, stats.owner, 1500);
+            animateCounter(statAgent, 0, stats.agent, 1500);
         }
 
-        // تحديث الإحصائيات
-        function updateStats() {
-            statProperties.textContent = properties.length;
-            
-            const neighborhoods = new Set(properties.map(p => p.area));
-            statNeighborhoods.textContent = neighborhoods.size;
-            
-            const types = new Set(properties.map(p => p.category));
-            statTypes.textContent = types.size;
+        // تأثير العد المتحرك
+        function animateCounter(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
         }
 
         // عرض الإشعارات
@@ -1306,7 +1441,7 @@
                     <span>${message}</span>
                 </div>
             `;
-            toast.className = `fixed top-4 right-4 p-4 rounded-xl shadow-2xl z-50 max-w-sm ${bgColor} text-white`;
+            toast.className = `fixed top-4 right-4 p-4 rounded-xl z-50 max-w-sm ${bgColor} text-white`;
             toast.classList.remove('hidden');
             toast.classList.add('toast-slide-in');
             
