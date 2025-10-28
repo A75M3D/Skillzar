@@ -3,1461 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إيجار بلس - منصة عقارات للإيجار</title>
+    <title>TikTok Clone | تيك توك</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff0050',
+                        secondary: '#00f2ea',
+                        dark: '#121212',
+                        card: '#1e1e1e',
+                    },
+                    fontFamily: {
+                        'arabic': ['Tajawal', 'Segoe UI', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            font-family: 'Tajawal', sans-serif;
+        .snap-y-mandatory {
+            scroll-snap-type: y mandatory;
         }
-        
-        .property-card {
-            transition: all 0.3s ease;
+        .snap-start {
+            scroll-snap-align: start;
         }
-        
-        .property-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-        
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
         }
-        
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #ff0050, #00f2ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
         .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.5s;
         }
-        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        
-        .btn-glow:hover {
-            box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+        .slide-up {
+            animation: slideUp 0.3s;
         }
-        
-        .toast-slide-in {
-            animation: toastSlideIn 0.3s ease-out;
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        
-        .toast-slide-out {
-            animation: toastSlideOut 0.3s ease-in;
-        }
-        
-        @keyframes toastSlideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes toastSlideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-        
-        /* تخصيص التمرير */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-        
-        /* الشريط الجانبي */
-        .sidebar {
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .sidebar.open {
-            transform: translateX(0);
-        }
-        
-        /* الوضع الداكن */
-        .dark-mode {
-            background-color: #1a202c;
-            color: #e2e8f0;
-        }
-        
-        .dark-mode .bg-white {
-            background-color: #2d3748;
-        }
-        
-        .dark-mode .text-gray-800 {
-            color: #e2e8f0;
-        }
-        
-        .dark-mode .text-gray-700 {
-            color: #cbd5e0;
-        }
-        
-        .dark-mode .text-gray-600 {
-            color: #a0aec0;
-        }
-        
-        .dark-mode .bg-gray-50 {
-            background-color: #2d3748;
-        }
-        
-        .dark-mode .bg-gray-200 {
-            background-color: #4a5568;
-        }
-        
-        .dark-mode .border-gray-300 {
-            border-color: #4a5568;
-        }
-        
-        .dark-mode .shadow-lg {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* تأثيرات إضافية */
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-        
-        .transition-all {
-            transition: all 0.3s ease;
-        }
-        
-        /* تصميم محسن لزر خدمة العملاء */
-        .customer-service-btn {
-            background: none;
-            color: #3b82f6;
-            padding: 8px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-        }
-        
-        .customer-service-btn:hover {
-            background: rgba(59, 130, 246, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        /* تصميم بطاقات العقارات المحسن */
-        .property-badge {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        /* تصميم محسن للإحصائيات */
-        .stat-card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #3b82f6;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* تصميم محسن للأقسام */
-        .section-title {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 2rem;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 0;
-            width: 60%;
-            height: 4px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 2px;
-        }
-        
-        /* تصميم محسن للأزرار */
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3);
-        }
-        
-        /* تصميم محسن للحقول */
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            backdrop-filter: blur(5px);
-        }
-        
-        .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .form-input:focus {
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-            outline: none;
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        /* تصميم محسن للفوتر */
-        .footer {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            border-top-left-radius: 40px;
-            border-top-right-radius: 40px;
-        }
-        
-        .dark-mode .footer {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
-        }
-        
-        .footer-links a {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-links a:after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            right: 0;
-            width: 0;
-            height: 2px;
-            background: #ffffff;
-            transition: width 0.3s ease;
-        }
-        
-        .footer-links a:hover:after {
-            width: 100%;
-        }
-        
-        /* تصميم محسن للشريط الجانبي */
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            margin-bottom: 8px;
-        }
-        
-        .sidebar-link:hover {
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-        }
-        
-        .sidebar-link.active {
-            background: rgba(59, 130, 246, 0.15);
-            color: #3b82f6;
-            font-weight: 600;
-        }
-        
-        /* تحسينات إضافية للتصميم */
-        .hero-title {
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .trust-badge {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .select-arrow {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-            background-position: left 0.75rem center;
-            background-repeat: no-repeat;
-            background-size: 16px 12px;
-            padding-left: 2.5rem;
-        }
-        
-        /* أيقونات الإحصائيات المحسنة */
-        .stat-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 28px;
-        }
-        
-        .stats-counter {
-            transition: all 0.5s ease;
-        }
-        
-        /* تحسينات للهيرو سيكشن */
-        .hero-section {
-            height: 50vh;
-            min-height: 400px;
-            position: relative;
-        }
-        
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding-bottom: 40px;
-        }
-        
-        /* إزالة المسافات الزائدة */
-        .no-gap {
-            margin: 0;
-            padding: 0;
-        }
-        
-        /* تحسينات للعداد */
-        .stats-section {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-        
-        /* تحسينات شاشة التحميل */
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            border-top-color: #3b82f6;
-            animation: spin 1s linear infinite;
-            margin-top: 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* تحسينات للشبكة */
-        .network-loading {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            z-index: 1000;
-            display: none;
-        }
-        
-        .network-spinner {
-            width: 100%;
-            height: 100%;
-            border: 4px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            border-top-color: #3b82f6;
-            animation: spin 1s linear infinite;
-        }
-        
-        /* شاشة تحميل العروض في المنتصف */
-        .properties-loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
-            padding: 30px;
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            width: 300px;
-        }
-        
-        .properties-loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            border-top-color: #3b82f6;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        
-        /* إشعار مشكلة الشبكة */
-        .network-error {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 12px;
-            padding: 16px;
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            max-width: 350px;
-        }
-        
-        .network-error-icon {
-            background: #ef4444;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 12px;
-            color: white;
-            font-size: 18px;
-        }
-        
-        /* شريط التقدم */
-        .progress-bar {
-            width: 300px;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            margin-top: 20px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 4px;
-            width: 0%;
-            transition: width 0.3s ease;
+        .video-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- شاشة التحميل الرئيسية -->
-    <div id="loadingScreen" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
-        <div class="text-center">
-            <i class="fas fa-home text-6xl text-blue-500 mb-4"></i>
-            <div class="text-3xl font-bold text-blue-600 mb-2">إيجار بلس</div>
-            <div class="text-gray-700 text-xl mb-4">جاري تحميل المنصة...</div>
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
+<body class="bg-dark text-white font-arabic" dir="rtl">
+    <div class="max-w-md mx-auto h-screen bg-dark relative overflow-hidden">
+        <!-- شريط الحالة -->
+        <div class="fixed top-0 left-0 right-0 z-50 bg-dark pt-2 pb-1 px-4 max-w-md mx-auto">
+            <div class="flex justify-between items-center text-white">
+                <div class="text-sm font-semibold" id="current-time">10:30</div>
+                <div class="flex space-x-2 space-x-reverse">
+                    <i class="fas fa-signal text-xs"></i>
+                    <i class="fas fa-wifi text-xs"></i>
+                    <i class="fas fa-battery-three-quarters text-xs"></i>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- مؤشر تحميل الشبكة -->
-    <div id="networkLoading" class="network-loading">
-        <div class="network-spinner"></div>
-    </div>
-
-    <!-- شاشة تحميل العروض في المنتصف -->
-    <div id="propertiesLoading" class="properties-loading">
-        <div class="properties-loading-spinner"></div>
-        <div class="text-gray-700 font-bold">جاري تحميل العروض...</div>
-        <p class="text-gray-500 text-sm mt-2">يرجى الانتظار</p>
-    </div>
-
-    <!-- إشعار مشكلة الشبكة -->
-    <div id="networkError" class="network-error">
-        <div class="network-error-icon">
-            <i class="fas fa-wifi"></i>
-        </div>
-        <div>
-            <h4 class="font-bold text-red-800">مشكلة في الاتصال</h4>
-            <p class="text-red-600 text-sm mt-1">يبدو أن هناك مشكلة في اتصال الإنترنت. يرجى التحقق من الشبكة.</p>
-        </div>
-    </div>
-
-    <!-- الشريط الجانبي -->
-    <div id="sidebar" class="sidebar fixed top-0 right-0 h-full w-80 bg-white z-50 overflow-y-auto">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-8">
-                <div class="flex items-center">
-                    <i class="fas fa-home text-2xl text-blue-500 ml-2"></i>
-                    <h2 class="text-xl font-bold text-gray-800">إيجار بلس</h2>
+        <!-- شريط التنقل العلوي -->
+        <div class="fixed top-8 left-0 right-0 z-40 bg-dark pt-4 pb-3 px-4 max-w-md mx-auto">
+            <div class="flex justify-between items-center">
+                <div class="text-lg font-bold" id="page-title">For You</div>
+                <div class="flex space-x-4 space-x-reverse">
+                    <div class="flex space-x-4 space-x-reverse mr-4">
+                        <div class="nav-tab font-medium text-white relative cursor-pointer" onclick="switchTab('trending')">Trending</div>
+                        <div class="nav-tab font-medium text-gray-400 relative cursor-pointer" onclick="switchTab('music')">
+                            Music
+                        </div>
+                    </div>
+                    <i class="fas fa-search text-xl cursor-pointer" onclick="openSearch()"></i>
                 </div>
-                <button id="closeSidebar" class="text-gray-600 hover:text-red-500 text-xl">
-                    <i class="fas fa-times"></i>
+            </div>
+        </div>
+
+        <!-- شريط البحث -->
+        <div id="search-bar" class="fixed top-8 left-0 right-0 z-40 bg-dark pt-4 pb-3 px-4 max-w-md mx-auto hidden slide-up">
+            <div class="flex items-center">
+                <div class="relative flex-1">
+                    <input type="text" id="search-input" placeholder="ابحث في اليوتيوب..." 
+                           class="w-full bg-gray-800 rounded-full py-2 px-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                    <i class="fas fa-search absolute right-3 top-2.5 text-gray-400"></i>
+                </div>
+                <button class="mr-2 text-gray-400" onclick="closeSearch()">
+                    <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            
-            <nav class="space-y-2">
-                <a href="#home" class="sidebar-link active">
-                    <i class="fas fa-home ml-3"></i>
-                    <span>الرئيسية</span>
-                </a>
-                <a href="#properties" class="sidebar-link">
-                    <i class="fas fa-building ml-3"></i>
-                    <span>العروض العقارية</span>
-                </a>
-                <a href="#neighborhoods" class="sidebar-link">
-                    <i class="fas fa-map-marker-alt ml-3"></i>
-                    <span>الأحياء</span>
-                </a>
-                <a href="#about" class="sidebar-link">
-                    <i class="fas fa-info-circle ml-3"></i>
-                    <span>من نحن</span>
-                </a>
-                <a href="#testimonials" class="sidebar-link">
-                    <i class="fas fa-star ml-3"></i>
-                    <span>آراء العملاء</span>
-                </a>
-                <a href="#contact" class="sidebar-link">
-                    <i class="fas fa-envelope ml-3"></i>
-                    <span>اتصل بنا</span>
-                </a>
-                <a href="admin.html" class="sidebar-link">
-                    <i class="fas fa-cog ml-3"></i>
-                    <span>لوحة التحكم</span>
-                </a>
-            </nav>
-            
-            <div class="mt-8 pt-6 border-t border-gray-200">
-                <div class="flex items-center justify-between mb-4">
-                    <span class="text-gray-700">الوضع الداكن</span>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="themeToggle" class="sr-only peer">
-                        <div class="w-12 h-6 bg-gray-200 peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    </label>
+        </div>
+
+        <!-- منطقة الفيديوهات الرئيسية -->
+        <div id="video-feed" class="h-full overflow-y-auto snap-y-mandatory scrollbar-hide pt-20 pb-16">
+            <!-- سيتم إضافة الفيديوهات ديناميكياً -->
+        </div>
+
+        <!-- منطقة نتائج البحث -->
+        <div id="search-results" class="h-full overflow-y-auto scrollbar-hide pt-20 pb-16 hidden">
+            <!-- سيتم إضافة نتائج البحث هنا -->
+        </div>
+
+        <!-- شاشة التحميل -->
+        <div id="loading-screen" class="fixed inset-0 bg-dark z-50 flex flex-col items-center justify-center max-w-md mx-auto">
+            <div class="text-6xl text-primary mb-6 pulse">
+                <i class="fab fa-youtube"></i>
+            </div>
+            <div class="text-xl font-semibold mb-2">جاري تحميل الفيديوهات</div>
+            <div class="text-gray-400 text-sm">من YouTube API</div>
+            <div class="w-48 h-1 bg-gray-800 rounded-full mt-6 overflow-hidden">
+                <div class="h-full bg-primary rounded-full animate-pulse"></div>
+            </div>
+        </div>
+
+        <!-- شريط التنقل السفلي -->
+        <div class="fixed bottom-0 left-0 right-0 z-50 bg-dark border-t border-gray-800 max-w-md mx-auto">
+            <div class="flex justify-around items-center py-2">
+                <!-- Home -->
+                <div class="flex flex-col items-center cursor-pointer" onclick="switchTab('trending')">
+                    <i class="fas fa-home text-xl text-white"></i>
+                    <span class="text-xs mt-1 text-white">Home</span>
                 </div>
                 
-                <div class="flex space-x-3 space-x-reverse">
-                    <button class="flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                        <i class="fas fa-user ml-1"></i>
-                        تسجيل الدخول
-                    </button>
-                    <button class="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors">
-                        <i class="fas fa-user-plus ml-1"></i>
-                        إنشاء حساب
-                    </button>
+                <!-- Discover -->
+                <div class="flex flex-col items-center cursor-pointer" onclick="openSearch()">
+                    <i class="fas fa-search text-xl text-gray-400"></i>
+                    <span class="text-xs mt-1 text-gray-400">Discover</span>
+                </div>
+                
+                <!-- Upload -->
+                <div class="flex flex-col items-center cursor-pointer -mt-4" onclick="showUploadInfo()">
+                    <div class="bg-gray-400 w-10 h-8 rounded flex items-center justify-center pulse">
+                        <i class="fas fa-plus text-white"></i>
+                    </div>
+                </div>
+                
+                <!-- Profile -->
+                <div class="flex flex-col items-center cursor-pointer">
+                    <i class="fas fa-user text-xl text-gray-400"></i>
+                    <span class="text-xs mt-1 text-gray-400">Profile</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- المحتوى الرئيسي -->
-    <div id="mainContent" class="hidden">
-        <!-- Header -->
-        <header class="bg-white border-b sticky top-0 z-40">
-            <div class="container mx-auto px-4">
-                <div class="flex justify-between items-center py-4">
-                    <div class="flex items-center">
-                        <button id="menuButton" class="text-gray-600 hover:text-blue-500 text-xl ml-4">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <i class="fas fa-home text-2xl text-blue-500 ml-2"></i>
-                        <h1 class="text-xl font-bold text-gray-800">إيجار بلس</h1>
-                    </div>
-                    
-                    <nav class="hidden md:flex space-x-4 space-x-reverse">
-                        <a href="#home" class="px-4 py-2 text-gray-700 hover:text-blue-500 transition-colors">الرئيسية</a>
-                        <a href="#properties" class="px-4 py-2 text-gray-700 hover:text-blue-500 transition-colors">العروض</a>
-                        <a href="#neighborhoods" class="px-4 py-2 text-gray-700 hover:text-blue-500 transition-colors">الأحياء</a>
-                        <a href="#testimonials" class="px-4 py-2 text-gray-700 hover:text-blue-500 transition-colors">آراء العملاء</a>
-                        <a href="admin.html" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                            لوحة التحكم
-                        </a>
-                    </nav>
-                    
-                    <div class="flex items-center space-x-3 space-x-reverse">
-                        <button id="customerService" class="customer-service-btn">
-                            <i class="fas fa-headset text-xl"></i>
-                        </button>
-                        <button id="themeToggleMobile" class="text-gray-600 hover:text-blue-500 text-xl">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Hero Section - محسنة -->
-        <section id="home" class="hero-section relative text-white overflow-hidden">
-            <!-- صورة الخلفية المحسنة -->
-            <img src="https://i.ibb.co/VW2jFCkK/Picsart-25-10-25-16-37-49-337.jpg" alt="خلفية إيجار بلس" class="hero-bg">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60 z-0"></div>
-            
-            <div class="container mx-auto px-4 h-full flex flex-col justify-center hero-content">
-                <div class="text-center">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Ejar plus | ايجار بلس</h1>
-                    <p class="text-xl md:text-2xl mb-6 max-w-2xl mx-auto">منصة عقارية متكاملة تجمع بين أفضل العروض العقارية وأحدث تقنيات البحث</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- قسم الإحصائيات - محسن -->
-        <section class="stats-section py-12 bg-white no-gap">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-8 text-gray-800 section-title">إحصائيات المنصة</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                    <!-- سمسار نشط -->
-                    <div class="stat-card">
-                        <div class="stat-icon bg-blue-100 text-blue-500">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <div class="text-4xl font-bold mb-2 text-blue-600 stats-counter" id="statBroker">0</div>
-                        <p class="text-gray-600">سمسار نشط</p>
-                    </div>
-                    
-                    <!-- مالك عقار -->
-                    <div class="stat-card">
-                        <div class="stat-icon bg-green-100 text-green-500">
-                            <i class="fas fa-user-check"></i>
-                        </div>
-                        <div class="text-4xl font-bold mb-2 text-green-600 stats-counter" id="statOwner">0</div>
-                        <p class="text-gray-600">مالك عقار</p>
-                    </div>
-                    
-                    <!-- وكيل -->
-                    <div class="stat-card">
-                        <div class="stat-icon bg-purple-100 text-purple-500">
-                            <i class="fas fa-handshake"></i>
-                        </div>
-                        <div class="text-4xl font-bold mb-2 text-purple-600 stats-counter" id="statAgent">0</div>
-                        <p class="text-gray-600">وكيل</p>
-                    </div>
-                    
-                    <!-- عقار متاح -->
-                    <div class="stat-card">
-                        <div class="stat-icon bg-amber-100 text-amber-500">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        <div class="text-4xl font-bold mb-2 text-amber-600 stats-counter" id="statProperties">0</div>
-                        <p class="text-gray-600">عقار متاح</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- العروض العقارية -->
-        <section id="properties" class="py-16 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">العروض العقارية</h2>
-                    <p class="text-gray-600 text-lg">اكتشف أفضل العروض العقارية في مختلف الأحياء</p>
-                </div>
-                
-                <div id="propertiesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- سيتم ملء العقارات هنا -->
-                </div>
-                
-                <!-- رسالة عدم وجود نتائج -->
-                <div id="noResults" class="hidden text-center py-12">
-                    <div class="text-6xl text-gray-400 mb-4">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-600 mb-2">لم نعثر على نتائج</h3>
-                    <p class="text-gray-500">جرب تغيير معايير البحث أو استخدم فلاتر مختلفة</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- الأحياء -->
-        <section id="neighborhoods" class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">الأحياء المتاحة</h2>
-                    <p class="text-gray-600 text-lg">تصفح العروض حسب الحي الذي تفضل السكن فيه</p>
-                </div>
-                
-                <!-- التصفية حسب الحي -->
-                <div class="flex flex-wrap justify-center gap-4 mb-12">
-                    <button class="neighborhood-filter bg-blue-500 text-white px-6 py-3 rounded-lg transition-colors" data-neighborhood="all">
-                        جميع الأحياء
-                    </button>
-                    <button class="neighborhood-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors" data-neighborhood="النخيل">
-                        حي النخيل
-                    </button>
-                    <button class="neighborhood-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors" data-neighborhood="الربيع">
-                        حي الربيع
-                    </button>
-                    <button class="neighborhood-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors" data-neighborhood="العليا">
-                        حي العليا
-                    </button>
-                    <button class="neighborhood-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors" data-neighborhood="السلام">
-                        حي السلام
-                    </button>
-                    <button class="neighborhood-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors" data-neighborhood="الفيصلية">
-                        حي الفيصلية
-                    </button>
-                    <button class="neighborhood-filter bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors" data-neighborhood="اخر">
-                        حي اخر
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- آراء العملاء -->
-        <section id="testimonials" class="py-16 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">آراء العملاء</h2>
-                    <p class="text-gray-600 text-lg">ما يقوله عملاؤنا عن تجربتهم مع إيجار بلس</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="testimonial-card">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center ml-3">
-                                <i class="fas fa-user text-blue-500"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">أحمد السيد</h4>
-                                <div class="flex text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-gray-700">"تجربة رائعة مع إيجار بلس، وجدت الشقة المثالية في وقت قياسي بفضل فريق الدعم المتميز."</p>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center ml-3">
-                                <i class="fas fa-user text-green-500"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">فاطمة العلي</h4>
-                                <div class="flex text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-gray-700">"منصة موثوقة وسهلة الاستخدام، ساعدتني في العثور على فيلتي بكل سهولة ويسر."</p>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center ml-3">
-                                <i class="fas fa-user text-purple-500"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold">محمد خالد</h4>
-                                <div class="flex text-yellow-400">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-gray-700">"خدمة عملاء ممتازة وتواصل سريع، أنصح الجميع باستخدام إيجار بلس للعثور على العقار المناسب."</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- من نحن -->
-        <section id="about" class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-800 mb-6 section-title">من نحن</h2>
-                        <p class="text-gray-600 mb-4">
-                            إيجار بلس هي منصة عقارية رائدة تهدف إلى توفير تجربة سلسة ومتكاملة للبحث عن عقارات للإيجار. نحن نقدم مجموعة واسعة من الخيارات في مختلف الأحياء لتلبية احتياجات عملائنا.
-                        </p>
-                        <p class="text-gray-600 mb-6">
-                            نتميز بفريق محترف من الخبراء العقاريين الذين يعملون على تقديم أفضل الخدمات والدعم لعملائنا، مع التركيز على الجودة والشفافية في كل خطوة.
-                        </p>
-                        <div class="flex space-x-4 space-x-reverse">
-                            <div class="bg-blue-500 text-white px-6 py-3 rounded-lg">
-                                <div class="text-2xl font-bold">5+</div>
-                                <div class="text-sm">سنوات من الخبرة</div>
-                            </div>
-                            <div class="bg-green-500 text-white px-6 py-3 rounded-lg">
-                                <div class="text-2xl font-bold">500+</div>
-                                <div class="text-sm">عقار متوفر</div>
-                            </div>
-                            <div class="bg-purple-500 text-white px-6 py-3 rounded-lg">
-                                <div class="text-2xl font-bold">95%</div>
-                                <div class="text-sm">رضا العملاء</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6">
-                        <img src="https://i.ibb.co/M5nfWqC0/file-0000000061506230af89e25838c11d05.png" alt="من نحن" class="w-full h-64 object-cover rounded-xl">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- اتصل بنا -->
-        <section id="contact" class="py-16 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">اتصل بنا</h2>
-                    <p class="text-gray-600 text-lg">نحن هنا لمساعدتك في العثور على العقار المثالي</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div>
-                        <form class="space-y-6">
-                            <div>
-                                <label class="block text-gray-700 mb-2 font-medium">الاسم الكامل</label>
-                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل اسمك الكامل">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2 font-medium">البريد الإلكتروني</label>
-                                <input type="email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="أدخل بريدك الإلكتروني">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2 font-medium">الرسالة</label>
-                                <textarea rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="اكتب رسالتك هنا..."></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors">
-                                إرسال الرسالة
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="space-y-6">
-                        <div class="bg-gray-50 rounded-xl p-6">
-                            <h3 class="text-xl font-bold mb-4">معلومات الاتصال</h3>
-                            <div class="space-y-4">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center ml-4">
-                                        <i class="fas fa-phone text-blue-500"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold">هاتف</h4>
-                                        <p class="text-gray-600">0924299798</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center ml-4">
-                                        <i class="fas fa-headset text-green-500"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold">خدمة العملاء</h4>
-                                        <p class="text-gray-600">0924299798</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center ml-4">
-                                        <i class="fas fa-envelope text-red-500"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold">البريد الإلكتروني</h4>
-                                        <p class="text-gray-600">info@ejarplus.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-blue-50 rounded-xl p-6">
-                            <h3 class="text-xl font-bold mb-4">ساعات العمل</h3>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span>24 ساعة </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer text-white py-12">
-            <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div>
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-home text-2xl ml-2 text-white"></i>
-                            <h3 class="text-xl font-bold">
-                   Ejar plus | ايجار بلس</h3>
-                        </div>
-                        <p class="text-white/90 mb-4">منصة عقارية متكاملة لتسهيل عملية البحث عن عقارات للإيجار</p>
-                    </div>
-                    
-                    <div>
-                        <h4 class="font-bold mb-4 text-lg">روابط سريعة</h4>
-                        <ul class="space-y-2 footer-links">
-                            <li><a href="#home" class="text-white/90 hover:text-white transition-colors">الرئيسية</a></li>
-                            <li><a href="#properties" class="text-white/90 hover:text-white transition-colors">العروض</a></li>
-                            <li><a href="#neighborhoods" class="text-white/90 hover:text-white transition-colors">الأحياء</a></li>
-                            <li><a href="#about" class="text-white/90 hover:text-white transition-colors">من نحن</a></li>
-                            <li><a href="#contact" class="text-white/90 hover:text-white transition-colors">اتصل بنا</a></li>
-                            <li><a href="admin.html" class="text-white/90 hover:text-white transition-colors">لوحة التحكم</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h4 class="font-bold mb-4 text-lg">اتصل بنا</h4>
-                        <div class="flex items-center mb-2 text-white/90">
-                            <i class="fas fa-phone ml-2"></i>
-                            <span>+249 924 299 798</span>
-                        </div>
-                        <div class="flex items-center mb-2 text-white/90">
-                            <i class="fas fa-envelope ml-2"></i>
-                            <span>info@ejarplus.com</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="border-t border-white/20 mt-8 pt-6 text-center text-white/80">
-                    <p>جميع الحقوق محفوظة &copy;Ejar plus+إيجار بلس <span id="currentYear"></span></p>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-4 right-4 p-4 rounded-xl z-50 max-w-sm hidden"></div>
-
     <script>
-        // 🔧 إعدادات Supabase - نفس إعدادات لوحة التحكم
-        const SUPABASE_URL = 'https://xpukdyicgmgqwukjnwau.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhwdWtkeWljZ21ncXd1a2pud2F1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMTUzNjgsImV4cCI6MjA3Njc5MTM2OH0.lzwmCX_c3-r3lQ1Q5JB_m5Ew86sPqtUSgZ7V7BiGiyA';
-
-        // تهيئة Supabase
-        let supabase;
-        let supabaseConnected = false;
-        try {
-            if (SUPABASE_URL && SUPABASE_ANON_KEY) {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                supabaseConnected = true;
-            }
-        } catch (error) {
-            console.error('خطأ في تهيئة Supabase:', error);
-            supabaseConnected = false;
-        }
-
+        // مفتاح YouTube API - يمكنك استبداله بمفتاحك
+        const YOUTUBE_API_KEY = 'AIzaSyASUAnslGu-5VWpvwtR9Huf6v3Qsk6MEE4';
+        
         // حالة التطبيق
-        let properties = [];
-        let filteredProperties = [];
-        let isDarkMode = false;
+        const appState = {
+            currentUser: null,
+            videos: [],
+            searchResults: [],
+            currentVideoIndex: 0,
+            isPlaying: true,
+            isMuted: true,
+            currentTab: 'trending',
+            searchQuery: '',
+            nextPageToken: ''
+        };
 
-        // عناصر DOM
-        const loadingScreen = document.getElementById('loadingScreen');
-        const networkLoading = document.getElementById('networkLoading');
-        const propertiesLoading = document.getElementById('propertiesLoading');
-        const networkError = document.getElementById('networkError');
-        const mainContent = document.getElementById('mainContent');
-        const propertiesList = document.getElementById('propertiesList');
-        const noResults = document.getElementById('noResults');
-        const toast = document.getElementById('toast');
-        const currentYear = document.getElementById('currentYear');
-        const statProperties = document.getElementById('statProperties');
-        const statBroker = document.getElementById('statBroker');
-        const statOwner = document.getElementById('statOwner');
-        const statAgent = document.getElementById('statAgent');
-        const sidebar = document.getElementById('sidebar');
-        const menuButton = document.getElementById('menuButton');
-        const closeSidebar = document.getElementById('closeSidebar');
-        const themeToggle = document.getElementById('themeToggle');
-        const themeToggleMobile = document.getElementById('themeToggleMobile');
-        const customerService = document.getElementById('customerService');
-        const progressFill = document.getElementById('progressFill');
-
-        // بدء التحميل
-        function startLoading() {
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 1;
-                progressFill.style.width = `${progress}%`;
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    loadingScreen.classList.add('hidden');
-                    mainContent.classList.remove('hidden');
-                    initializeSite();
-                }
-            }, 30);
-        }
-
-        // تهيئة الموقع
-        async function initializeSite() {
-            await loadProperties();
+        // تهيئة التطبيق
+        async function initApp() {
+            updateTime();
+            setInterval(updateTime, 60000);
+            
             setupEventListeners();
-            updateStats();
             
-            // تعيين السنة الحالية
-            currentYear.textContent = new Date().getFullYear();
+            // تحميل الفيديوهات الشائعة أولاً
+            await loadTrendingVideos();
             
-            // التحقق من تفضيلات المستخدم للوضع الداكن
-            if (localStorage.getItem('darkMode') === 'true') {
-                enableDarkMode();
-                themeToggle.checked = true;
-            }
-        }
-
-        // إعداد مستمعي الأحداث
-        function setupEventListeners() {
-            // تصفية حسب الحي
-            document.querySelectorAll('.neighborhood-filter').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // إزالة الفئة النشطة من جميع الأزرار
-                    document.querySelectorAll('.neighborhood-filter').forEach(b => {
-                        b.classList.remove('bg-blue-500', 'text-white');
-                        b.classList.add('bg-gray-200', 'text-gray-700');
-                    });
-                    
-                    // إضافة الفئة النشطة للزر المختار
-                    this.classList.remove('bg-gray-200', 'text-gray-700');
-                    this.classList.add('bg-blue-500', 'text-white');
-                    
-                    const neighborhood = this.getAttribute('data-neighborhood');
-                    filterPropertiesByNeighborhood(neighborhood);
-                });
-            });
-            
-            // التنعيم للروابط الداخلية
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                    
-                    // إغلاق الشريط الجانبي إذا كان مفتوحًا
-                    if (sidebar.classList.contains('open')) {
-                        sidebar.classList.remove('open');
-                    }
-                });
-            });
-            
-            // فتح وإغلاق الشريط الجانبي
-            menuButton.addEventListener('click', () => {
-                sidebar.classList.add('open');
-            });
-            
-            closeSidebar.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-            });
-            
-            // تبديل الثيم
-            themeToggle.addEventListener('change', toggleTheme);
-            themeToggleMobile.addEventListener('click', toggleTheme);
-            
-            // خدمة العملاء
-            customerService.addEventListener('click', () => {
-                const phoneNumber = "966501234567";
-                const message = "مرحباً، أود الاستفسار عن خدماتكم";
-                const encodedMessage = encodeURIComponent(message);
-                const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-                window.open(url, '_blank');
-            });
-            
-            // إغلاق الشريط الجانبي عند النقر خارجها
-            document.addEventListener('click', (e) => {
-                if (!sidebar.contains(e.target) && !menuButton.contains(e.target) && sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                }
-            });
-
-            // مراقبة حالة الاتصال بالإنترنت
-            window.addEventListener('online', () => {
-                networkLoading.style.display = 'none';
-                hideNetworkError();
-                showToast('تم استعادة الاتصال بالإنترنت', 'success');
-            });
-
-            window.addEventListener('offline', () => {
-                networkLoading.style.display = 'block';
-                showNetworkError();
-                showToast('تم فقدان الاتصال بالإنترنت', 'error');
-            });
-        }
-
-        // إظهار إشعار مشكلة الشبكة
-        function showNetworkError() {
-            networkError.style.display = 'flex';
+            // إخفاء شاشة التحميل بعد 2 ثانية
             setTimeout(() => {
-                hideNetworkError();
-            }, 5000);
+                document.getElementById('loading-screen').classList.add('hidden');
+            }, 2000);
         }
 
-        // إخفاء إشعار مشكلة الشبكة
-        function hideNetworkError() {
-            networkError.style.display = 'none';
+        // تحديث الوقت
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-EG', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            });
+            document.getElementById('current-time').textContent = timeString;
         }
 
-        // تبديل الوضع الداكن
-        function toggleTheme() {
-            if (isDarkMode) {
-                disableDarkMode();
-            } else {
-                enableDarkMode();
-            }
-            
-            // تحديث حالة التبديل
-            themeToggle.checked = isDarkMode;
-            
-            // حفظ التفضيل في التخزين المحلي
-            localStorage.setItem('darkMode', isDarkMode);
-        }
-
-        // تفعيل الوضع الداكن
-        function enableDarkMode() {
-            document.body.classList.add('dark-mode');
-            isDarkMode = true;
-            themeToggleMobile.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-
-        // تعطيل الوضع الداكن
-        function disableDarkMode() {
-            document.body.classList.remove('dark-mode');
-            isDarkMode = false;
-            themeToggleMobile.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-
-        // تحميل العقارات من Supabase
-        async function loadProperties() {
-            // عرض مؤشر تحميل العروض في المنتصف
-            propertiesLoading.style.display = 'flex';
-            
+        // جلب الفيديوهات الشائعة من YouTube
+        async function loadTrendingVideos() {
             try {
-                if (supabaseConnected) {
-                    const { data, error } = await supabase
-                        .from('properties')
-                        .select('*')
-                        .order('created_at', { ascending: false });
-
-                    if (error) throw error;
+                showLoading();
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&chart=mostPopular&regionCode=US&maxResults=10&key=${YOUTUBE_API_KEY}`
+                );
+                
+                const data = await response.json();
+                
+                if (data.items) {
+                    appState.videos = data.items.map(item => ({
+                        id: item.id,
+                        snippet: item.snippet,
+                        statistics: item.statistics,
+                        contentDetails: item.contentDetails,
+                        videoUrl: `https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1`
+                    }));
                     
-                    properties = data || [];
-                    showToast('تم تحميل العقارات بنجاح', 'success');
-                } else {
-                    throw new Error('لا يوجد اتصال بقاعدة البيانات');
+                    renderVideos();
                 }
             } catch (error) {
-                console.error('Error loading properties:', error);
-                properties = getDefaultProperties();
-                showToast('تم تحميل البيانات الافتراضية', 'info');
+                console.error('Error fetching trending videos:', error);
+                showError('فشل في تحميل الفيديوهات');
             } finally {
-                // إخفاء مؤشر تحميل العروض
-                propertiesLoading.style.display = 'none';
+                hideLoading();
             }
-            
-            filteredProperties = [...properties];
-            displayProperties();
         }
 
-        // البيانات الافتراضية
-        function getDefaultProperties() {
-            return [
-                {
-                    id: 1,
-                    title: "شقة فاخرة للايجار",
-                    area: "النخيل",
-                    price: 3500,
-                    category: "شقة",
-                    room: 3,
-                    bath: 2,
-                    space: 120,
-                    des: "شقة فاخرة في موقع مميز، مجهزة بتكييف مركزي وأثاث راقي",
-                    num: "966501234567",
-                    image_url: "https://images.unsplash.com/photo-1556020685-ae41abfc9365?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    id: 2,
-                    title: "فيلا جديدة للايجار",
-                    area: "الربيع",
-                    price: 8000,
-                    category: "فيلا",
-                    room: 5,
-                    bath: 4,
-                    space: 300,
-                    des: "فيلا جديدة بالكامل مع حديقة خاصة ومواقف سيارات",
-                    num: "966501234568",
-                    image_url: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    id: 3,
-                    title: "استوديو مفروش",
-                    area: "العليا",
-                    price: 2000,
-                    category: "استوديو",
-                    room: 1,
-                    bath: 1,
-                    space: 50,
-                    des: "استوديو مفروش بالكامل في موقع حيوي قريب من الخدمات",
-                    num: "966501234569",
-                    image_url: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    id: 4,
-                    title: "شقة عائلية راقية",
-                    area: "الفيصلية",
-                    price: 4500,
-                    category: "شقة",
-                    room: 4,
-                    bath: 3,
-                    space: 180,
-                    des: "شقة عائلية فاخرة في حي الفيصلية مع إطلالة رائعة وخدمات متكاملة",
-                    num: "966501234570",
-                    image_url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    id: 5,
-                    title: "فيلا دوبلكس",
-                    area: "الورود",
-                    price: 12000,
-                    category: "فيلا",
-                    room: 6,
-                    bath: 5,
-                    space: 400,
-                    des: "فيلا دوبلكس فاخرة مع مسبح خاص وحديقة واسعة في حي الورود",
-                    num: "966501234571",
-                    image_url: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                },
-                {
-                    id: 6,
-                    title: "شقة مفروشة حديثاً",
-                    area: "السلام",
-                    price: 2800,
-                    category: "شقة",
-                    room: 2,
-                    bath: 2,
-                    space: 90,
-                    des: "شقة مفروشة حديثاً بحالة ممتازة في حي السلام، قريبة من الخدمات والمرافق",
-                    num: "966501234572",
-                    image_url: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                }
-            ];
-        }
-
-        // عرض العقارات
-        function displayProperties() {
-            propertiesList.innerHTML = '';
-            
-            if (filteredProperties.length === 0) {
-                noResults.classList.remove('hidden');
-                return;
-            }
-            
-            noResults.classList.add('hidden');
-            
-            filteredProperties.forEach((property, index) => {
-                const propertyCard = createPropertyCard(property, index);
-                propertiesList.appendChild(propertyCard);
-            });
-        }
-
-        // إنشاء بطاقة عقار
-        function createPropertyCard(property, index) {
-            const propertyCard = document.createElement('div');
-            propertyCard.className = 'property-card bg-white rounded-xl overflow-hidden fade-in';
-            
-            propertyCard.innerHTML = `
-                <div class="relative overflow-hidden">
-                    <img src="${property.image_url}" alt="${property.title}" class="w-full h-48 object-cover">
-                    <div class="property-badge">
-                        ${property.category}
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-lg text-gray-800 truncate">${property.title}</h3>
-                    </div>
-                    
-                    <div class="flex items-center text-gray-600 mb-3">
-                        <i class="fas fa-map-marker-alt ml-1 text-blue-500"></i>
-                        <span class="truncate">${property.area}</span>
-                    </div>
-                    
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-2xl font-bold text-blue-600">${property.price.toLocaleString()} ريال/شهري</span>
-                    </div>
-                    
-                    <div class="flex justify-between text-sm text-gray-600 mb-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-bed ml-1 text-blue-500"></i>
-                            <span>${property.room} غرف</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-bath ml-1 text-blue-500"></i>
-                            <span>${property.bath || 1} حمام</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-vector-square ml-1 text-blue-500"></i>
-                            <span>${property.space} م²</span>
-                        </div>
-                    </div>
-                    
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">${property.des}</p>
-                    
-                    <button class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center contact-btn" data-num="${property.num}">
-                        <i class="fab fa-whatsapp ml-2 text-lg"></i>
-                        تواصل عبر واتساب
-                    </button>
-                </div>
-            `;
-            
-            // إضافة مستمع حدث لزر التواصل
-            propertyCard.querySelector('.contact-btn').addEventListener('click', function() {
-                const whatsappNumber = this.getAttribute('data-num');
-                contactViaWhatsApp(whatsappNumber, property.title);
-            });
-            
-            return propertyCard;
-        }
-
-        // التواصل عبر واتساب
-        function contactViaWhatsApp(phoneNumber, propertyTitle) {
-            const message = `مرحباً، أنا مهتم بالعقار: ${propertyTitle}. هل يمكنك تزويدي بمزيد من المعلومات؟`;
-            const encodedMessage = encodeURIComponent(message);
-            const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            window.open(url, '_blank');
-        }
-
-        // تصفية العقارات حسب الحي
-        function filterPropertiesByNeighborhood(neighborhood) {
-            if (neighborhood === 'all') {
-                filteredProperties = [...properties];
-            } else {
-                filteredProperties = properties.filter(property => property.area === neighborhood);
-            }
-            
-            displayProperties();
-        }
-
-        // تحديث الإحصائيات مع تأثير العد
-        function updateStats() {
-            const stats = {
-                properties: properties.length,
-                broker: 42,  // عدد السماسرة النشطين
-                owner: 156,  // عدد مالكي العقارات
-                agent: 23    // عدد الوكلاء
-            };
-            
-            animateCounter(statProperties, 0, stats.properties, 1500);
-            animateCounter(statBroker, 0, stats.broker, 1500);
-            animateCounter(statOwner, 0, stats.owner, 1500);
-            animateCounter(statAgent, 0, stats.agent, 1500);
-        }
-
-        // تأثير العد المتحرك
-        function animateCounter(element, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = Math.floor(progress * (end - start) + start);
-                element.textContent = value;
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // عرض الإشعارات
-        function showToast(message, type = 'info') {
-            let bgColor, icon;
-            switch(type) {
-                case 'success':
-                    bgColor = 'bg-green-500';
-                    icon = 'fas fa-check-circle';
-                    break;
-                case 'error':
-                    bgColor = 'bg-red-500';
-                    icon = 'fas fa-exclamation-circle';
-                    break;
-                default:
-                    bgColor = 'bg-blue-500';
-                    icon = 'fas fa-info-circle';
-            }
-            
-            toast.innerHTML = `
-                <div class="flex items-center">
-                    <i class="${icon} ml-2"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-            toast.className = `fixed top-4 right-4 p-4 rounded-xl z-50 max-w-sm ${bgColor} text-white`;
-            toast.classList.remove('hidden');
-            toast.classList.add('toast-slide-in');
-            
-            setTimeout(() => {
-                toast.classList.remove('toast-slide-in');
-                toast.classList.add('toast-slide-out');
+        // جلب فيديوهات الموسيقى
+        async function loadMusicVideos() {
+            try {
+                showLoading();
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=music&maxResults=10&key=${YOUTUBE_API_KEY}`
+                );
                 
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                    toast.classList.remove('toast-slide-out');
-                }, 300);
-            }, 4000);
+                const data = await response.json();
+                
+                if (data.items) {
+                    // جلب التفاصيل الإضافية لكل فيديو
+                    const videoIds = data.items.map(item => item.id.videoId).join(',');
+                    const detailsResponse = await fetch(
+                        `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoIds}&key=${YOUTUBE_API_KEY}`
+                    );
+                    
+                    const detailsData = await detailsResponse.json();
+                    
+                    appState.videos = detailsData.items.map(item => ({
+                        id: item.id,
+                        snippet: item.snippet,
+                        statistics: item.statistics,
+                        contentDetails: item.contentDetails,
+                        videoUrl: `https://www.youtube.com/embed/${item.id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1`
+                    }));
+                    
+                    renderVideos();
+                }
+            } catch (error) {
+                console.error('Error fetching music videos:', error);
+                showError('فشل في تحميل فيديوهات الموسيقى');
+            } finally {
+                hideLoading();
+            }
         }
 
-        // بدء التحميل عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', startLoading);
+        // البحث في YouTube
+        async function searchVideos(query) {
+            try {
+                showLoading();
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(query)}&maxResults=15&key=${YOUTUBE_API_KEY}`
+                );
+                
+                const data = await response.json();
+                
+                if (data.items) {
+                    // جلب التفاصيل الإضافية لكل فيديو
+                    const videoIds = data.items.map(item => item.id.videoId).join(',');
+                    const detailsResponse = await fetch(
+                        `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${videoIds}&key=${YOUTUBE_API_KEY}`
+                    );
+                    
+                    const detailsData = await detailsResponse.json();
+                    
+                    appState.searchResults = detailsData.items.map(item => ({
+                        id: item.id,
+                        snippet: item.snippet,
+                        statistics: item.statistics,
+                        contentDetails: item.contentDetails,
+                        videoUrl: `https://www.youtube.com/embed/${item.id}`
+                    }));
+                    
+                    renderSearchResults();
+                }
+                
+                appState.nextPageToken = data.nextPageToken || '';
+            } catch (error) {
+                console.error('Error searching videos:', error);
+                showError('فشل في البحث');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // عرض الفيديوهات
+        function renderVideos() {
+            const videoFeed = document.getElementById('video-feed');
+            videoFeed.innerHTML = '';
+            
+            appState.videos.forEach((video, index) => {
+                const videoElement = createVideoElement(video, index);
+                videoFeed.appendChild(videoElement);
+            });
+        }
+
+        // إنشاء عنصر فيديو
+        function createVideoElement(video, index) {
+            const videoContainer = document.createElement('div');
+            videoContainer.className = 'h-screen snap-start relative bg-black flex justify-center fade-in';
+            
+            const title = video.snippet.title;
+            const channel = video.snippet.channelTitle;
+            const views = formatCount(video.statistics.viewCount);
+            const likes = formatCount(video.statistics.likeCount);
+            const thumbnail = video.snippet.thumbnails.maxres?.url || video.snippet.thumbnails.high?.url;
+            
+            videoContainer.innerHTML = `
+                <!-- شريط التقدم -->
+                <div class="absolute top-14 left-4 right-4 z-30">
+                    <div class="flex space-x-1">
+                        ${appState.videos.map((_, i) => `
+                            <div class="h-1 flex-1 rounded-full ${i === index ? 'bg-white' : 'bg-gray-600'}"></div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <!-- فيديو اليوتيوب -->
+                <div class="w-full h-full bg-black relative">
+                    ${thumbnail ? `
+                        <img src="${thumbnail}" alt="${title}" class="w-full h-full object-cover absolute inset-0">
+                        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+                    ` : ''}
+                    
+                    <iframe 
+                        src="${video.videoUrl}&autoplay=${index === 0 ? 1 : 0}"
+                        class="w-full h-full relative z-10"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <!-- معلومات الفيديو على اليسار -->
+                <div class="absolute left-4 bottom-24 z-20 text-white text-shadow">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary mr-3 flex items-center justify-center">
+                            <span class="font-bold text-white">${channel.charAt(0)}</span>
+                        </div>
+                        <div class="font-semibold">${channel}</div>
+                        <button class="ml-4 bg-primary text-white text-xs font-semibold px-3 py-1 rounded" onclick="followChannel('${channel}')">متابعة</button>
+                    </div>
+                    <div class="mb-2 max-w-xs text-sm">${title}</div>
+                    <div class="flex items-center text-xs mb-1">
+                        <i class="fas fa-eye mr-2"></i>
+                        <span>${views} مشاهدة</span>
+                    </div>
+                    <div class="flex items-center text-xs">
+                        <i class="fas fa-music mr-2"></i>
+                        <span>${channel}</span>
+                    </div>
+                </div>
+                
+                <!-- أزرار التفاعل على اليمين -->
+                <div class="absolute right-4 bottom-24 z-20 flex flex-col items-center space-y-6">
+                    <!-- صورة المستخدم -->
+                    <div class="relative">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+                            <span class="font-bold text-white text-lg">${channel.charAt(0)}</span>
+                        </div>
+                        <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+                            <div class="bg-primary rounded-full p-1">
+                                <i class="fas fa-plus text-white text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- الإعجاب -->
+                    <div class="flex flex-col items-center" onclick="toggleLike('${video.id}')">
+                        <div class="p-2 rounded-full bg-black bg-opacity-50">
+                            <i class="fas fa-heart text-2xl text-white"></i>
+                        </div>
+                        <span class="text-white text-xs mt-1 font-semibold">${likes}</span>
+                    </div>
+                    
+                    <!-- التعليق -->
+                    <div class="flex flex-col items-center" onclick="showComments('${video.id}')">
+                        <div class="p-2 rounded-full bg-black bg-opacity-50">
+                            <i class="fas fa-comment text-2xl text-white"></i>
+                        </div>
+                        <span class="text-white text-xs mt-1 font-semibold">${formatCount(video.statistics.commentCount)}</span>
+                    </div>
+                    
+                    <!-- المشاركة -->
+                    <div class="flex flex-col items-center" onclick="shareVideo('${video.id}')">
+                        <div class="p-2 rounded-full bg-black bg-opacity-50">
+                            <i class="fas fa-share text-2xl text-white"></i>
+                        </div>
+                        <span class="text-white text-xs mt-1 font-semibold">مشاركة</span>
+                    </div>
+                </div>
+                
+                <!-- زر كتم الصوت -->
+                <button onclick="toggleMute()" class="absolute top-24 right-4 z-20 bg-black bg-opacity-50 rounded-full p-2">
+                    <i class="fas fa-volume-mute text-white text-xl"></i>
+                </button>
+            `;
+            
+            return videoContainer;
+        }
+
+        // عرض نتائج البحث
+        function renderSearchResults() {
+            const searchResultsContainer = document.getElementById('search-results');
+            searchResultsContainer.innerHTML = '';
+            
+            appState.searchResults.forEach(video => {
+                const videoElement = createSearchResultElement(video);
+                searchResultsContainer.appendChild(videoElement);
+            });
+        }
+
+        // إنشاء عنصر نتيجة بحث
+        function createSearchResultElement(video) {
+            const resultElement = document.createElement('div');
+            resultElement.className = 'bg-card rounded-xl mb-4 overflow-hidden fade-in cursor-pointer';
+            resultElement.onclick = () => playVideo(video);
+            
+            const thumbnail = video.snippet.thumbnails.medium?.url;
+            const duration = formatDuration(video.contentDetails.duration);
+            const views = formatCount(video.statistics.viewCount);
+            
+            resultElement.innerHTML = `
+                <div class="relative">
+                    ${thumbnail ? `
+                        <img src="${thumbnail}" alt="${video.snippet.title}" class="w-full h-40 object-cover">
+                    ` : `
+                        <div class="w-full h-40 bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+                            <i class="fab fa-youtube text-white text-4xl"></i>
+                        </div>
+                    `}
+                    <div class="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-2 py-1 rounded">
+                        ${duration}
+                    </div>
+                </div>
+                <div class="p-3">
+                    <h3 class="font-semibold mb-2 line-clamp-2 text-sm">${video.snippet.title}</h3>
+                    <div class="flex justify-between text-xs text-gray-400">
+                        <span>${video.snippet.channelTitle}</span>
+                        <span>${views} مشاهدة</span>
+                    </div>
+                </div>
+            `;
+            
+            return resultElement;
+        }
+
+        // تشغيل الفيديو
+        function playVideo(video) {
+            // إضافة الفيديو إلى بداية القائمة
+            appState.videos.unshift({
+                ...video,
+                videoUrl: `https://www.youtube.com/embed/${video.id}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1`
+            });
+            
+            renderVideos();
+            switchTab('trending');
+        }
+
+        // تنسيق الأعداد
+        function formatCount(count) {
+            if (!count) return '0';
+            const num = parseInt(count);
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        // تنسيق المدة
+        function formatDuration(duration) {
+            const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+            if (!match) return '0:00';
+            
+            const hours = (match[1] || '').replace('H', '');
+            const minutes = (match[2] || '').replace('M', '');
+            const seconds = (match[3] || '').replace('S', '');
+            
+            if (hours) {
+                return `${hours}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
+            } else {
+                return `${minutes}:${seconds.padStart(2, '0')}`;
+            }
+        }
+
+        // إظهار التحميل
+        function showLoading() {
+            document.getElementById('loading-screen').classList.remove('hidden');
+        }
+
+        // إخفاء التحميل
+        function hideLoading() {
+            document.getElementById('loading-screen').classList.add('hidden');
+        }
+
+        // إظهار خطأ
+        function showError(message) {
+            alert(message);
+        }
+
+        // تبديل التبويبات
+        async function switchTab(tab) {
+            appState.currentTab = tab;
+            
+            // تحديث واجهة التبويبات
+            document.querySelectorAll('.nav-tab').forEach((el, index) => {
+                if ((tab === 'trending' && index === 0) || (tab === 'music' && index === 1)) {
+                    el.classList.remove('text-gray-400');
+                    el.classList.add('text-white');
+                } else {
+                    el.classList.remove('text-white');
+                    el.classList.add('text-gray-400');
+                }
+            });
+            
+            // تحديث المحتوى
+            if (tab === 'trending') {
+                document.getElementById('video-feed').classList.remove('hidden');
+                document.getElementById('search-results').classList.add('hidden');
+                document.getElementById('page-title').textContent = 'Trending';
+                await loadTrendingVideos();
+            } else if (tab === 'music') {
+                document.getElementById('video-feed').classList.remove('hidden');
+                document.getElementById('search-results').classList.add('hidden');
+                document.getElementById('page-title').textContent = 'Music';
+                await loadMusicVideos();
+            }
+        }
+
+        // فتح البحث
+        function openSearch() {
+            document.getElementById('search-bar').classList.remove('hidden');
+            document.getElementById('page-title').classList.add('hidden');
+            document.getElementById('search-input').focus();
+        }
+
+        // إغلاق البحث
+        function closeSearch() {
+            document.getElementById('search-bar').classList.add('hidden');
+            document.getElementById('page-title').classList.remove('hidden');
+            document.getElementById('search-results').classList.add('hidden');
+            document.getElementById('video-feed').classList.remove('hidden');
+        }
+
+        // البحث في اليوتيوب
+        function searchYouTube() {
+            const query = document.getElementById('search-input').value;
+            if (query.trim() === '') return;
+            
+            appState.searchQuery = query;
+            document.getElementById('video-feed').classList.add('hidden');
+            document.getElementById('search-results').classList.remove('hidden');
+            
+            searchVideos(query);
+            
+            // إظهار نتائج البحث
+            document.getElementById('page-title').textContent = `نتائج البحث: ${query}`;
+            document.getElementById('page-title').classList.remove('hidden');
+            document.getElementById('search-bar').classList.add('hidden');
+        }
+
+        // وظائف التفاعل
+        function toggleLike(videoId) {
+            alert(`تم الإعجاب بالفيديو ${videoId}`);
+        }
+
+        function showComments(videoId) {
+            alert(`تعليقات الفيديو ${videoId}`);
+        }
+
+        function shareVideo(videoId) {
+            alert(`مشاركة الفيديو ${videoId}`);
+        }
+
+        function followChannel(channel) {
+            alert(`متابعة القناة ${channel}`);
+        }
+
+        function toggleMute() {
+            const iframes = document.querySelectorAll('iframe');
+            appState.isMuted = !appState.isMuted;
+            
+            iframes.forEach(iframe => {
+                const src = iframe.src;
+                if (appState.isMuted) {
+                    iframe.src = src.replace('mute=0', 'mute=1');
+                } else {
+                    iframe.src = src.replace('mute=1', 'mute=0');
+                }
+            });
+        }
+
+        function showUploadInfo() {
+            alert('لرفع فيديو، ستحتاج إلى تفعيل YouTube Data API v3 وإضافة صلاحية uploading');
+        }
+
+        // إعداد معالجات الأحداث
+        function setupEventListeners() {
+            // البحث عند الضغط على Enter
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchYouTube();
+                }
+            });
+        }
+
+        // بدء التطبيق
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
