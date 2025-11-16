@@ -1,5 +1,4 @@
-body {
-        /* ===== متغيرات التصميم ===== */
+/* ===== متغيرات التصميم ===== */
         :root {
             --primary: #0f172a;
             --primary-dark: #0a0f1c;
@@ -26,6 +25,9 @@ body {
             --error: #ef4444;
             --font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+body {
+     
 
         /* الثيم الأزرق (الافتراضي) */
         .theme-blue {
