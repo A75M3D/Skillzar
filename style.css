@@ -26,7 +26,6 @@
             --font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-body {
      
 
         /* الثيم الأزرق (الافتراضي) */
@@ -2141,4 +2140,5 @@ body {
 .category-carousel-manual.inertia .category-filters-manual {
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }    
-   }
+   
+
