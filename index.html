@@ -1,569 +1,825 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skillzoy Academy - منصة التعليم الالكتروني</title>
-  <link rel="stylesheet" href="style.css">
-   <!-- ✅ CSP آمن - لا يعطل أي شيء -->
-    <meta http-equiv="Content-Security-Policy" 
-          content="
-            default-src 'self' https://skillzoy-academy.vercel.app;
-            script-src 'self' 'unsafe-inline' 'unsafe-eval' 
-                       https://cdnjs.cloudflare.com 
-                       https://cdn.jsdelivr.net 
-                       https://apis.google.com 
-                       https://www.youtube.com 
-                       https://*.supabase.co 
-                       https://*.supabase.in;
-            style-src 'self' 'unsafe-inline' 
-                      https://cdnjs.cloudflare.com 
-                      https://fonts.googleapis.com 
-                      https://*.supabase.co;
-            font-src 'self' 
-                     https://cdnjs.cloudflare.com 
-                     https://fonts.gstatic.com 
-                     https://fonts.googleapis.com;
-            img-src 'self' data: https: 
-                    https://*.supabase.co 
-                    https://i.ytimg.com 
-                    https://img.youtube.com;
-            connect-src 'self' 
-                       https://*.supabase.co 
-                       https://*.supabase.in 
-                       https://www.googleapis.com 
-                       https://youtube.googleapis.com 
-                       wss://*.supabase.co;
-            frame-src 'self' 
-                     https://www.youtube.com 
-                     https://youtube.com 
-                     https://*.youtube.com 
-                     https://*.supabase.co;
-            media-src 'self' https: 
-                      https://*.supabase.co 
-                      https://*.youtube.com;
-            object-src 'none';
-            base-uri 'self';
-            form-action 'self' https://*.supabase.co;
-          ">
-<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="security.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
- 
+<meta charset="UTF-8">
+<title>Skillzoy Academy | منصة رائدة في التعليم الألكتروني</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#4F46E5">
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif'],
+          },
+          colors: {
+            primary: '#4F46E5',
+            secondary: '#10B981',
+            dark: '#0F172A',
+          }
+        }
+      }
+    }
+</script>
+  <script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "u9054g22tr");
+  </script>
+<style>
+    /* Global Styles */
+    :root {
+        --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+    
+    .dark :root {
+        --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+        --glass-bg: rgba(15, 23, 42, 0.85);
+    }
+
+    body {
+        font-family: 'Cairo', sans-serif;
+        -webkit-tap-highlight-color: transparent;
+        background-color: #F8FAFC;
+    }
+
+    .dark body {
+        background-color: #020617;
+        color: #E2E8F0;
+    }
+
+    /* Scrollbar Hiding */
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Glassmorphism Classes */
+    .glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: var(--glass-border);
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .dark .glass-card {
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animations */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .animate-float { animation: float 3s ease-in-out infinite; }
+
+    /* Skeleton Loading */
+    .skeleton {
+        background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+    }
+    .dark .skeleton {
+        background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    }
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+    /* Custom Transitions */
+    .trans-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    /* Video Player */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        height: 0;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+    }
+</style>
 </head>
-<body class="theme-blue">
-    <!-- ===== نظام الإشعارات ===== -->
-    <div class="notification-container" id="notification-container"></div>
 
-    <!-- ===== زر القائمة المتنقلة ===== -->
-    <button class="mobile-menu-btn">
-        <i class="fas fa-bars"></i>
-    </button>
+<body class="transition-colors duration-300 antialiased pb-24">
 
-    <!-- ===== الشريط الجانبي - محسن بالشفافية ===== -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-graduation-cap"></i>
+    <header class="fixed top-0 w-full z-50 glass trans-all shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
+                <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                    <i class="fas fa-graduation-cap text-lg"></i>
                 </div>
-                <span>Skillzoy</span>
-            </a>
+                <div>
+                    <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400">Skillzoy</h1>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 trans-all">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+                <div class="relative cursor-pointer">
+                    <div class="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-white dark:border-gray-900 rounded-full"></span>
+                </div>
+            </div>
         </div>
-        
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <h3 class="nav-section-title" data-translate="main_menu">القائمة الرئيسية</h3>
-                <ul class="nav-links">
-                    <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> <span data-translate="home">الرئيسية</span></a></li>
-                    <li><a href="#" class="nav-link" data-page="my-courses"><i class="fas fa-user-graduate"></i> <span data-translate="my_courses">دوراتي</span></a></li>
-                    <li><a href="#" class="nav-link" data-page="progress"><i class="fas fa-chart-line"></i> <span data-translate="progress">التقدم</span></a></li>
-                    <li><a href="#" class="nav-link" data-page="certificates"><i class="fas fa-certificate"></i> <span data-translate="my_certificates">شهاداتي</span></a></li>
-                </ul>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 mt-24 space-y-8">
+
+        <section id="heroSection" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-violet-700 p-6 md:p-10 text-white shadow-2xl shadow-indigo-500/20">
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="text-center md:text-right space-y-3 max-w-lg">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-sm font-medium border border-white/20">
+                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                        <span>مباشر: دورات جديدة</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold leading-tight">طور مهاراتك لمستقبل أفضل</h2>
+                    <p class="text-indigo-100 text-lg opacity-90">شاهد مقدمة الدورة مباشرة قبل التسجيل وابدأ رحلتك.</p>
+                </div>
+                <div class="hidden md:block absolute left-0 bottom-0 opacity-20">
+                    <i class="fas fa-rocket text-9xl transform -rotate-45 translate-y-10 -translate-x-10"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="sticky top-20 z-40">
+            <div class="glass-card p-2 rounded-2xl flex flex-col md:flex-row gap-2 shadow-lg">
+                <div class="relative flex-1">
+                    <i class="fas fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث عن مهارة جديدة..." 
+                        class="w-full bg-transparent border-none focus:ring-0 text-gray-700 dark:text-gray-200 pr-10 pl-4 py-3 placeholder-gray-400">
+                </div>
+                <div class="flex gap-2 overflow-x-auto scrollbar-hide py-1 md:py-0 px-1">
+                    <select id="categoryFilter" class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 border-none rounded-xl px-4 py-2 text-sm focus:ring-0 cursor-pointer min-w-[120px]">
+                        <option value="">كل التخصصات</option>
+                        </select>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex justify-between items-end mb-4 px-1">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white">التصنيفات الشائعة</h3>
+            </div>
+            <div id="categoriesContainer" class="flex gap-4 overflow-x-auto scrollbar-hide pb-4">
+                <div class="skeleton min-w-[100px] h-28 rounded-2xl"></div>
+                <div class="skeleton min-w-[100px] h-28 rounded-2xl"></div>
+                <div class="skeleton min-w-[100px] h-28 rounded-2xl"></div>
+            </div>
+        </section>
+
+        <section id="coursesSection" class="min-h-[400px]">
+            <div class="flex justify-between items-end mb-4 px-1">
+                <h3 class="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-play-circle text-indigo-500"></i>
+                    الدورات المتاحة (شاهد الآن)
+                </h3>
             </div>
             
-            <div class="nav-section">
-                <h3 class="nav-section-title" data-translate="educational_content">المحتوى التعليمي</h3>
-                <ul class="nav-links">
-                    <li><a href="#" class="nav-link"><i class="fas fa-file-alt"></i> <span data-translate="study_materials">المواد الدراسية</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fas fa-tasks"></i> <span data-translate="assignments">الواجبات</span></a></li>
-                </ul>
-            </div>
+            <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
             
-            <div class="nav-section">
-                <h3 class="nav-section-title" data-translate="account_settings">الحساب والإعدادات</h3>
-                <ul class="nav-links">
-                   <li><a href="#" class="nav-link" data-page="settings"><i class="fas fa-cog"></i> <span data-translate="settings">الإعدادات</span></a></li>
-                    <li><a href="https://wa.me/message/6TY5HI5QHOQBA1" class="nav-link"><i class="fas fa-question"></i> <span data-translate="help">المساعدة</span></a></li>
-                </ul> 
+            <div id="noResults" class="hidden flex-col items-center justify-center py-20 text-center">
+                <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-search text-3xl text-gray-400"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-700 dark:text-gray-300">لم يتم العثور على نتائج</h3>
             </div>
+        </section>
+
+        <section id="myCoursesView" class="hidden min-h-screen">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">دوراتي التعليمية</h2>
             
-            <!-- زر تغيير اللغة -->
-            <div class="nav-section">
-                <h3 class="nav-section-title" data-translate="language">اللغة</h3>
-                <div class="theme-toggle" id="language-toggle">
+            <div id="resumeLearningBanner" class="hidden mb-8 bg-gray-900 rounded-2xl p-6 text-white relative overflow-hidden shadow-xl">
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <i class="fas fa-globe"></i>
-                        <span data-translate="language">English</span>
-                    </div>
-                    <i class="fas fa-toggle-off" id="language-icon"></i>
-                </div>
-            </div>
-            
-            <!-- زر تغيير الثيم -->
-            <div class="nav-section">
-                <h3 class="nav-section-title" data-translate="appearance">المظهر</h3>
-                <div class="theme-toggle" id="theme-toggle">
-                    <div>
-                        <i class="fas fa-sun"></i>
-                        <span data-translate="light_mode">وضع النهار</span>
-                    </div>
-                    <i class="fas fa-toggle-off" id="theme-icon"></i>
-                </div>
-            </div>
-            
-            <!-- أزرار تغيير الألوان -->
-            <div class="nav-section">
-                <h3 class="nav-section-title">الألوان</h3>
-                <div class="color-theme-options">
-                    <div class="color-theme-option active" data-theme="blue">
-                        <div class="color-swatch blue"></div>
-                        <span>أزرق</span>
-                    </div>
-                    <div class="color-theme-option" data-theme="green">
-                        <div class="color-swatch green"></div>
-                        <span>أخضر</span>
-                    </div>
-                    <div class="color-theme-option" data-theme="purple">
-                        <div class="color-swatch purple"></div>
-                        <span>بنفسجي</span>
-                    </div>
-                    <div class="color-theme-option" data-theme="orange">
-                        <div class="color-swatch orange"></div>
-                        <span>برتقالي</span>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        
-        <div class="sidebar-footer">
-            <div class="user-profile">
-                <img src="https://ui-avatars.com/api/?name=نشط+الان&background=3b82f6&color=fff" alt="صورة المستخدم" class="user-avatar">
-                <div class="user-info">
-                    <h4 data-translate="active_now">نشط الان</h4>
-                    <p data-translate="student">👨‍🎓طالب</p>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <!-- ===== مشغل الفيديو المدمج ===== -->
-    <div class="video-player-container" id="video-player">
-        <div class="video-player">
-            <button class="close-video" id="close-video">
-                <i class="fas fa-times"></i>
-            </button>
-            <iframe id="video-frame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <!-- ===== نموذج إدخال بيانات الشهادة ===== -->
-    <div class="certificate-form-container" id="certificate-form-container">
-        <div class="certificate-form">
-            <h2 data-translate="congratulations">مبروك! لقد أكملت الدورة بنجاح</h2>
-            <p data-translate="enter_full_name">أدخل اسمك الكامل للحصول على شهادتك:</p>
-            
-            <div class="form-group">
-                <label for="student-name" data-translate="full_name">الاسم الكامل</label>
-                <input type="text" id="student-name" placeholder="أدخل اسمك الكامل">
-            </div>
-            
-            <div class="form-actions">
-                <button class="btn btn-outline" id="cancel-certificate" data-translate="cancel">إلغاء</button>
-                <button class="btn btn-primary" id="generate-certificate" data-translate="get_certificate">احصل على شهادتك</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== عرض الشهادة الاحترافية ===== -->
-    <div class="certificate-container" id="certificate-container">
-        <div class="certificate-professional" id="certificate-template">
-            <div class="certificate-header">
-                <h1 class="certificate-title">CERTIFICATE OF COMPLETION</h1>
-                <h2 class="certificate-subtitle">Skillzoy Academy</h2>
-            </div>
-            
-            <div class="certificate-body">
-                <p class="certificate-text" data-translate="certificate_awarded">تمنح هذه الشهادة بكل فخر إلى</p>
-                <p class="student-name" id="certificate-student-name">اسم الطالب</p>
-                <p class="certificate-text" data-translate="for_completing">لإكماله بنجاح دورة</p>
-                <h3 class="course-name" id="certificate-course-name">دورة كاملة <span>Canva</span></h3>
-                <p class="certificate-date" id="certificate-date">في تاريخ November 4, 2025</p>
-            </div>
-            
-            <div class="certificate-footer">
-                <div class="certificate-issue-date" id="certificate-issue-date">تاريخ الإصدار: November 4, 2025</div>
-                <div class="certificate-id" id="certificate-id">رقم الشهادة: SKZ-2025-713885-183</div>
-            </div>
-
-            <div class="certificate-seal">
-                <div class="seal">Skillzoy Academy</div>
-            </div>
-        </div>
-        
-        <div class="certificate-actions">
-            <button class="btn btn-outline" id="close-certificate" data-translate="close">إغلاق</button>
-            <button class="btn btn-success" id="download-certificate-png">
-                <i class="fas fa-download"></i> <span data-translate="download_as_image">تحميل كصورة</span>
-            </button>
-            <button class="btn btn-primary" id="download-certificate-pdf">
-                <i class="fas fa-file-pdf"></i> <span data-translate="download_as_pdf">تحميل كPDF</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- ===== المحتوى الرئيسي ===== -->
-    <main class="main-content">
-        <!-- ===== الصفحة الرئيسية ===== -->
-        <div class="home-page">
-            <div class="page-title">
-                <h1 data-translate="platform_title">Skillzoy Academy - منصة التعليم الالكتروني الرائدة</h1>
-                <p data-translate="platform_description">أفضل الدورات التعليمية لتطوير مهاراتك ومعرفتك في مختلف المجالات</p>
-            </div>
-            
-            <!-- ===== فلاتر التصنيفات - محسنة مع الكاروسيل ===== -->
-            <div class="category-filters-container">
-                <div class="category-carousel-wrapper">
-                    <div class="category-filters" id="category-filters">
-                        <!-- سيتم ملؤها ديناميكياً -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ===== شبكة الدورات ===== -->
-            <div class="courses-grid" id="courses-container">
-                <!-- سيتم ملؤها ديناميكياً -->
-            </div>
-
-            <!-- ===== قسم الإحصائيات ===== -->
-            <div class="stats-section">
-                <div class="stat-card">
-                    <div class="stat-number" id="students-count">0</div>
-                    <div class="stat-label" data-translate="registered_students">طالب مسجل</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="courses-count">0</div>
-                    <div class="stat-label" data-translate="available_courses">دورة متاحة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="certificates-count">0</div>
-                    <div class="stat-label" data-translate="certified_certificates">شهادة معتمدة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="instructors-count">0</div>
-                    <div class="stat-label" data-translate="professional_instructors">مدرب محترف</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== صفحة دوراتي ===== -->
-        <div class="my-courses-page">
-            <div class="page-title">
-                <h1 data-translate="my_courses">دوراتي</h1>
-                <p data-translate="my_courses_description">الدورات التي سجلت فيها ويمكنك متابعتها</p>
-            </div>
-            
-            <div class="courses-grid" id="my-courses-container">
-                <!-- سيتم ملؤها ديناميكياً -->
-            </div>
-            
-            <div class="empty-state" id="empty-my-courses" style="display: none;">
-                <i class="fas fa-book-open"></i>
-                <h3 data-translate="no_courses">لا توجد دورات مسجلة</h3>
-                <p data-translate="no_courses_description">لم تسجل في أي دورة بعد. تصفح الدورات المتاحة وسجل في الدورة التي تهمك.</p>
-                <button class="btn btn-primary" id="browse-courses-btn" data-translate="browse_courses">تصفح الدورات</button>
-            </div>
-        </div>
-
-        <!-- ===== صفحة التقدم ===== -->
-        <div class="progress-page">
-            <div class="page-title">
-                <h1 data-translate="my_progress">تقدمي التعليمي</h1>
-                <p data-translate="my_progress_description">تابع تقدمك في جميع الدورات المسجلة</p>
-            </div>
-            
-            <div class="progress-stats" id="progress-stats">
-                <!-- سيتم ملؤها ديناميكياً -->
-            </div>
-            
-            <div class="progress-section">
-                <h2 style="margin-bottom: 20px; color: var(--light);" data-translate="my_courses_progress">تقدم دوراتي</h2>
-                <div class="progress-courses" id="progress-courses-container">
-                    <!-- سيتم ملؤها ديناميكياً -->
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== صفحة الشهادات ===== -->
-        <div class="certificates-page" style="display: none;">
-            <div class="page-title">
-                <h1 data-translate="my_certificates">شهاداتي</h1>
-                <p data-translate="my_certificates_description">الشهادات التي حصلت عليها من الدورات المكتملة</p>
-            </div>
-            
-            <div class="courses-grid" id="certificates-container">
-                <!-- سيتم ملؤها ديناميكياً -->
-            </div>
-            
-            <div class="empty-state" id="empty-certificates" style="display: none;">
-                <i class="fas fa-certificate"></i>
-                <h3 data-translate="no_certificates">لا توجد شهادات بعد</h3>
-                <p data-translate="no_certificates_description">لم تكمل أي دورة بعد. أكمل الدورات المسجلة للحصول على شهادات معتمدة.</p>
-                <button class="btn btn-primary" id="browse-my-courses-btn" data-translate="browse_my_courses">تصفح دوراتي</button>
-            </div>
-        </div>
-
-        <!-- ===== صفحة الإعدادات ===== -->
-        <div class="settings-page" style="display: none;">
-            <div class="page-title">
-                <h1 data-translate="settings">الإعدادات</h1>
-                <p data-translate="settings_description">تخصيص تجربتك في المنصة وفقاً لتفضيلاتك</p>
-            </div>
-            
-            <div class="settings-container">
-                <!-- إعدادات المظهر -->
-                <div class="settings-section">
-                    <h3 data-translate="appearance">المظهر</h3>
-                    <div class="settings-options">
-                        <div class="setting-option">
-                            <div class="setting-info">
-                                <h4 data-translate="dark_mode">الوضع الداكن</h4>
-                                <p data-translate="dark_mode_description">تفعيل أو تعطيل الوضع الداكن</p>
-                            </div>
-                            <div class="setting-control">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="dark-mode-toggle">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div class="setting-option">
-                            <div class="setting-info">
-                                <h4 data-translate="language">اللغة</h4>
-                                <p data-translate="language_description">اختر اللغة المناسبة لك</p>
-                            </div>
-                            <div class="setting-control">
-                                <select class="select-control" id="language-select">
-                                    <option value="ar">العربية</option>
-                                    <option value="en">English</option>
-                                </select>
-                            </div>
+                        <div class="text-xs font-semibold text-gray-400 mb-1 uppercase tracking-wider">أكمل من حيث توقفت</div>
+                        <h3 id="resumeTitle" class="text-xl font-bold mb-2">عنوان الدورة هنا</h3>
+                        <div class="flex items-center gap-2 text-sm text-gray-300">
+                            <i class="fas fa-play-circle"></i>
+                            <span id="resumeProgress">المقطع 4 من 12</span>
                         </div>
                     </div>
-                </div>
-                
-                <!-- منطقة الخطر -->
-                <div class="danger-zone">
-                    <h4><i class="fas fa-exclamation-triangle"></i> <span data-translate="danger_zone">منطقة الخطر</span></h4>
-                    <p data-translate="danger_zone_description">هذه الإجراءات لا يمكن التراجع عنها. يرجى التأكد قبل المتابعة.</p>
-                    <button class="btn btn-danger" id="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> <span data-translate="logout">تسجيل الخروج</span>
+                    <button id="resumeBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-bold trans-all shadow-lg shadow-indigo-600/30">
+                        استئناف المشاهدة
                     </button>
                 </div>
             </div>
+
+            <div id="myCoursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </section>
+
+        <div id="playerOverlay" class="fixed inset-0 z-[60] bg-white dark:bg-gray-900 transform translate-y-full transition-transform duration-300 overflow-y-auto">
+            <div class="sticky top-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-10 px-4 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                <button onclick="closePlayer()" class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:scale-110 trans-all">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <span class="font-bold text-gray-800 dark:text-gray-200">مشاهدة الدورة</span>
+                <div class="w-10"></div> </div>
+
+            <div class="max-w-5xl mx-auto px-4 py-6">
+                <div class="video-container bg-black mb-6">
+                    <iframe id="playerFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="flex-1 space-y-4">
+                        <h1 id="playerCourseTitle" class="text-2xl font-bold text-gray-900 dark:text-white leading-snug"></h1>
+                        <p id="playerCourseDesc" class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed"></p>
+                        
+                        <div class="flex items-center gap-4 py-4 border-y border-gray-100 dark:border-gray-800">
+                             <button onclick="toggleCompleteVideo()" id="markCompleteBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-green-500/30 trans-all flex items-center justify-center gap-2">
+                                <i class="fas fa-check-circle"></i>
+                                <span>إكمال المقطع</span>
+                            </button>
+                            <a href="https://wa.me/249908280115" target="_blank" class="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 py-3 rounded-xl font-bold trans-all flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-green-500 text-xl"></i>
+                                <span>طلب الشهادة</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-96 bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 h-fit">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-gray-800 dark:text-white">محتوى الدورة</h3>
+                            <span id="progressPercentage" class="text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300 px-2 py-1 rounded-lg">0% مكتمل</span>
+                        </div>
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-4">
+                            <div id="progressBarFill" class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 w-0 trans-all duration-1000"></div>
+                        </div>
+                        <div id="playlistContainer" class="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                            </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </main>
 
-    <!-- ===== صفحة تفاصيل الدورة ===== -->
-    <div class="course-details" id="course-details">
-        <div class="course-header">
-            <a href="#" class="back-to-courses" id="back-to-courses">
-                <i class="fas fa-arrow-right"></i> <span data-translate="back_to_courses">العودة للدورات</span>
-            </a>
+    <nav class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-white/20 dark:border-gray-700 rounded-full px-6 py-3 shadow-2xl z-40 flex items-center gap-8 trans-all duration-500 w-[90%] max-w-sm justify-between">
+        <button onclick="showHome()" class="nav-btn active flex flex-col items-center gap-1 text-indigo-600 dark:text-indigo-400 trans-all">
+            <i class="fas fa-home text-xl"></i>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </button>
+        
+        <button onclick="showMyCourses()" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-300 trans-all relative">
+            <i class="fas fa-book-reader text-xl"></i>
+            <span class="text-[10px] font-bold">دوراتي</span>
+            <span id="myCoursesDot" class="hidden absolute top-0 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+        
+        <button onclick="openWhatsApp()" class="nav-btn flex flex-col items-center gap-1 text-gray-400 hover:text-green-500 trans-all">
+            <i class="fab fa-whatsapp text-xl"></i>
+            <span class="text-[10px] font-bold">تواصل</span>
+        </button>
+    </nav>
+
+    <a href="https://wa.me/249908280115" target="_blank" class="hidden md:flex fixed bottom-8 left-8 w-14 h-14 bg-green-500 text-white rounded-full items-center justify-center shadow-lg shadow-green-500/40 hover:scale-110 trans-all z-50 animate-bounce">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+<script>
+    // --- Configuration ---
+    // !!! هام: لا تقم بحذف أو تغيير اسم المتغير هذا، فقط ضع بياناتك داخله !
+const firebaseConfig = {
+  apiKey: "AIzaSyDgFy0-QL0YuGgqgtcx9541Cs7QxBewRKQ",
+  authDomain: "skillzoy-5ba3c.firebaseapp.com",
+  projectId: "skillzoy-5ba3c",
+  storageBucket: "skillzoy-5ba3c.firebasestorage.app",
+  messagingSenderId: "622606995088",
+  appId: "1:622606995088:web:999c8a6790e7aa30651215",
+  measurementId: "G-WVHTQ4BGNJ"     
+};
+  
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // --- State Management ---
+    let appState = {
+        courses: [],
+        myCourses: JSON.parse(localStorage.getItem("myCourses")) || [],
+        progress: JSON.parse(localStorage.getItem("courseProgress")) || {},
+        darkMode: localStorage.getItem("darkMode") === "true",
+        currentCourseId: null
+    };
+
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+        setupTheme();
+        renderSkeletons();
+        fetchCourses();
+        setupEventListeners();
+        updateNavState();
+    });
+
+    // --- UI Logic: Theme ---
+    function setupTheme() {
+        if (appState.darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }
+
+    function toggleDarkMode() {
+        appState.darkMode = !appState.darkMode;
+        localStorage.setItem("darkMode", appState.darkMode);
+        document.documentElement.classList.toggle('dark');
+    }
+
+    // --- Data Fetching ---
+    async function fetchCourses() {
+        try {
+            const snapshot = await db.collection('courses').get();
+            appState.courses = [];
             
-            <!-- ===== قسم معلومات الدورة ===== -->
-            <div class="course-info-cards">
-                <div class="info-card">
-                    <i class="fas fa-play-circle"></i>
-                    <div class="number" id="course-videos-count">5</div>
-                    <div class="label" data-translate="videos">فيديوهات</div>
-                </div>
-                <div class="info-card">
-                    <i class="far fa-clock"></i>
-                    <div class="number" id="course-total-hours">35</div>
-                    <div class="label" data-translate="learning_hours">ساعة تعليمية</div>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-certificate"></i>
-                    <div class="number" data-translate="certificate">شهادة</div>
-                    <div class="label" data-translate="after_completion">بعد الإكمال</div>
-                </div>
-                <div class="info-card">
-                    <i class="fas fa-signal"></i>
-                    <div class="number" id="course-level">متقدم</div>
-                    <div class="label" data-translate="level">المستوى</div>
+            snapshot.forEach(doc => {
+                appState.courses.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Simulate network delay for sleek effect
+            setTimeout(() => {
+                renderCategories();
+                renderCourses();
+                renderMyCourses();
+            }, 800);
+
+        } catch (error) {
+            console.error("Error:", error);
+            showToast("حدث خطأ في تحميل البيانات", "error");
+        }
+    }
+
+    // --- Rendering ---
+    function renderSkeletons() {
+        const grid = document.getElementById('coursesGrid');
+        grid.innerHTML = Array(6).fill(0).map(() => `
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+                <div class="skeleton w-full h-40 rounded-xl mb-4"></div>
+                <div class="skeleton w-3/4 h-6 rounded-lg mb-2"></div>
+                <div class="skeleton w-1/2 h-4 rounded-lg mb-4"></div>
+                <div class="flex justify-between">
+                    <div class="skeleton w-20 h-8 rounded-lg"></div>
+                    <div class="skeleton w-20 h-8 rounded-lg"></div>
                 </div>
             </div>
-            
-            <h1 id="course-details-title">دورة تطوير الويب الشاملة</h1>
-            <p id="course-details-description">تعلم تطوير الويب من المبتدئ إلى المحترف باستخدام HTML، CSS، JavaScript وتقنيات الويب الحديثة</p>
-            <div class="course-meta-details">
-                <div class="meta-item">
-                    <i class="far fa-clock"></i>
-                    <span id="course-total-duration">35 ساعة</span>
+        `).join('');
+    }
+
+    function renderCategories() {
+        const categories = [...new Set(appState.courses.map(c => c.category || 'عام'))];
+        const container = document.getElementById('categoriesContainer');
+        const filterSelect = document.getElementById('categoryFilter');
+
+        container.innerHTML = categories.map(cat => `
+            <div onclick="filterByCategory('${cat}')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center gap-2 hover:border-indigo-500 hover:shadow-lg trans-all group">
+                <div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 trans-all">
+                    ${getCategoryIcon(cat)}
                 </div>
-                <div class="meta-item">
-                    <i class="fas fa-signal"></i>
-                    <span id="course-level-text">متقدم</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-user-tie"></i>
-                    <span id="course-instructor">Skillzoy Academy</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-play-circle"></i>
-                    <span id="course-videos-text">5 فيديوهات</span>
-                </div>
+                <span class="text-sm font-bold text-gray-700 dark:text-gray-300">${cat}</span>
             </div>
-        </div>
-        <div class="course-content-section">
-            <h3 data-translate="course_videos">فيديوهات الدورة</h3>
-            <div class="videos-grid" id="course-videos-container">
-                <!-- سيتم ملؤها ديناميكياً -->
+        `).join('');
+
+        container.insertAdjacentHTML('afterbegin', `
+            <div onclick="filterByCategory('all')" class="min-w-[110px] h-28 cursor-pointer rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex flex-col items-center justify-center gap-2 shadow-lg shadow-indigo-500/30 trans-all hover:scale-105">
+                <i class="fas fa-th-large text-xl"></i>
+                <span class="text-sm font-bold">الكل</span>
             </div>
-            
-            <!-- ===== قسم الشهادة بعد إكمال الدورة ===== -->
-            <div class="certificate-section" id="certificate-section" style="display: none;">
-                <!-- ملاحظة حول الشهادة المجانية -->
-                <div class="certificate-notice">
-                    <div class="certificate-notice-content">
-                        <i class="fas fa-info-circle"></i>
-                        <div>
-                            <strong data-translate="important_note">ملاحظة هامة:</strong> <span data-translate="certificate_note">الشهادة المجانية ستظهر تلقائيًا بعد إكمال جميع فيديوهات الدورة بنجاح.</span>
-                        </div>
+        `);
+
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.innerText = cat;
+            filterSelect.appendChild(option);
+        });
+    }
+
+    function getCategoryIcon(cat) {
+        const map = {
+            'برمجة': '<i class="fas fa-code"></i>',
+            'تصميم': '<i class="fas fa-paint-brush"></i>',
+            'تسويق': '<i class="fas fa-bullhorn"></i>',
+            'لغات': '<i class="fas fa-language"></i>',
+            'طب وصحة': '<i class="fas fa-heartbeat"></i>',
+            'أعمال': '<i class="fas fa-briefcase"></i>',
+            'تطوير الذات': '<i class="fas fa-lightbulb"></i>',
+            'مهارات تقنية': '<i class="fas fa-laptop-code"></i>',
+            'إدارة': '<i class="fas fa-chart-line"></i>',
+            'محاسبة': '<i class="fas fa-calculator"></i>',
+            'تصوير': '<i class="fas fa-camera"></i>',
+            'طبخ': '<i class="fas fa-utensils"></i>',
+            'لياقة بدنية': '<i class="fas fa-dumbbell"></i>',
+            'فنون': '<i class="fas fa-palette"></i>',
+            'موسيقى': '<i class="fas fa-music"></i>',
+            'قيادة': '<i class="fas fa-car"></i>',
+            'تعليم': '<i class="fas fa-chalkboard-teacher"></i>',
+            'استشارات': '<i class="fas fa-handshake"></i>',
+            'سفر': '<i class="fas fa-plane"></i>',
+            'عقارات': '<i class="fas fa-home"></i>',
+            'تداول': '<i class="fas fa-chart-bar"></i>',
+            'زراعة': '<i class="fas fa-leaf"></i>'
+        };
+        return map[cat] || '<i class="fas fa-book"></i>';
+    }
+
+    function renderCourses(filter = null) {
+        const grid = document.getElementById('coursesGrid');
+        let data = appState.courses;
+
+        if (filter && filter !== 'all') {
+            data = data.filter(c => (c.category || 'عام') === filter || c.title.includes(filter));
+        }
+
+        if (data.length === 0) {
+            grid.innerHTML = '';
+            document.getElementById('noResults').classList.remove('hidden');
+            document.getElementById('noResults').classList.add('flex');
+            return;
+        }
+
+        document.getElementById('noResults').classList.add('hidden');
+        document.getElementById('noResults').classList.remove('flex');
+
+        grid.innerHTML = data.map(course => {
+            const isEnrolled = appState.myCourses.includes(course.id);
+            const priceDisplay = (course.price === 'free' || course.price === 'مجانية') 
+                ? '<span class="text-green-500 font-bold">مجانية</span>' 
+                : `<span class="text-indigo-600 dark:text-indigo-400 font-bold font-mono">${course.price}</span>`;
+
+            // إعداد رابط الفيديو
+            let videoEmbed = '';
+            if (course.playlist_id) {
+                // استخدام رابط القائمة، وإذا لم يوجد نستخدم رابط فيديو عادي
+                videoEmbed = `<iframe class="absolute inset-0 w-full h-full" 
+                                      src="https://www.youtube.com/embed/videoseries?list=${course.playlist_id}" 
+                                      frameborder="0" 
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                      allowfullscreen
+                                      loading="lazy">
+                              </iframe>`;
+            } else {
+                 videoEmbed = `<div class="absolute inset-0 w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500"><i class="fas fa-video-slash"></i> لا يوجد فيديو</div>`;
+            }
+
+            return `
+            <div class="glass-card rounded-2xl overflow-hidden hover:transform hover:-translate-y-2 trans-all group h-full flex flex-col">
+                <div class="relative w-full aspect-video bg-black rounded-t-2xl overflow-hidden">
+                    ${videoEmbed}
+                    
+                    <div class="absolute top-2 left-2 z-20 bg-black/60 backdrop-blur-md text-white text-xs px-2 py-1 rounded-lg border border-white/20">
+                        ${course.category || 'عام'}
                     </div>
                 </div>
-                
-                <h2 data-translate="congratulations_completed">مبروك! لقد أكملت الدورة بنجاح</h2>
-                <p data-translate="get_certificate_now">يمكنك الآن الحصول على شهادتك المعتمدة من الأكاديمية</p>
-                
-                <div class="certificate-types">
-                    <div class="certificate-type">
-                        <h3 data-translate="free_certificate">شهادة مجانية</h3>
-                        <ul>
-                            <li data-translate="certificate_feature1">شهادة رقمية باللغة الإنجليزية</li>
-                            <li data-translate="certificate_feature2">ختم الأكاديمية الرسمي</li>
-                            <li data-translate="certificate_feature3">توقيع المدير التنفيذي</li>
-                            <li data-translate="certificate_feature4">رقم شهادة فريد</li>
-                            <li data-translate="certificate_feature5">تحميل كPDF/صورة</li>
-                        </ul>
-                        <button class="btn btn-success" id="get-free-certificate-btn">
-                            <i class="fas fa-certificate"></i> <span data-translate="get_free_certificate">احصل على شهادة مجانية</span>
+
+                <div class="p-5 flex flex-col flex-1">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">${course.title}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2 flex-1">${course.description || 'لا يوجد وصف'}</p>
+                    
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                        ${priceDisplay}
+                        <button onclick="${isEnrolled ? `openPlayer('${course.id}')` : `enrollCourse('${course.id}')`}" 
+                            class="${isEnrolled ? 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30'} 
+                            px-4 py-2 rounded-xl text-sm font-bold hover:brightness-110 trans-all">
+                            ${isEnrolled ? 'استكمال الدورة <i class="fas fa-play text-xs mr-1"></i>' : 'تسجيل الآن'}
                         </button>
                     </div>
-                    
-                    <div class="certificate-type premium">
-                        <h3 data-translate="premium_certificate">شهادة مميزة</h3>
-                        <ul>
-                            <li data-translate="premium_feature1">جميع ميزات الشهادة المجانية</li>
-                            <li data-translate="premium_feature2">تصميم مميز بلمسات ذهبية</li>
-                            <li data-translate="premium_feature3">ختم مطبوع رسمي</li>
-                            <li data-translate="premium_feature4">رمز QR للتحقق</li>
-                            <li data-translate="premium_feature5">نسخة ورقية مطبوعة</li>
-                            <li data-translate="premium_feature6">تحقق مدى الحياة</li>
-                        </ul>
-                        
-                        <div class="premium-certificate-preview">
-                            <img src="https://i.ibb.co/PvLgGpF4/Blue-Grey-Modern-Gradient-Certificate-of-Completion-20250927-110652.png" alt="الشهادة المميزة" class="premium-certificate-image">
-                            <div class="premium-features">
-                                <h4 data-translate="additional_premium_features">الميزات الإضافية للشهادة المميزة:</h4>
-                                <ul>
-                                    <li data-translate="premium_additional1">تصميم فاخر بلمسات ذهبية</li>
-                                    <li data-translate="premium_additional2">طباعة عالية الجودة على ورق مميز</li>
-                                    <li data-translate="premium_additional3">اعتراف دولي</li>
-                                    <li data-translate="premium_additional4">خيار التأطير متاح</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <a href="https://wa.me/0924299798" class="btn btn-primary" target="_blank">
-                            <i class="fab fa-whatsapp"></i> <span data-translate="contact_for_premium">تواصل للحصول على الشهادة المميزة</span>
-                        </a>
-                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+            `;
+        }).join('');
+    }
 
-    <!-- ===== الفوتر ===== -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Skillzoy Academy</h3>
-                <p data-translate="footer_description">منصة تعليمية رائدة في تقديم الدورات التعليمية عالية الجودة في مختلف المجالات. نهدف إلى تمكين الأفراد من خلال المعرفة والمهارات التي يحتاجونها لتحقيق أهدافهم.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
+    // --- Actions ---
+    function enrollCourse(id) {
+        if (!appState.myCourses.includes(id)) {
+            appState.myCourses.push(id);
+            localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
             
-            <div class="footer-section">
-                <h3 data-translate="quick_links">روابط سريعة</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-home"></i> <span data-translate="home">الرئيسية</span></a></li>
-                    <li><a href="#"><i class="fas fa-book"></i> <span data-translate="all_courses">جميع الدورات</span></a></li>
-                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> <span data-translate="instructors">المدربين</span></a></li>
-                    <li><a href="#"><i class="fas fa-certificate"></i> <span data-translate="certificates">الشهادات</span></a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> <span data-translate="about_academy">عن الأكاديمية</span></a></li>
-                </ul>
-            </div>
+            // Init Progress
+            if(!appState.progress[id]) {
+                appState.progress[id] = { completed: [], total: 10 };
+                localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
+            }
             
-            <div class="footer-section">
-                <h3 data-translate="learner_support">مركز دعم المتعلم</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-question-circle"></i> <span data-translate="faq">الأسئلة الشائعة</span></a></li>
-                    <li><a href="#"><i class="fas fa-headset"></i> <span data-translate="technical_support">الدعم الفني</span></a></li>
-                    <li><a href="#"><i class="fas fa-comments"></i> <span data-translate="contact_us">اتصل بنا</span></a></li>
-                    <li><a href="#"><i class="fas fa-file-alt"></i> <span data-translate="privacy_policy">سياسة الخصوصية</span></a></li>
-                    <li><a href="#"><i class="fas fa-file-contract"></i> <span data-translate="terms_of_use">شروط الاستخدام</span></a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3 data-translate="contact_us">اتصل بنا</h3>
-                <ul class="footer-links">
-                    <li><a href="tel:+249924299798"><i class="fas fa-phone"></i> 249 924 299 798+</a></li>
-                    <li><a href="mailto:info@skillzoy.com"><i class="fas fa-envelope"></i> skillzoyacademy@gmail.com</a></li>
-                    <li><a href="https://wa.me/0924299798" target="_blank"><i class="fab fa-whatsapp"></i> <span data-translate="whatsapp">واتساب</span></a></li>
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="address">العنوان: Sudan، Khartoum</span></a></li>
-                </ul>
-            </div>
-        </div>
+            showToast("تم التسجيل بنجاح! 🎉", "success");
+            renderCourses();
+            renderMyCourses();
+            updateNavState();
+        }
+    }
+
+    function removeCourse(id, event) {
+        event.stopPropagation();
+        if(confirm("هل أنت متأكد من حذف الدورة؟")) {
+            appState.myCourses = appState.myCourses.filter(cid => cid !== id);
+            localStorage.setItem("myCourses", JSON.stringify(appState.myCourses));
+            renderMyCourses();
+            renderCourses();
+            updateNavState();
+        }
+    }
+
+    // --- Player Logic ---
+    function openPlayer(id) {
+        const course = appState.courses.find(c => c.id === id);
+        if (!course) return;
+
+        appState.currentCourseId = id;
+        document.getElementById('playerCourseTitle').innerText = course.title;
+        document.getElementById('playerCourseDesc').innerText = course.description || '';
         
-        <div class="copyright">
-            <p data-translate="copyright">جميع الحقوق محفوظة © 2025 Skillzoy Academy</p>
-        </div>
-    </footer>
+        const frame = document.getElementById('playerFrame');
+        if (course.playlist_id) {
+            frame.src = `https://www.youtube.com/embed/videoseries?list=${course.playlist_id}`;
+        } else {
+             frame.src = "";
+        }
 
-  <script src="script.js"></script>
+        renderPlaylistItems(id, course.num || 10);
+        document.getElementById('playerOverlay').classList.remove('translate-y-full');
+        
+        localStorage.setItem("lastViewedCourse", JSON.stringify({id: course.id, title: course.title}));
+    }
+
+    function closePlayer() {
+        document.getElementById('playerOverlay').classList.add('translate-y-full');
+        document.getElementById('playerFrame').src = ""; 
+        renderMyCourses();
+    }
+
+    function renderPlaylistItems(courseId, totalVideos) {
+        const container = document.getElementById('playlistContainer');
+        const progressData = appState.progress[courseId] || { completed: [] };
+        let html = '';
+
+        for (let i = 1; i <= totalVideos; i++) {
+            const isCompleted = progressData.completed.includes(i);
+            html += `
+                <div class="flex items-center justify-between p-3 rounded-xl ${isCompleted ? 'bg-green-50 dark:bg-green-900/20' : 'bg-white dark:bg-gray-800'} border border-gray-100 dark:border-gray-700">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'}">
+                            ${isCompleted ? '<i class="fas fa-check"></i>' : i}
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">الدرس رقم ${i}</span>
+                    </div>
+                    <button onclick="toggleLessonComplete(${i})" class="text-gray-400 hover:text-green-500 trans-all">
+                        <i class="far fa-circle ${isCompleted ? 'fas fa-check-circle text-green-500' : ''}"></i>
+                    </button>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+        updateProgressUI(courseId, totalVideos);
+    }
+
+    function toggleLessonComplete(lessonIndex) {
+        const id = appState.currentCourseId;
+        if (!appState.progress[id]) appState.progress[id] = { completed: [] };
+        
+        const list = appState.progress[id].completed;
+        if (list.includes(lessonIndex)) {
+            appState.progress[id].completed = list.filter(i => i !== lessonIndex);
+        } else {
+            appState.progress[id].completed.push(lessonIndex);
+        }
+        
+        localStorage.setItem("courseProgress", JSON.stringify(appState.progress));
+        const course = appState.courses.find(c => c.id === id);
+        renderPlaylistItems(id, course.num || 10);
+        updateProgressUI(id, course.num || 10);
+    }
+
+    function toggleCompleteVideo() {
+        const id = appState.currentCourseId;
+        if(!id) return;
+        
+        const course = appState.courses.find(c => c.id === id);
+        const total = course.num || 10;
+        
+        if (!appState.progress[id]) appState.progress[id] = { completed: [] };
+        const completedList = appState.progress[id].completed;
+        
+        let targetLesson = 1;
+        while (completedList.includes(targetLesson)) {
+            targetLesson++;
+        }
+        
+        if (targetLesson <= total) {
+            toggleLessonComplete(targetLesson);
+            showToast(`تم إكمال الدرس ${targetLesson}`, 'success');
+        } else {
+            showToast('لقد أتممت جميع الدروس بالفعل!', 'info');
+        }
+    }
+
+    function updateProgressUI(id, total) {
+        const completed = appState.progress[id]?.completed.length || 0;
+        const percent = Math.round((completed / total) * 100);
+        
+        document.getElementById('progressBarFill').style.width = `${percent}%`;
+        document.getElementById('progressPercentage').innerText = `${percent}% مكتمل`;
+    }
+
+    // --- My Courses Page ---
+    function renderMyCourses() {
+        const grid = document.getElementById('myCoursesGrid');
+        
+        const lastViewed = JSON.parse(localStorage.getItem("lastViewedCourse"));
+        const banner = document.getElementById('resumeLearningBanner');
+        
+        if (lastViewed && appState.myCourses.includes(lastViewed.id)) {
+            banner.classList.remove('hidden');
+            document.getElementById('resumeTitle').innerText = lastViewed.title;
+            document.getElementById('resumeBtn').onclick = () => openPlayer(lastViewed.id);
+        } else {
+            banner.classList.add('hidden');
+        }
+
+        if (appState.myCourses.length === 0) {
+            grid.innerHTML = `<div class="col-span-3 text-center text-gray-500 py-10">لم تقم بالتسجيل في أي دورة بعد.</div>`;
+            return;
+        }
+
+        grid.innerHTML = appState.myCourses.map(id => {
+            const course = appState.courses.find(c => c.id === id);
+            if (!course) return '';
+            
+            const total = course.num || 10;
+            const completed = appState.progress[id]?.completed.length || 0;
+            const percent = Math.round((completed / total) * 100);
+
+            return `
+                <div class="glass-card rounded-2xl p-4 flex gap-4 items-center cursor-pointer hover:bg-white/50 dark:hover:bg-gray-700/50 trans-all" onclick="openPlayer('${id}')">
+                    <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl shrink-0">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-gray-800 dark:text-white truncate">${course.title}</h4>
+                        <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400 mt-1 mb-2">
+                            <span>${completed}/${total} درس</span>
+                            <span>${percent}%</span>
+                        </div>
+                        <div class="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-full bg-green-500 rounded-full" style="width: ${percent}%"></div>
+                        </div>
+                    </div>
+                    <button onclick="removeCourse('${id}', event)" class="text-gray-300 hover:text-red-500 px-2 trans-all">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // --- Navigation Logic ---
+    function showHome() {
+        document.getElementById('heroSection').classList.remove('hidden');
+        document.getElementById('coursesSection').classList.remove('hidden');
+        document.getElementById('myCoursesView').classList.add('hidden');
+        setActiveNav(0);
+        window.scrollTo(0,0);
+    }
+
+    function showMyCourses() {
+        document.getElementById('heroSection').classList.add('hidden');
+        document.getElementById('coursesSection').classList.add('hidden');
+        document.getElementById('myCoursesView').classList.remove('hidden');
+        renderMyCourses();
+        setActiveNav(1);
+        window.scrollTo(0,0);
+    }
+
+    function setActiveNav(index) {
+        const btns = document.querySelectorAll('.nav-btn');
+        btns.forEach(b => {
+            b.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'active');
+            b.classList.add('text-gray-400');
+        });
+        btns[index].classList.add('text-indigo-600', 'dark:text-indigo-400', 'active');
+        btns[index].classList.remove('text-gray-400');
+    }
+    
+    function openWhatsApp() {
+        window.open("https://wa.me/249908280115", "_blank");
+    }
+
+    function updateNavState() {
+        if(appState.myCourses.length > 0) {
+            document.getElementById('myCoursesDot').classList.remove('hidden');
+        } else {
+            document.getElementById('myCoursesDot').classList.add('hidden');
+        }
+    }
+
+    // --- Toast Notification ---
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        const colorClass = type === 'success' ? 'bg-green-500' : (type === 'error' ? 'bg-red-500' : 'bg-gray-800');
+        
+        toast.className = `fixed top-6 left-1/2 transform -translate-x-1/2 ${colorClass} text-white px-6 py-3 rounded-full shadow-2xl z-[70] flex items-center gap-3 animate-float font-bold text-sm min-w-[300px] justify-center`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    function filterByCategory(cat) {
+        renderCourses(cat);
+    }
+    
+    function setupEventListeners() {
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderCourses(e.target.value);
+        });
+        
+        document.getElementById('categoryFilter').addEventListener('change', (e) => {
+            renderCourses(e.target.value);
+        });
+    }
+    // ===== sybergurd =====
+    (() => {
+      document.addEventListener("keydown", (e) => {
+        if (
+          (e.ctrlKey && e.shiftKey && ["I", "C", "J", "L"].includes(e.key.toUpperCase())) ||
+          (e.key === "F12") ||
+          (e.ctrlKey && e.key.toUpperCase() === "U")
+        ) {
+          e.preventDefault();
+        }
+      });
+
+      document.addEventListener("copy", e => e.preventDefault());
+      document.addEventListener("cut", e => e.preventDefault());
+      document.addEventListener("contextmenu", e => e.preventDefault());
+      document.addEventListener("selectstart", e => e.preventDefault());
+
+      let detectSize = () => {
+        if (window.outerWidth - window.innerWidth > 200 || 
+            window.outerHeight - window.innerHeight > 200) {
+          console.clear();
+        }
+      };
+      window.addEventListener("resize", detectSize);
+
+      let start = performance.now();
+      console.log("%c ", "font-size:200px;");
+      let end = performance.now();
+      if (end - start > 50) console.clear();
+
+      const observer = new MutationObserver(() => {
+        console.clear();
+      });
+      observer.observe(document.documentElement, { 
+        attributes: true, 
+        childList: false, 
+        subtree: false 
+      });
+
+      setInterval(() => {
+        const t = Date.now();
+        debugger;
+        if (Date.now() - t > 100) console.clear();
+      }, 500);
+    })();
+</script>
 </body>
 </html>
